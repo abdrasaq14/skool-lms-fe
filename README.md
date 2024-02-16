@@ -1,1 +1,5 @@
-# Manged-Internship-SQ019-LMS-Skool-FE-
+-Project has been setup
+-Typescript
+-Vite
+-Tailwind
+-Eslint
