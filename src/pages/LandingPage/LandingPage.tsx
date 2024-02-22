@@ -113,14 +113,14 @@ function LandingPage() {
             <div className="flex flex-col gap-6 mx-auto">
               <MainButton button_text={"Login"} />
               <div className="text-gray-400 w-2/3 mx-auto px-0 text-sm">
-                No account ? <Link className="text-green-400" to="/register">Create One</Link>
+                No account ? <Link className="text-green-400 hover:underline" to="/register">Create One</Link>
               </div>
             </div>
           </form>
         </div>
 
         <footer className="w-full">
-          <div className="flex justify-between mx-auto w-10/12 py-2 text-white text-base font-bold mt-28 leading-8 tracking-wider">
+          <div className="flex justify-between mx-auto w-10/12 py-2 text-white text-lg font-bold mt-28 leading-8 tracking-wider">
             <div>
               <h5>Website Terms and Conditions</h5>
             </div>
