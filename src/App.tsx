@@ -3,6 +3,7 @@ import "./index.css";
 
 // import TestPage from "./pages/TestPage";
 import LandingPage from "./pages/LandingPage/LandingPage";
+import SignUpPage from "./pages/Signup/SignUpPage";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         {/* <Route path="/signup" element={<TestPage />} /> */}
+        <Route path="/signup" element={<SignUpPage />} />
       </Routes>
     </>
   );
