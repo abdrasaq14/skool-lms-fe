@@ -11,48 +11,46 @@ function SignUpPage() {
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
   const [email, setEmail] = useState("");
-  const [phoneNumber, setphoneNumber] = useState("");
-  const [country, setCountry] = useState("");
+  const [password, setPassword] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [countryOfResidence, setCountryOfResidence] = useState("");
   const [error, setError] = useState("");
 
   const handleSignup = async (e: FormEvent) => {
     e.preventDefault();
 
-    if (!firstName || !lastName || !email || !phoneNumber || !country) {
+    if (!firstName || !lastName || !email || !phoneNumber || !countryOfResidence) {
       setError("All fields are required, please fill out all fields");
       return;
     }
-
-    try {
-      const res = await axios.post("http://localhost:3000/users/signup", {
-        firstName: firstName,
-        lasttName: lastName,
-        email: email,
-        phoneNumber: phoneNumber,
-        country: country,
+    console.log("sending request to server...")
+      const res = await axios.post("http://localhost:3000/users/register", {
+        firstName,
+        lastName,
+        email,
+        password,
+        phoneNumber,
+        countryOfResidence,
       });
-      console.log(res);
 
-      if (res.data.message) {
-        navigate(`/users/login`);
-      } else if (res.data.error) {
-        setError(res.data.error);
+      console.log("response", res);
+
+      if (res.data.successfulSignup ) {
+        navigate("/");
+      } else if (res.data.existingUserError) {
+        setError(res.data.existingUserError);
       }
-    } catch (error) {
-      setError(`%{error}`);
-      console.log(error);
-    }
   };
 
   return (
     <>
       <div
-        className="bg-[image-url] bg-cover bg-center h-screen "
+        className="bg-[image-url] bg-cover bg-center h-screen"
         style={{
           backgroundImage: `linear-gradient(to bottom, rgba(16, 24, 40, 0.5), rgba(16, 24, 40, 0.5)), url(${backgroundImage})`,
         }}
       >
-        <h1 className=" mx-auto w-4/12 pt-12 font-normal text-4xl px-0 text-white text-center leading-tight tracking-wider inknut-antiqua-regular">
+        <h1 className=" mx-auto w-3/12 pt-1 font-normal text-3xl px-0 text-white text-center leading-tight tracking-wider inknut-antiqua-regular">
           Register to the Applicant Portal
         </h1>
 
@@ -74,7 +72,7 @@ function SignUpPage() {
 
             <div className="flex flex-col gap-2 mb-4">
               <div className="flex flex-col gap-1">
-                <label htmlFor="firstName" className=" text-base">
+                <label htmlFor="firstName" className=" text-sm">
                   First Name
                 </label>
                 <input
@@ -89,7 +87,7 @@ function SignUpPage() {
                 />
               </div>
               <div className="flex flex-col gap-1">
-                <label htmlFor="lastName" className=" text-base">
+                <label htmlFor="lastName" className=" text-sm">
                   Last Name
                 </label>
                 <input
@@ -104,7 +102,7 @@ function SignUpPage() {
                 />
               </div>
               <div className="flex flex-col gap-1">
-                <label htmlFor="email" className=" text-base">
+                <label htmlFor="email" className=" text-sm">
                   Email Address
                 </label>
                 <input
@@ -118,14 +116,29 @@ function SignUpPage() {
                   placeholder="Enter your email"
                 />
               </div>
+              <div className="flex flex-col gap-1">
+                <label htmlFor="email" className=" text-sm">
+                  Password
+                </label>
+                <input
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setPassword(e.target.value)
+                  }
+                  value={password}
+                  className="border-2 rounded-lg border-gray-300 py-1 px-3 text-sm focus:border-green-700"
+                  id="email"
+                  type="text"
+                  placeholder="Enter your password"
+                />
+              </div>
 
               <div className="flex flex-col gap-1">
-                <label htmlFor="phoneNumber" className=" text-base">
+                <label htmlFor="phoneNumber" className=" text-sm">
                   Phone Number
                 </label>
                 <input
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setphoneNumber(e.target.value)
+                    setPhoneNumber(e.target.value)
                   }
                   value={phoneNumber}
                   className="border-2 rounded-lg border-gray-300 py-1 px-3 text-sm focus:border-green-700"
@@ -136,14 +149,14 @@ function SignUpPage() {
               </div>
 
               <div className="flex flex-col gap-1">
-                <label htmlFor="country" className=" text-base">
+                <label htmlFor="country" className=" text-sm">
                   Country of permanent residence
                 </label>
                 <input
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setCountry(e.target.value)
+                    setCountryOfResidence(e.target.value)
                   }
-                  value={country}
+                  value={countryOfResidence}
                   className="border-2 rounded-lg border-gray-300 py-1 px-3 text-sm focus:border-green-700"
                   id="country"
                   type="text"
@@ -156,7 +169,7 @@ function SignUpPage() {
               <MainButton button_text={"Sign Up"} />
               <div className="text-gray-400 w-3/3 mx-auto px-0 text-sm">
                 Already have an account ?{" "}
-                <Link className="text-green-400" to="/users/login">
+                <Link className="text-green-400" to="/">
                   Sign in here
                 </Link>
               </div>
@@ -165,7 +178,7 @@ function SignUpPage() {
         </div>
 
         <footer className="w-full">
-          <div className="flex justify-between mx-auto w-10/12 py-2 text-white text-base font-bold mt-18 leading-8 tracking-wider">
+          <div className="flex justify-between mx-auto w-10/12 py-2 text-white text-sm font-bold mt-18 leading-8 tracking-wider">
             <div>
               <h5>Website Terms and Conditions</h5>
             </div>
