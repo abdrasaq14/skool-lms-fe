@@ -113,7 +113,7 @@ function LandingPage() {
             <div className="flex flex-col gap-6 mx-auto">
               <MainButton button_text={"Login"} />
               <div className="text-gray-400 w-2/3 mx-auto px-0 text-sm">
-                No account ? <Link className="text-green-400" to="/users/register">Create One</Link>
+                No account ? <Link className="text-green-400" to="/register">Create One</Link>
               </div>
             </div>
           </form>
