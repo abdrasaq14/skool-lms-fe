@@ -1,12 +1,12 @@
-import { fetchDetails, updateDetails } from "../states/userDetails/userDetailsSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store/store";
-import { useState } from "react";
+// import { fetchDetails, updateDetails } from "../states/userDetails/userDetailsSlice";
+// import { useDispatch, useSelector } from "react-redux";
+// import { RootState } from "../store/store";
+// import { useState } from "react";
 
 function TestPage() {
    
-    const dispatch = useDispatch();
-    const userDetails = useSelector((state: RootState) => state.userDetails);
+    // const dispatch = useDispatch();
+    // const userDetails = useSelector((state: RootState) => state.userDetails);
 
 
   return (
