@@ -106,7 +106,7 @@ function LandingPage() {
               </div>
 
               <div className="text-right underline text-blue-600 text-sm">
-                <Link to="/users/forgotpassword">Forgot password</Link>
+                <Link to="/reset-password">Forgot password</Link>
               </div>
             </div>
 
