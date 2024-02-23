@@ -36,9 +36,19 @@ function SignUpPage() {
       console.log("response", res);
 
       if (res.data.successfulSignup ) {
-        navigate("/");
+        localStorage.setItem("name", firstName);
+
+        navigate("/check-email");
       } else if (res.data.existingUserError) {
+
         setError(res.data.existingUserError);
+        setfirstName("");
+        setlastName("");
+        setEmail("");
+        setPassword("");
+        setPhoneNumber("");
+        setCountryOfResidence("");
+
       }
   };
 
@@ -50,17 +60,17 @@ function SignUpPage() {
           backgroundImage: `linear-gradient(to bottom, rgba(16, 24, 40, 0.5), rgba(16, 24, 40, 0.5)), url(${backgroundImage})`,
         }}
       >
-        <h1 className=" mx-auto w-3/12 pt-1 font-normal text-3xl px-0 text-white text-center leading-tight tracking-wider inknut-antiqua-regular">
+        <h1 className=" mx-auto w-4/12 pt-6 font-normal text-4xl px-0 text-white text-center leading-tight tracking-wider inknut-antiqua-regular">
           Register to the Applicant Portal
         </h1>
 
-        <div className="bg-white w-3/12 mx-auto mt-10 py-6 px-6 border rounded-2xl">
+        <div className="bg-white w-3/12 mx-auto mt-4 py-4 px-6 border rounded-2xl">
           <form onSubmit={handleSignup}>
             <div className="mx-auto w-1/3">
               <img src={decagonLogo} alt="decagon logo" />
             </div>
 
-            <div className="text-center text-lg my-4 font-bold">
+            <div className="text-center text-lg my-2 font-bold">
               <h5>Create a new account</h5>
             </div>
 
@@ -127,7 +137,7 @@ function SignUpPage() {
                   value={password}
                   className="border-2 rounded-lg border-gray-300 py-1 px-3 text-sm focus:border-green-700"
                   id="email"
-                  type="text"
+                  type="password"
                   placeholder="Enter your password"
                 />
               </div>
@@ -165,11 +175,11 @@ function SignUpPage() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-6 mx-auto">
+            <div className="flex flex-col gap-3 mx-auto">
               <MainButton button_text={"Sign Up"} />
               <div className="text-gray-400 w-3/3 mx-auto px-0 text-sm">
                 Already have an account ?{" "}
-                <Link className="text-green-400" to="/">
+                <Link className="text-green-400 hover:underline" to="/">
                   Sign in here
                 </Link>
               </div>
@@ -178,7 +188,7 @@ function SignUpPage() {
         </div>
 
         <footer className="w-full">
-          <div className="flex justify-between mx-auto w-10/12 py-2 text-white text-sm font-bold mt-18 leading-8 tracking-wider">
+          <div className="flex justify-between mx-auto w-10/12 pt-2 text-white text-lg font-bold mt-2 leading-8 tracking-wider">
             <div>
               <h5>Website Terms and Conditions</h5>
             </div>

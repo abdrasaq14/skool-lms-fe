@@ -6,6 +6,7 @@ import LandingPage from "./pages/LandingPage/LandingPage";
 import SignUpPage from "./pages/Signup/SignUpPage";
 import EmailForm from "./pages/ResetPassword/Email";
 import NewPasswordForm from "./pages/ResetPassword/NewPassword";
+import CheckEmail from "./pages/OtpVerification/CheckEmail";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/register" element={<SignUpPage />} />
         <Route path="/reset-password" element={<EmailForm />} />
         <Route path="/new-password" element={<NewPasswordForm />} />
+        <Route path="/check-email" element={<CheckEmail />} />
       </Routes>
     </>
   );
