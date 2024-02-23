@@ -5,4 +5,4 @@
 -Eslint
 
 
-Frontend has been hosted on render- https://skool-lms-client.onrender.com/
+Frontend has been hosted on render- https://skool-lms-client.onrender.com

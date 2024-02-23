@@ -4,7 +4,7 @@ import decagonLogo from "/images/decagon-logo.png";
 import MainButton from "../../components/MainButton";
 import "./LandingPage.css";
 import { ChangeEvent, FormEvent, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 
 
 function LandingPage() {
@@ -12,6 +12,7 @@ function LandingPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+
 
     const handleLogin = async (e: FormEvent) => {
         e.preventDefault();
@@ -24,7 +25,7 @@ function LandingPage() {
           try {
             console.log(email, password)
 
-            const res = await axios.post("http://localhost:3000/users/login", {
+            const res = await axiosInstance.post("/users/login", {
                 email: email,
                 password: password
 
@@ -40,7 +41,7 @@ function LandingPage() {
             }
             
           } catch (error) {
-            setError(`%{error}`);
+            setError(`${error}`);
             console.log(error)
             
           }

@@ -9,39 +9,43 @@ function CheckEmail() {
   const name = localStorage.getItem("name");
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
 
   const HandleVerifyEmail = async (e: FormEvent) => {
     e.preventDefault();
 
     if (!otp) {
-        setError("All fields are required, please fill out all fields");
-        return;
-      }
+      setError("All fields are required, please fill out all fields");
+      return;
+    }
 
     console.log("sending request to server...");
-
 
     const res = await axios.post("http://localhost:3000/users/verify-otp", {
       otp,
     });
 
     if (res.data.verifySuccessful) {
-      navigate("/");
+
+        setSuccess(true);
+
+        setTimeout(() => {
+          navigate("/");
+        }, 5000); // Redirect after 5 seconds
+ 
     } else if (res.data.invalidOtp) {
       setOtp("");
       setError(res.data.invalidOtp);
-    }
-    else if(res.data.expiredOtp){
-        setOtp("");
+    } else if (res.data.expiredOtp) {
+      setOtp("");
       setError(res.data.invalidOtp);
-
     }
   };
 
   return (
     <>
       <div
-        className="bg-[image-url] bg-cover bg-center h-screen pt-10"
+        className="bg-[image-url] bg-cover bg-center h-screen pt-16"
         style={{
           backgroundImage: `linear-gradient(to bottom, rgba(16, 24, 40, 0.5), rgba(16, 24, 40, 0.5)), url(${backgroundImage})`,
         }}
@@ -66,9 +70,23 @@ function CheckEmail() {
             >
               <div>
                 {error && (
-                  <div className="text-center w-full mx-auto text-red-500 mb-4 text-sm">
-                    {error}
+                  <div
+                    className="bg-red-100 border border-red-400 text-red-700 py-1 rounded my-2 relative text-center"
+                    role="alert"
+                  >
+                    <span className=" text-xs">{error}</span>
                   </div>
+                )}
+
+                {success && (
+                    <div>
+                        <div
+                            className="bg-green-100 border border-green-400 text-green-700 py-1 rounded my-2 relative text-center"
+                            role="alert"
+                        >
+                            <span className=" text-xs">Email verified successfully...redirectng to login in 5 seconds</span>
+                        </div>
+                    </div>
                 )}
 
                 <div className="flex flex-col gap-2">
@@ -83,7 +101,9 @@ function CheckEmail() {
                     placeholder="Enter otp"
                   />
                 </div>
+
               </div>
+
               <div>
                 <MainButton button_text={"Verify Email"} />
               </div>
