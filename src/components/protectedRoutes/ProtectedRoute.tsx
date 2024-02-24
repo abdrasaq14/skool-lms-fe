@@ -26,12 +26,14 @@ import { ReactNode, useEffect, useState, useContext, createContext } from "react
   
   
   export function StudentProtectedRoute({ children }: ProtectedRouteProps) {
+
     const navigate = useNavigate();
     const [userData, setUserData] = useState<User>();
   
     useEffect(() => {
+
       async function checkToken() {
-        const auth = await axiosInstance.get("/protected-routes/students");
+        const auth = await axiosInstance.get("/protected-route");
         if (
           auth.status === 200 &&
           (auth.data.noTokenError ||
@@ -39,7 +41,7 @@ import { ReactNode, useEffect, useState, useContext, createContext } from "react
             auth.data.verificationError)
         ) {
           navigate("/students/signin");
-        } else if (auth.status === 200 && auth.data.student) {
+        } else if (auth.status === 200 && auth.data.user) {
           setUserData(auth.data.student);
         }
       }
