@@ -13,21 +13,6 @@ export default function StartCourse() {
   const country = [
     "Nigeria"
   ];
-  const entryYear = [2024, 2025, 2026];
-  const entryMonth = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
 
   return (
     <div className="flex flex-col h-screen">
@@ -108,7 +93,7 @@ export default function StartCourse() {
               ))}
             </select>
 
-            <label htmlFor="country">Country</label>
+            <label htmlFor="country">Country of birth</label>
             <select
               className="bg-white my-2 p-1 flex border border-gray-200 rounded text-gray-500"
               name="country"
@@ -116,7 +101,7 @@ export default function StartCourse() {
               value={userData.country}
               onChange={handleChange}
             >
-              <option value="">Enter your country</option>
+              <option value="">Enter your country of birth</option>
               {country.map((type, index) => (
                 <option key={index} value={type}>
                   {type}
@@ -124,32 +109,33 @@ export default function StartCourse() {
               ))}
             </select>
 
-            <label htmlFor="entryYear">Country of permanent residence</label>
+            <label htmlFor="residence">Country of permanent residence</label>
             <select
               className="bg-white my-2 p-1 flex border border-gray-200 rounded text-gray-500"
-              name="entryYear"
-              id="entryYear"
-              value={userData.entryYear}
+              name="residence"
+              id="residence"
+              value={userData.residence}
               onChange={handleChange}
             >
-              <option value="">Enter entry year</option>
-              {entryYear.map((type, index) => (
+              <option value="">Nigeria</option>
+              {country.map((type, index) => (
                 <option key={index} value={type}>
                   {type}
                 </option>
               ))}
             </select>
 
-            <label htmlFor="entryMonth">Entry month</label>
+           
+            <label htmlFor="entryMonth">Nationality</label>
             <select
               className="bg-white my-2 p-1 flex border border-gray-200 rounded text-gray-500"
-              name="entryMonth"
-              id="entryMonth"
-              value={userData.entryMonth}
+              name="nationality"
+              id="nationality"
+              value={userData.country}
               onChange={handleChange}
             >
-              <option value="">Enter entry month</option>
-              {entryMonth.map((type, index) => (
+              <option value="">Nigeria</option>
+              {country.map((type, index) => (
                 <option key={index} value={type}>
                   {type}
                 </option>
