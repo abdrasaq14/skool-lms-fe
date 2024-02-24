@@ -78,7 +78,12 @@ function LandingPage() {
             </div>
 
             {error && (
-                <div className="text-center w-full mx-auto text-red-500 mb-4 text-sm">{error}</div>
+              <div
+                className="bg-red-100 border border-red-400 text-red-700 py-1 rounded my-2 relative text-center"
+                role="alert"
+              >
+                <span className=" text-xs">{error}</span>
+              </div>
             )}
 
             <div className="flex flex-col gap-2 mb-4">
