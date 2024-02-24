@@ -27,6 +27,9 @@ function SignUpPage() {
       !countryOfResidence
     ) {
       setError("All fields are required, please fill out all fields");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
       return;
     }
     console.log("sending request to server...");
@@ -43,7 +46,6 @@ function SignUpPage() {
 
     if (res.data.successfulSignup) {
       localStorage.setItem("name", firstName);
-
       navigate("/check-email");
     } else if (res.data.existingUserError) {
       setError(res.data.existingUserError);
@@ -53,6 +55,9 @@ function SignUpPage() {
       setPassword("");
       setPhoneNumber("");
       setCountryOfResidence("");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
     }
   };
 

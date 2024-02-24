@@ -2,7 +2,7 @@ import MainButton from "../../components/MainButton";
 import { useNavigate } from "react-router-dom";
 import backgroundImage from "/images/signup-background-image.jpeg";
 import { ChangeEvent, FormEvent, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 
 function CheckEmail() {
   const navigate = useNavigate();
@@ -19,9 +19,7 @@ function CheckEmail() {
       return;
     }
 
-    console.log("sending request to server...");
-
-    const res = await axios.post("http://localhost:3000/users/verify-otp", {
+    const res = await axiosInstance.post("/users/verify-otp", {
       otp,
     });
 
@@ -31,7 +29,7 @@ function CheckEmail() {
 
         setTimeout(() => {
           navigate("/");
-        }, 5000); // Redirect after 5 seconds
+        }, 5000); 
  
     } else if (res.data.invalidOtp) {
       setOtp("");
@@ -84,7 +82,7 @@ function CheckEmail() {
                             className="bg-green-100 border border-green-400 text-green-700 py-1 rounded my-2 relative text-center"
                             role="alert"
                         >
-                            <span className=" text-xs">Email verified successfully...redirectng to login in 5 seconds</span>
+                            <span className=" text-xs">Email verified successfully...redirecting to login in 5 seconds</span>
                         </div>
                     </div>
                 )}

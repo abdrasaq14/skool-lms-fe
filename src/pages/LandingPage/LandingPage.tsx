@@ -19,6 +19,9 @@ function LandingPage() {
 
         if (!email || !password) {
             setError("All fields are required, try again");
+            setTimeout(() => {
+              setError("");
+            }, 3000);
             return;
           }
 
@@ -38,6 +41,10 @@ function LandingPage() {
             }
             else if(res.data.error){
                 setError(res.data.error)
+                setTimeout(() => {
+                  setError("");
+                }, 3000);
+                return
             }
             
           } catch (error) {
@@ -46,14 +53,7 @@ function LandingPage() {
             
           }
         
-
-
-
     }
-
-
-
-
 
   return (
     <>

@@ -2,13 +2,19 @@ import backgroundImage from "/images/signup-background-image.jpeg";
 import decagonLogo from "/images/decagon-logo.png";
 import { ChangeEvent, useState, FormEvent } from "react";
 import MainButton from "../../components/MainButton";
-import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
+import axiosInstance from "../../utils/axiosInstance";
+
+
 
 
 const NewPasswordForm = () => {
+  const navigate = useNavigate();
+  const { token } = useParams();
   const [ password, setPassword] = useState("");
   const [ confirmPassword, setConfirmPassword] = useState("")
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
 
   const handleResetPassword = async (e: FormEvent) => {
     e.preventDefault();
@@ -23,14 +29,26 @@ const NewPasswordForm = () => {
         setError("Passwords do not match");
         setTimeout(() => {
           setError("");
-        }, 3000);
+        }, 5000);
         return;
     }
-    const res = await axios.post("http://localhost:3000/users/login", {
+    const res = await axiosInstance.post(`/users/forgotpassword/${token}`, {
       password,
-      confirmPassword
+      token
     });
-    console.log(res);
+    if(res.data.successMessage){
+        setSuccess(true);
+        setTimeout(() => {
+          navigate("/");
+        }, 3000); 
+
+    }
+    else if(res.data.error){
+        setError(res.data.error);
+        setTimeout(() => {
+          setError("");
+        }, 3000);
+    }
   };
   return (
     <>
@@ -51,14 +69,30 @@ const NewPasswordForm = () => {
             <div className="text-center text-lg my-4 font-bold">
               <h5>Reset your password</h5>
             </div>
-            <div className="flex flex-col gap-2 mb-1">
-              <div className="text-center text-xs text-gray-400 ">
-                {error && (
-                  <div className="text-center w-full mx-auto text-red-500 text-sm">
-                    {error}
+
+            {error && (
+                  <div
+                    className="bg-red-100 border border-red-400 text-red-700 py-1 rounded my-2 relative text-center"
+                    role="alert"
+                  >
+                    <span className=" text-xs">{error}</span>
                   </div>
                 )}
-              </div>
+
+                {success && (
+                    <div>
+                        <div
+                            className="bg-green-100 border border-green-400 text-green-700 py-1 rounded my-2 relative text-center"
+                            role="alert"
+                        >
+                            <span className=" text-xs">Password reset successfull..redirecting to login in 5 seconds</span>
+                        </div>
+                    </div>
+                )}
+
+
+            <div className="flex flex-col gap-2 mb-1">
+              
               <div className="flex flex-col gap-1 mb-1">
                 <label htmlFor="email" className=" text-base">
                 Password
