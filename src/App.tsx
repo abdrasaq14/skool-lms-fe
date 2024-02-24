@@ -1,3 +1,13 @@
+<<<<<<< HEAD
+// App.tsx file
+import ApplicationView from "./Components/ApplicationView";
+
+function App() {
+  return (
+    <div>
+      <ApplicationView />
+    </div>
+=======
 import { Routes, Route } from "react-router-dom";
 import "./index.css";
 
@@ -21,6 +31,7 @@ function App() {
         
       </Routes>
     </>
+>>>>>>> 1c330c0b411875365b6cfd59207551a2f5a8a226
   );
 }
 
