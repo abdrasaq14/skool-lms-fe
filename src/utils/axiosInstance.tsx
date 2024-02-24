@@ -1,10 +1,15 @@
 import axios from "axios";
 
 // backend url
+
+const backendUrl = import.meta.env.VITE_BACKEND_URL
+
 const axiosInstance = axios.create({
-  baseURL: "",
+  baseURL: backendUrl,
   withCredentials: true,
 });
+
+// console.log(process.env.REACT_APP_BACKEND_URL);
 
 axiosInstance.interceptors.request.use(
   (config) => {

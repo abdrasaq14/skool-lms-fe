@@ -4,7 +4,7 @@ import decagonLogo from "/images/decagon-logo.png";
 import MainButton from "../../components/MainButton";
 import "./LandingPage.css";
 import { ChangeEvent, FormEvent, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 
 
 function LandingPage() {
@@ -13,18 +13,22 @@ function LandingPage() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
+
     const handleLogin = async (e: FormEvent) => {
         e.preventDefault();
 
         if (!email || !password) {
             setError("All fields are required, try again");
+            setTimeout(() => {
+              setError("");
+            }, 3000);
             return;
           }
 
           try {
             console.log(email, password)
 
-            const res = await axios.post("http://localhost:3000/users/login", {
+            const res = await axiosInstance.post("/users/login", {
                 email: email,
                 password: password
 
@@ -37,22 +41,19 @@ function LandingPage() {
             }
             else if(res.data.error){
                 setError(res.data.error)
+                setTimeout(() => {
+                  setError("");
+                }, 3000);
+                return
             }
             
           } catch (error) {
-            setError(`%{error}`);
+            setError(`${error}`);
             console.log(error)
             
           }
         
-
-
-
     }
-
-
-
-
 
   return (
     <>

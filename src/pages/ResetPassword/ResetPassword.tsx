@@ -2,14 +2,16 @@ import backgroundImage from "/images/signup-background-image.jpeg";
 import decagonLogo from "/images/decagon-logo.png";
 import { ChangeEvent, useState, FormEvent } from "react";
 import MainButton from "../../components/MainButton";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 import { Link } from "react-router-dom";
 
-const EmailForm = () => {
+const ResetPasswordForm = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
 
   const handleResetPassword = async (e: FormEvent) => {
+
     e.preventDefault();
     if (!email) {
       setError("Email is required");
@@ -18,12 +20,19 @@ const EmailForm = () => {
       }, 3000);
       return;
     }
-    const res = await axios.post("http://localhost:3000/users/forgotpassword", {
+    const res = await axiosInstance.post("/users/forgotpassword", {
       email,
     });
-    console.log(res.data.successMessage);
+
     if(res.data.successMessage){
-        
+      setSuccess(true);
+  
+    }
+    else if(res.data.error){
+      setError(res.data.error);
+      setTimeout(() => {
+        setError("");
+      }, 3000);
     }
   };
   return (
@@ -47,10 +56,25 @@ const EmailForm = () => {
             </div>
             <div className="flex flex-col gap-2 mb-4">
               <div className="text-center text-xs text-gray-400 mb-4">
-                {error && (
-                  <div className="text-center w-full mx-auto text-red-500 mb-4 text-sm">
-                    {error}
+
+              {error && (
+                  <div
+                    className="bg-red-100 border border-red-400 text-red-700 py-1 rounded my-2 relative text-center"
+                    role="alert"
+                  >
+                    <span className=" text-xs">{error}</span>
                   </div>
+                )}
+
+                {success && (
+                    <div>
+                        <div
+                            className="bg-green-100 border border-green-400 text-green-700 py-1 rounded my-2 relative text-center"
+                            role="alert"
+                        >
+                            <span className=" text-xs">Check your email for the reset instructions</span>
+                        </div>
+                    </div>
                 )}
                 <p>
                   Enter your email below and we'll send you instructions on how
@@ -89,4 +113,4 @@ const EmailForm = () => {
   );
 };
 
-export default EmailForm;
+export default ResetPasswordForm;

@@ -4,7 +4,7 @@ import decagonLogo from "/images/decagon-logo.png";
 import MainButton from "../../components/MainButton";
 import "./SignUpPage.css";
 import { ChangeEvent, FormEvent, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 
 function SignUpPage() {
   const navigate = useNavigate();
@@ -19,37 +19,46 @@ function SignUpPage() {
   const handleSignup = async (e: FormEvent) => {
     e.preventDefault();
 
-    if (!firstName || !lastName || !email || !phoneNumber || !countryOfResidence) {
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !phoneNumber ||
+      !countryOfResidence
+    ) {
       setError("All fields are required, please fill out all fields");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
       return;
     }
-    console.log("sending request to server...")
-      const res = await axios.post("http://localhost:3000/users/register", {
-        firstName,
-        lastName,
-        email,
-        password,
-        phoneNumber,
-        countryOfResidence,
-      });
+    console.log("sending request to server...");
+    const res = await axiosInstance.post("/users/register", {
+      firstName,
+      lastName,
+      email,
+      password,
+      phoneNumber,
+      countryOfResidence,
+    });
 
-      console.log("response", res);
+    console.log("response", res);
 
-      if (res.data.successfulSignup ) {
-        localStorage.setItem("name", firstName);
-
-        navigate("/check-email");
-      } else if (res.data.existingUserError) {
-
-        setError(res.data.existingUserError);
-        setfirstName("");
-        setlastName("");
-        setEmail("");
-        setPassword("");
-        setPhoneNumber("");
-        setCountryOfResidence("");
-
-      }
+    if (res.data.successfulSignup) {
+      localStorage.setItem("name", firstName);
+      navigate("/check-email");
+    } else if (res.data.existingUserError) {
+      setError(res.data.existingUserError);
+      setfirstName("");
+      setlastName("");
+      setEmail("");
+      setPassword("");
+      setPhoneNumber("");
+      setCountryOfResidence("");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+    }
   };
 
   return (
@@ -70,13 +79,16 @@ function SignUpPage() {
               <img src={decagonLogo} alt="decagon logo" />
             </div>
 
-            <div className="text-center text-lg my-2 font-bold">
+            <div className="text-center text-lg my-1 font-bold">
               <h5>Create a new account</h5>
             </div>
 
             {error && (
-              <div className="text-center w-full mx-auto text-red-500 mb-4 text-sm">
-                {error}
+              <div
+                className="bg-red-100 border border-red-400 text-red-700 py-1 rounded my-2 relative text-center"
+                role="alert"
+              >
+                <span className=" text-xs">{error}</span>
               </div>
             )}
 
@@ -136,7 +148,7 @@ function SignUpPage() {
                   }
                   value={password}
                   className="border-2 rounded-lg border-gray-300 py-1 px-3 text-sm focus:border-green-700"
-                  id="email"
+                  id="password"
                   type="password"
                   placeholder="Enter your password"
                 />
@@ -187,8 +199,8 @@ function SignUpPage() {
           </form>
         </div>
 
-        <footer className="w-full">
-          <div className="flex justify-between mx-auto w-10/12 pt-2 text-white text-lg font-bold mt-2 leading-8 tracking-wider">
+        <footer className="w-full ">
+          <div className="flex justify-between mx-auto w-10/12 pt-2 text-white text-lg font-bold mt-1 leading-8 tracking-wider">
             <div>
               <h5>Website Terms and Conditions</h5>
             </div>
