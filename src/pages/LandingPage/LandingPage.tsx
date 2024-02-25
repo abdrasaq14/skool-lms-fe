@@ -37,6 +37,7 @@ function LandingPage() {
             console.log(res)
 
             if(res.data.message){
+              
                 navigate(`/dashboard`);
             }
             else if(res.data.error){
