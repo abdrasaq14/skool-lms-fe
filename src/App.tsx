@@ -7,16 +7,11 @@ import SignUpPage from "./pages/Signup/SignUpPage";
 import ResetPasswordForm from "./pages/ResetPassword/ResetPassword";
 import NewPasswordForm from "./pages/ResetPassword/NewPassword";
 import CheckEmail from "./pages/OtpVerification/CheckEmail";
-import ApplicationView from "./components/ApplicationView";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<ApplicationView />} />
-        {/* <Route path="/signup" element={<TestPage />} /> */}
-
-
         <Route path="/" element={<LandingPage />} />
         {/* <Route path="/signup" element={<TestPage />} /> */}
         <Route path="/register" element={<SignUpPage />} />
