@@ -1,22 +1,25 @@
 import MainButton from "../../components/MainButton";
 import { useState } from "react";
-import axiosInstance from "../../utils/axiosInstance";
+
 import ApplicationHeader from "../../components/applicationComponents/ApplicationHeader";
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { updateDetails } from "../../states/applicationDetails/employmentDetailsSlice";
+import { employmentDetailsState } from "../../states/applicationDetails/employmentDetailsSlice";
 
 function EmploymentDetails() {
 
-    const [ answer, setAnswer ] = useState("")
+    const [ employmentDetails, setEmploymentDetails ] = useState(false)
+    const dispatch = useDispatch()
+    const answer = useSelector((state: employmentDetailsState ) => state.employmentDetails)
+
+    console.log(answer)
+
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log(answer)
+       
+        dispatch(updateDetails(employmentDetails))
 
-        const res = await axiosInstance.post('/dashboard/application/employment-details', 
-        answer)
-        
-        console.log(res.data)
     }
 
   return (
@@ -49,12 +52,12 @@ function EmploymentDetails() {
                 <div>
               <label htmlFor="answerYes" className="flex justify-start gap-2 p">
                 <input
-                onChange={(e) => setAnswer(e.target.value)}
+                onChange={() => setEmploymentDetails(true)}
                   type="radio"
                   className=""
                   name="answer"
                   id="answerYes"
-                  value="Yes"
+                  
                 />
                 <span className="">Yes</span>
               </label>
@@ -63,12 +66,12 @@ function EmploymentDetails() {
             <div>
               <label htmlFor="answerNO" className="flex justify-start gap-2">
                 <input
-                onChange={(e) => setAnswer(e.target.value)}
+                onChange={() => setEmploymentDetails(false)}
                   type="radio"
                   className=""
                   name="answer"
                   id="answerNO"
-                  value="No"
+                  
                 />
                 <span className="">No</span>
                
