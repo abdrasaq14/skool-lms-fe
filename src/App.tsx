@@ -8,6 +8,7 @@ import ResetPasswordForm from "./pages/ResetPassword/ResetPassword";
 import NewPasswordForm from "./pages/ResetPassword/NewPassword";
 import CheckEmail from "./pages/OtpVerification/CheckEmail";
 import EmploymentDetails from "./pages/Application/EmploymentDetails";
+import DisabilityDetails from "./pages/Application/DisabilityDetails";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/reset-password" element={<ResetPasswordForm />} />
         <Route path="/new-password/:token" element={<NewPasswordForm />} />
         <Route path="/dashboard/application/employment-details" element={<EmploymentDetails />} />
+        <Route path="/dashboard/application/disability-details" element={<DisabilityDetails />} />
  
         
       </Routes>
