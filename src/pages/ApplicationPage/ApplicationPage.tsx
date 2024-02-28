@@ -8,7 +8,7 @@ import { RootState } from "../../store/store"
 function ApplicationPage() {
 
   const academicReferencesFilled = useSelector((state: RootState) => state.academicReferences.academicReferences);
-
+  const employmentDetailsFilled = useSelector((state: RootState) => state.employmentDetails.employmentDetails);
 
 
   return (
@@ -55,7 +55,7 @@ function ApplicationPage() {
         <div className="flex flex-wrap justify-center space-x-5 mt-5">
           <ApplicationContainer header_text="Academic references" paragraph_text="We require feedback regarding your suitability from prior instructors." link_to="/dashboard/application/academic-references" isFilled={academicReferencesFilled}/>
 
-          {/* <ApplicationContainer header_text="Employment details" paragraph_text="Tell us about your past employment experience." link_to="/dashboard/application/employment-details" isFilled={}/> */}
+          <ApplicationContainer header_text="Employment details" paragraph_text="Tell us about your past employment experience." link_to="/dashboard/application/employment-details" isFilled={employmentDetailsFilled}/>
         </div>
 
         <div className="flex flex-wrap justify-center space-x-5 mt-5">

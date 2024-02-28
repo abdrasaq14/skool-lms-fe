@@ -10,7 +10,7 @@ import { RootState } from "../../store/store"
 const AcademicReferences = () => {
   const academicReferencesRedux = useSelector((state: RootState) => state.academicReferences.academicReferences);
   console.log(academicReferencesRedux)
-  const [academicReferences, setAcademicReferences] = useState<boolean | undefined>(undefined);
+  const [academicReferences, setAcademicReferences] = useState<boolean | null>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

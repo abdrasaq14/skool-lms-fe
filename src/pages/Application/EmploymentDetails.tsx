@@ -1,26 +1,40 @@
 import MainButton from "../../components/MainButton";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
 import ApplicationHeader from "../../components/applicationComponents/ApplicationHeader";
 import { useDispatch, useSelector } from "react-redux";
 import { updateDetails } from "../../states/applicationDetails/employmentDetailsSlice";
-import { employmentDetailsState } from "../../states/applicationDetails/employmentDetailsSlice";
+// import { employmentDetailsState } from "../../states/applicationDetails/employmentDetailsSlice";
+import { useNavigate } from "react-router-dom";
+import { RootState } from "../../store/store";
 
 function EmploymentDetails() {
 
-    const [ employmentDetails, setEmploymentDetails ] = useState(false)
-    const dispatch = useDispatch()
-    const answer = useSelector((state: employmentDetailsState ) => state.employmentDetails)
+  const employmentDetailsRedux = useSelector((state: RootState) => state.academicReferences.academicReferences);
+  console.log(employmentDetailsRedux)
+  const [employmentDetails, setEmploymentDetails] = useState<boolean | null>(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    console.log(answer)
-
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-       
-        dispatch(updateDetails(employmentDetails))
-
+  useEffect(() => {
+    const storedValue = localStorage.getItem("employmentDetails");
+    if (storedValue !== null) {
+      setEmploymentDetails(JSON.parse(storedValue));
     }
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+  if (employmentDetails !== null) { 
+    dispatch(updateDetails(employmentDetails));
+    navigate("/dashboard/application");
+   }
+  }; 
+
+  const handleRadioChange = (value: boolean) => {
+    setEmploymentDetails(value);
+    localStorage.setItem("employmentDetails", JSON.stringify(value));
+  };
 
   return (
     <>
@@ -52,12 +66,12 @@ function EmploymentDetails() {
                 <div>
               <label htmlFor="answerYes" className="flex justify-start gap-2 p">
                 <input
-                onChange={() => setEmploymentDetails(true)}
                   type="radio"
                   className=""
                   name="answer"
                   id="answerYes"
-                  
+                  checked={employmentDetails === true}
+                  onChange={() => handleRadioChange(true)}
                 />
                 <span className="">Yes</span>
               </label>
@@ -66,12 +80,12 @@ function EmploymentDetails() {
             <div>
               <label htmlFor="answerNO" className="flex justify-start gap-2">
                 <input
-                onChange={() => setEmploymentDetails(false)}
                   type="radio"
                   className=""
                   name="answer"
                   id="answerNO"
-                  
+                  checked={employmentDetails === false}
+                  onChange={() => handleRadioChange(false)}
                 />
                 <span className="">No</span>
                
