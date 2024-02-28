@@ -9,6 +9,8 @@ import NewPasswordForm from "./pages/ResetPassword/NewPassword";
 import CheckEmail from "./pages/OtpVerification/CheckEmail";
 import EmploymentDetails from "./pages/Application/EmploymentDetails";
 import ApplicationPage from "./pages/ApplicationPage/ApplicationPage";
+import AcademicReferences from "./pages/Application/AcademicReferences";
+import UploadPassport from "./pages/Application/UploadPassport";
 
 
 function App() {
@@ -17,14 +19,22 @@ function App() {
       <Routes>
         {/* <Route path="/signup" element={<TestPage />} /> */}
 
-
         <Route path="/" element={<LandingPage />} />
         <Route path="/register" element={<SignUpPage />} />
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/reset-password" element={<ResetPasswordForm />} />
         <Route path="/new-password/:token" element={<NewPasswordForm />} />
+        <Route
+          path="/dashboard/application/employment-details"
+          element={<EmploymentDetails />}
+        />
+        <Route
+          path="/dashboard/application/academic-references"
+          element={<AcademicReferences />}
+        />
         <Route path="/dashboard/application/employment-details" element={<EmploymentDetails />} />
         <Route path="/dashboard/application" element={<ApplicationPage />} />
+        <Route path="/dashboard/application/upload-passport" element={<UploadPassport />} />
  
         
       </Routes>
