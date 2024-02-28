@@ -11,6 +11,7 @@ import EmploymentDetails from "./pages/Application/EmploymentDetails";
 import ApplicationPage from "./pages/ApplicationPage/ApplicationPage";
 import AcademicReferences from "./pages/Application/AcademicReferences";
 import UploadPassport from "./pages/Application/UploadPassport";
+import PersonalStatement from "./pages/Application/PersonalStatement";
 
 
 function App() {
@@ -32,11 +33,19 @@ function App() {
           path="/dashboard/application/academic-references"
           element={<AcademicReferences />}
         />
-        <Route path="/dashboard/application/employment-details" element={<EmploymentDetails />} />
+        <Route
+          path="/dashboard/application/employment-details"
+          element={<EmploymentDetails />}
+        />
         <Route path="/dashboard/application" element={<ApplicationPage />} />
-        <Route path="/dashboard/application/upload-passport" element={<UploadPassport />} />
- 
-        
+        <Route
+          path="/dashboard/application/upload-passport"
+          element={<UploadPassport />}
+        />
+        <Route
+          path="/dashboard/application/personal-statement"
+          element={<PersonalStatement />}
+        />
       </Routes>
     </>
   );
