@@ -1,25 +1,43 @@
 import ApplicationHeader from "../../components/applicationComponents/ApplicationHeader";
 import MainButton from "../../components/MainButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { updateDetails } from "../../states/applicationDetails/academicReferencesSlice";
-import { academicReferencesState } from "../../states/applicationDetails/academicReferencesSlice";
+// import { academicReferencesState } from "../../states/applicationDetails/academicReferencesSlice";
+import { RootState } from "../../store/store"
 
 const AcademicReferences = () => {
-  const [academicReferences, setAcademicReferences] = useState(false);
+  const academicReferencesRedux = useSelector((state: RootState) => state.academicReferences.academicReferences);
+  console.log(academicReferencesRedux)
+  const [academicReferences, setAcademicReferences] = useState<boolean | null>(null);
   const dispatch = useDispatch();
-  const reference = useSelector((state: academicReferencesState) => state.academicReferences);
-  console.log(reference);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedValue = localStorage.getItem("academicReferences");
+    if (storedValue !== null) {
+      setAcademicReferences(JSON.parse(storedValue));
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+  if (academicReferences !== undefined) { 
     dispatch(updateDetails(academicReferences));
+    navigate("/dashboard/application");
+   }
+  }; 
+
+  const handleRadioChange = (value: boolean) => {
+    setAcademicReferences(value);
+    localStorage.setItem("academicReferences", JSON.stringify(value));
   };
 
   return (
     <>
-      <ApplicationHeader header_text="Return to Application Home" />
+      <ApplicationHeader linkTo="/dashboard/application" header_text="Return to Application Home" />
       <div className=" w-9/12 mx-auto text-center mt-12">
         <div className=" text-black w-3/12 mx-auto font-semibold text-2xl mb-4">
           <h3>Academic References</h3>
@@ -51,11 +69,12 @@ const AcademicReferences = () => {
                   className="flex justify-start gap-2 p"
                 >
                   <input
-                    onClick={() => setAcademicReferences(true)}
                     type="radio"
                     className=""
                     name="answer"
                     id="answerYes"
+                    checked={academicReferences === true}
+                    onChange={() => handleRadioChange(true)}
                   />
                   <span className="">Yes</span>
                 </label>
@@ -64,12 +83,12 @@ const AcademicReferences = () => {
               <div>
                 <label htmlFor="answerNO" className="flex justify-start gap-2">
                   <input
-                    onClick={() => setAcademicReferences(false)}
                     type="radio"
                     className=""
                     name="answer"
                     id="answerNO"
-                    
+                    checked={academicReferences === false}
+                    onChange={() => handleRadioChange(false)}
                   />
                   <span className="">No</span>
                 </label>

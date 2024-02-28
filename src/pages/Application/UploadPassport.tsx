@@ -45,7 +45,7 @@ function UploadPassport() {
 
   return (
     <>
-      <ApplicationHeader header_text="Return to Application Home" />
+      <ApplicationHeader linkTo="/dashboard/application" header_text="Return to Application Home" />
 
       <div
         className="w-9/12 mx-auto text-center mt-12"

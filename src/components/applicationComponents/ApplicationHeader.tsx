@@ -5,9 +5,10 @@ import { Link } from "react-router-dom";
 
 interface Header{
   header_text: string;
+  linkTo: string;
 }
 
-function ApplicationHeader( {header_text}: Header) {
+function ApplicationHeader( {header_text, linkTo}: Header) {
 
   const firstName = localStorage.getItem("name")
 
@@ -31,7 +32,7 @@ function ApplicationHeader( {header_text}: Header) {
       </div>
 
       <div className=" mt-6">
-        <Link className=" flex gap-1" to="/dashboard/application">
+        <Link className=" flex gap-1" to={linkTo}>
           <img src={leftArrow} alt="Arrow to go back to the previous page" />
           <div>{header_text}</div>
         </Link>

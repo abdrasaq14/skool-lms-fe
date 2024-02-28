@@ -8,6 +8,7 @@ import ResetPasswordForm from "./pages/ResetPassword/ResetPassword";
 import NewPasswordForm from "./pages/ResetPassword/NewPassword";
 import CheckEmail from "./pages/OtpVerification/CheckEmail";
 import EmploymentDetails from "./pages/Application/EmploymentDetails";
+import ApplicationPage from "./pages/ApplicationPage/ApplicationPage";
 import AcademicReferences from "./pages/Application/AcademicReferences";
 import UploadPassport from "./pages/Application/UploadPassport";
 
@@ -32,6 +33,7 @@ function App() {
           element={<AcademicReferences />}
         />
         <Route path="/dashboard/application/employment-details" element={<EmploymentDetails />} />
+        <Route path="/dashboard/application" element={<ApplicationPage />} />
         <Route path="/dashboard/application/upload-passport" element={<UploadPassport />} />
  
         

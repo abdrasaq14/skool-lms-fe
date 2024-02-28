@@ -21,8 +21,8 @@ const academicReferencesSlice = createSlice({
       state.academicReferences = action.payload;
     },
     fetchDetails: (state) => {
-      state.academicReferences = localStorage.getItem("employmentDetails")
-        ? JSON.parse(localStorage.getItem("employmentDetails") as string)
+      state.academicReferences = localStorage.getItem("academicReferences")
+        ? JSON.parse(localStorage.getItem("academicReferences") as string)
         : initialState.academicReferences;
     },
     deleteDetails: (state) => {
