@@ -1,0 +1,7 @@
+@media (max-width: 1000px) {
+    .flex.flex-wrap {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  
