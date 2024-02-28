@@ -9,6 +9,8 @@ import NewPasswordForm from "./pages/ResetPassword/NewPassword";
 import CheckEmail from "./pages/OtpVerification/CheckEmail";
 import EmploymentDetails from "./pages/Application/EmploymentDetails";
 import DisabilityDetails from "./pages/Application/DisabilityDetails";
+import UploadPassport from "./pages/Application/UploadPassport";
+
 
 
 function App() {
@@ -25,6 +27,7 @@ function App() {
         <Route path="/new-password/:token" element={<NewPasswordForm />} />
         <Route path="/dashboard/application/employment-details" element={<EmploymentDetails />} />
         <Route path="/dashboard/application/disability-details" element={<DisabilityDetails />} />
+        <Route path="/dashboard/application/upload-passport" element={<UploadPassport />} />
  
         
       </Routes>

@@ -1,20 +1,22 @@
 import MainButton from "../../components/MainButton";
 import { useState } from "react";
-import axiosInstance from "../../utils/axiosInstance";
 import ApplicationHeader from "../../components/applicationComponents/ApplicationHeader";
+import { useDispatch, useSelector } from "react-redux";
+import { updateDetails, disabilityDetailsState } from "../../states/applicationDetails/disabilityDetailsSlice";
 
 
 export default function DisabilityDetails(){
-    const [ answer, setAnswer ] = useState("");
+    const [ disabilityDetails, setDisabilityDetails ] = useState("");
+    const dispatch = useDispatch()
+    const answer = useSelector(( state: disabilityDetailsState) => state.disabilityDetails)
+
+    console.log(answer);
+    
     
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log(answer)
-
-        const res = await axiosInstance.post('/dashboard/application/employment-details', 
-        answer)
         
-        console.log(res.data)
+        dispatch(updateDetails(disabilityDetails))
     }
 
 
@@ -42,16 +44,16 @@ export default function DisabilityDetails(){
     
               <div className="w-9/12 mx-auto">
                 <div className=" text-left mb-3">Please select an option</div>
-    
-            
-        
-  <div className="relative mt-2 rounded-md shadow-sm  w-11/12">
-    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 ">
-    </div>
-    <input type="text" className="block rounded-md py-2.5 pl-7 pr-20" />
-    <div className="absolute inset-y-0 right-0 flex items-center">
-      <select id="currency" name="currency" className="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm">
-        <option>Physical Disabilities</option>
+
+                <div>
+  <div className="relative mt-2 rounded-md shadow-sm py-1.5 w-11/12 mx-auto ">
+    <input type="text" className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+    onChange={() => setDisabilityDetails(disabilityDetails)}
+    />
+    <div className="absolute inset-y-0 right-0 flex items-center bg-black w-full rounded-lg ">
+     
+      <select className="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm w-full">
+      <option>Physical Disabilities</option>
         <option>Sensory Disabilities</option>
         <option>Cognitive/Neurological Disabilities</option>
         <option>Psychiatric/Mental Health Disabilities</option>
@@ -63,8 +65,9 @@ export default function DisabilityDetails(){
         <option>No Disability</option>
       </select>
     </div>
-
+  </div>
 </div>
+    
                </div> 
     
                 <div className="mt-4 w-11/12 mx-auto">
@@ -79,4 +82,3 @@ export default function DisabilityDetails(){
       );
 }
 
-// className="block w-full rounded-md border-0 py-2.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"

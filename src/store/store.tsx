@@ -1,7 +1,8 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import userDetailsReducer from '../states/userDetails/userDetailsSlice';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import employmentDetailsReducer from '../states/applicationDetails/employmentDetailsSlice';
 
 
 
@@ -12,7 +13,10 @@ const persistConfig = {
   };
 
 
-  const persistedReducer = persistReducer(persistConfig, userDetailsReducer);
+  const persistedReducer = persistReducer(persistConfig, combineReducers({
+    userDetails: userDetailsReducer,
+    employmentDetails: employmentDetailsReducer
+  }))
 
 
   export const store = configureStore({
