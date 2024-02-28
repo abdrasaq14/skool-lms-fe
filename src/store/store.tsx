@@ -4,6 +4,8 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import employmentDetailsReducer from "../states/applicationDetails/employmentDetailsSlice";
 import academicReferencesReducer from "../states/applicationDetails/academicReferencesSlice";
+import uploadPassportReducer from "../states/applicationDetails/uploadPasswordSlice"
+
 
 const persistConfig = {
   key: "root",
@@ -16,6 +18,8 @@ const persistedReducer = persistReducer(
     userDetails: userDetailsReducer,
     employmentDetails: employmentDetailsReducer,
     academicReferences: academicReferencesReducer,
+    uploadPassport: uploadPassportReducer,
+    
   })
 );
 

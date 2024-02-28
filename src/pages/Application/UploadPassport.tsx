@@ -1,13 +1,25 @@
-import ApplicationHeader from "../../components/applicationComponents/ApplicationHeader";
-import MainButton from "../../components/MainButton";
-import { useState, useRef, ChangeEvent, DragEvent } from "react";
-import image from "/images/drag-drop.png";
+import React, { useRef, ChangeEvent, DragEvent } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentImage, setUploadedImage } from '../../states/applicationDetails/uploadPasswordSlice';
+import ApplicationHeader from '../../components/applicationComponents/ApplicationHeader';
+import MainButton from '../../components/MainButton';
+
+interface UploadPassportState {
+  uploadPassport: {
+    currentImage: string;
+    uploadedImage: string | null;
+  };
+}
 
 function UploadPassport() {
-  const [currentImage, setCurrentImage] = useState(image);
-  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const dispatch = useDispatch();
+  const currentImage = useSelector((state: UploadPassportState) => state.uploadPassport.currentImage);
+  const uploadedImage = useSelector((state: UploadPassportState) => state.uploadPassport.uploadedImage);
+
+  // Local component state
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+  // Event handlers
   const handleClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -32,16 +44,19 @@ function UploadPassport() {
   const handleFile = (selectedFile: File | undefined) => {
     if (selectedFile) {
       const imageUrl = URL.createObjectURL(selectedFile);
-      setUploadedImage(imageUrl);
-      setCurrentImage(imageUrl);
+      // Dispatch actions to update Redux state
+      dispatch(setUploadedImage(imageUrl));
+      dispatch(setCurrentImage(imageUrl));
     } else {
-      setUploadedImage(null);
+      // Dispatch action to reset Redux state
+      dispatch(setUploadedImage(null));
     }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-}
+    e.preventDefault();
+    // Add your form submission logic or dispatch an action if needed
+  };
 
   return (
     <>
@@ -99,6 +114,4 @@ function UploadPassport() {
 }
 
 export default UploadPassport;
-
-
 
