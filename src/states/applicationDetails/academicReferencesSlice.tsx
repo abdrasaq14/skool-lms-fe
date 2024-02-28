@@ -1,11 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface academicReferencesState {
-  academicReferences: boolean;
+  academicReferences: boolean | null;
 }
 
 const initialState: academicReferencesState = {
-  academicReferences: false,
+  academicReferences: null,
 };
 
 const academicReferencesSlice = createSlice({
