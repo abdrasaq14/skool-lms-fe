@@ -1,25 +1,22 @@
 import React, { useRef, ChangeEvent, DragEvent } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentImage, setUploadedImage } from '../../states/applicationDetails/uploadPasswordSlice';
+import {
+  setCurrentImage,
+  setUploadedImage,
+  updateDetails,
+  fetchDetails,
+  deleteDetails,
+} from '../../states/applicationDetails/uploadPasswordSlice';
 import ApplicationHeader from '../../components/applicationComponents/ApplicationHeader';
 import MainButton from '../../components/MainButton';
-
-interface UploadPassportState {
-  uploadPassport: {
-    currentImage: string;
-    uploadedImage: string | null;
-  };
-}
+import { RootState } from '../../store/store'; 
 
 function UploadPassport() {
   const dispatch = useDispatch();
-  const currentImage = useSelector((state: UploadPassportState) => state.uploadPassport.currentImage);
-  const uploadedImage = useSelector((state: UploadPassportState) => state.uploadPassport.uploadedImage);
-
-  // Local component state
+  const { currentImage, uploadedImage } = useSelector((state: RootState) => state.uploadPassport);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  // Event handlers
+ 
   const handleClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -44,19 +41,29 @@ function UploadPassport() {
   const handleFile = (selectedFile: File | undefined) => {
     if (selectedFile) {
       const imageUrl = URL.createObjectURL(selectedFile);
-      // Dispatch actions to update Redux state
       dispatch(setUploadedImage(imageUrl));
       dispatch(setCurrentImage(imageUrl));
     } else {
-      // Dispatch action to reset Redux state
       dispatch(setUploadedImage(null));
     }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Add your form submission logic or dispatch an action if needed
+    dispatch(updateDetails({ currentImage, uploadedImage }));
   };
+
+  React.useEffect(() => {
+    dispatch(fetchDetails());
+    
+  }, [dispatch]);
+
+
+  React.useEffect(() => {
+    return () => {
+      dispatch(deleteDetails());
+    };
+  }, [dispatch]);
 
   return (
     <>
