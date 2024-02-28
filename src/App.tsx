@@ -12,6 +12,7 @@ import ApplicationPage from "./pages/ApplicationPage/ApplicationPage";
 import AcademicReferences from "./pages/Application/AcademicReferences";
 import UploadPassport from "./pages/Application/UploadPassport";
 import PersonalStatement from "./pages/Application/PersonalStatement";
+import ApplicationView from "./pages/ApplictionView";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/reset-password" element={<ResetPasswordForm />} />
         <Route path="/new-password/:token" element={<NewPasswordForm />} />
+        <Route path="/dashboard/onboarding" element={<ApplicationView />} />
         <Route
           path="/dashboard/application/employment-details"
           element={<EmploymentDetails />}
