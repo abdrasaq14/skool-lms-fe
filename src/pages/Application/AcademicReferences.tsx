@@ -8,7 +8,8 @@ import { academicReferencesState } from "../../states/applicationDetails/academi
 const AcademicReferences = () => {
   const [academicReferences, setAcademicReferences] = useState(false);
   const dispatch = useDispatch();
-  useSelector((state: academicReferencesState) => state.academicReferences);
+  const reference = useSelector((state: academicReferencesState) => state.academicReferences);
+  console.log(reference);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -68,7 +69,7 @@ const AcademicReferences = () => {
                     className=""
                     name="answer"
                     id="answerNO"
-                    value="No"
+                    
                   />
                   <span className="">No</span>
                 </label>
