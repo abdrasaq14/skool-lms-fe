@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
-import FormStepper from "./components/Steppers/Stepper";
-import { Stepone } from "./components/OnboardingSteps/Stepone";
-import { Steptwo } from "./components/OnboardingSteps/Steptwo";
+import FormStepper from "../components/Steppers/Stepper";
+import { Stepone } from "../components/OnboardingSteps/Stepone";
+import { Steptwo } from "../components/OnboardingSteps/Steptwo";
 
 
 
