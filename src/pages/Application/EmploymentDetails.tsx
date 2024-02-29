@@ -98,7 +98,6 @@ function EmploymentDetails() {
             <MainButton button_text="Save and Continue" />
             </div>
 
-            
           </form>
         </div>
       </div>

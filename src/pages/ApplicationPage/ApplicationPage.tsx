@@ -9,6 +9,7 @@ function ApplicationPage() {
 
   const academicReferencesFilled = useSelector((state: RootState) => state.academicReferences.academicReferences);
   const employmentDetailsFilled = useSelector((state: RootState) => state.employmentDetails.employmentDetails);
+  const disabilityDetailsFilled = useSelector((state: RootState) => state.disabilityDetails.disabilityDetails);
   const personalStatementFilled = useSelector((state: RootState) => state.personalStatement.personalStatement);
 
 
@@ -59,6 +60,8 @@ function ApplicationPage() {
           <ApplicationContainer header_text="Academic references" paragraph_text="We require feedback regarding your suitability from prior instructors." link_to="/dashboard/application/academic-references" isFilled={academicReferencesFilled}/>
 
           <ApplicationContainer header_text="Employment details" paragraph_text="Tell us about your past employment experience." link_to="/dashboard/application/employment-details" isFilled={employmentDetailsFilled}/>
+
+          <ApplicationContainer header_text="Disability" paragraph_text="Tell us about any disabilities you may have, if that makes you comfortable" link_to="/dashboard/application/disability-details" isFilled={disabilityDetailsFilled} />
         </div>
 
         <div className="flex flex-wrap justify-center space-x-5 mt-5">
