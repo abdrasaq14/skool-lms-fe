@@ -37,15 +37,12 @@ function App() {
           path="/dashboard/application/academic-references"
           element={<AcademicReferences />}
         />
-<<<<<<< HEAD
         <Route path="/dashboard/application/employment-details" element={<EmploymentDetails />} />
         <Route path="/dashboard/application/disability-details" element={<DisabilityDetails />} />
-=======
         <Route
           path="/dashboard/application/employment-details"
           element={<EmploymentDetails />}
         />
->>>>>>> 0c92e84b25ddb717a0b37c30e2c43e2b5a72df30
         <Route path="/dashboard/application" element={<ApplicationPage />} />
         <Route
           path="/dashboard/application/upload-passport"
