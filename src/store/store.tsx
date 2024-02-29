@@ -4,6 +4,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import employmentDetailsReducer from "../states/applicationDetails/employmentDetailsSlice";
 import academicReferencesReducer from "../states/applicationDetails/academicReferencesSlice";
+import fundingInformationReducer from "../states/applicationDetails/fundingInformationSlice";
 <<<<<<< HEAD
 import disabilityDetailsReducer from "../states/applicationDetails/disabilityDetailsSlice";
 =======
@@ -22,7 +23,8 @@ const persistedReducer = persistReducer(
     personalStatement: personalStatementReducer,
     employmentDetails: employmentDetailsReducer,
     academicReferences: academicReferencesReducer,
-    disabilityDetails: disabilityDetailsReducer
+    disabilityDetails: disabilityDetailsReducer,
+    fundingInformation: fundingInformationReducer,
 
   })
 );
