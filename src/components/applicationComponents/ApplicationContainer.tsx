@@ -4,7 +4,7 @@ interface Props {
   header_text: string;
   paragraph_text: string;
   link_to: string;
-  isFilled: boolean | null;
+  isFilled: boolean | null | string;
 }
 
 function ApplicationContainer( {header_text, paragraph_text, link_to, isFilled}: Props ) {
