@@ -22,7 +22,7 @@ function ApplicationContainer( {header_text, paragraph_text, link_to, isFilled}:
 
       <div className="flex-shrink-0 ml-auto">
         <Link to={link_to}>
-          <button className={`py-2 px-3 rounded-md ${isFilled === null ? "bg-green-600" : "bg-gray-500"} text-white text-xs`}> {isFilled === undefined ? "Start Now" : "Edit Details"} </button>
+          <button className={`py-2 px-3 rounded-md ${isFilled === null ? "bg-green-600" : "bg-gray-500"} text-white text-xs font-bold`}> {isFilled === null ? "Start Now" : "Edit Details"} </button>
         </Link>
       </div>
       
