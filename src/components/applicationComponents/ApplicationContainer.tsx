@@ -4,12 +4,12 @@ interface Props {
   header_text: string;
   paragraph_text: string;
   link_to: string;
-  isFilled: string| boolean | null;
+  isFilled: string | boolean | null;
 }
 
 function ApplicationContainer( {header_text, paragraph_text, link_to, isFilled}: Props ) {
   return (
-    <div className={`h-32 w-4/12 flex px-5 rounded-xl border border-green-500 ${isFilled === null ? "bg-white" : "bg-green-600"} shadow-card justify-between items-center`}>
+    <div className={`application-container h-32 w-4/12 flex px-5 rounded-xl border border-green-500 ${isFilled === null ? "bg-white" : "bg-green-600"} shadow-card justify-between items-center`}>
       <div className="w-56 flex-shrink-0">
         <div className={`font-inter font-semibold text-lg mb-2 ${isFilled === null ? "text-black" : "text-white" }`}>
           <h3>{header_text}</h3>
