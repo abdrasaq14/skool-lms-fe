@@ -13,6 +13,8 @@ import ApplicationPage from "./pages/ApplicationPage/ApplicationPage";
 import AcademicReferences from "./pages/Application/AcademicReferences";
 import UploadPassport from "./pages/Application/UploadPassport";
 import ApplicationView from "./pages/ApplictionView";
+import EnglishQualification from "./pages/Application/EnglishLang";
+
 
 
 function App() {
@@ -43,6 +45,7 @@ function App() {
         />
         <Route path="/dashboard/application" element={<ApplicationPage />} />
         <Route path="/dashboard/application/upload-passport" element={<UploadPassport />} />
+        <Route path="/dashboard/application/english-qualification" element={<EnglishQualification />} />
  
         
       </Routes>

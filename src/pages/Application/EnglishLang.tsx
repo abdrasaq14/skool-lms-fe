@@ -7,33 +7,35 @@ import { updateDetails } from "../../states/applicationDetails/employmentDetails
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../store/store";
 
+
+
 function EnglishQualification() {
 
-  const employmentDetailsRedux = useSelector((state: RootState) => state.academicReferences.academicReferences);
-  console.log(employmentDetailsRedux)
-  const [employmentDetails, setEmploymentDetails] = useState<boolean | null>(null);
+  const englishQualificationRedux = useSelector((state: RootState) => state.academicReferences.academicReferences);
+  console.log(englishQualificationRedux)
+  const [englishQualification, setEnglishQualification] = useState<boolean | null>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedValue = localStorage.getItem("employmentDetails");
+    const storedValue = localStorage.getItem("englishQualification");
     if (storedValue !== null) {
-      setEmploymentDetails(JSON.parse(storedValue));
+      setEnglishQualification(JSON.parse(storedValue));
     }
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-  if (employmentDetails !== null) { 
-    dispatch(updateDetails(employmentDetails));
+  if (englishQualification !== null) { 
+    dispatch(updateDetails(englishQualification));
     navigate("/dashboard/application");
    }
   }; 
 
   const handleRadioChange = (value: boolean) => {
-    setEmploymentDetails(value);
-    localStorage.setItem("employmentDetails", JSON.stringify(value));
+    setEnglishQualification(value);
+    localStorage.setItem("englishQualification", JSON.stringify(value));
   };
 
   return (
@@ -67,7 +69,7 @@ uploading your documentation as soon as possible will be ideal.
                   className=""
                   name="answer"
                   id="answerYes"
-                  checked={employmentDetails === true}
+                  checked={englishQualification === true}
                   onChange={() => handleRadioChange(true)}
                 />
                 <span className="">Yes</span>
@@ -81,7 +83,7 @@ uploading your documentation as soon as possible will be ideal.
                   className=""
                   name="answer"
                   id="answerNO"
-                  checked={employmentDetails === false}
+                  checked={englishQualification === false}
                   onChange={() => handleRadioChange(false)}
                 />
                 <span className="">No</span>
