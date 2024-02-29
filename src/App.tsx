@@ -12,8 +12,8 @@ import DisabilityDetails from "./pages/Application/DisabilityDetails";
 import ApplicationPage from "./pages/ApplicationPage/ApplicationPage";
 import AcademicReferences from "./pages/Application/AcademicReferences";
 import UploadPassport from "./pages/Application/UploadPassport";
-import PersonalStatement from "./pages/Application/PersonalStatement";
 import ApplicationView from "./pages/ApplictionView";
+import EnglishQualification from "./pages/Application/EnglishLang";
 
 
 
@@ -44,15 +44,14 @@ function App() {
           element={<EmploymentDetails />}
         />
         <Route path="/dashboard/application" element={<ApplicationPage />} />
-        <Route
-          path="/dashboard/application/upload-passport"
-          element={<UploadPassport />}
-        />
-        <Route
-          path="/dashboard/application/personal-statement"
-          element={<PersonalStatement />}
-        />
+        <Route path="/dashboard/application/upload-passport" element={<UploadPassport />} />
+        <Route path="/dashboard/application/english-qualification" element={<EnglishQualification />} />
+ 
+        
       </Routes>
+
+
+
     </>
   );
 }

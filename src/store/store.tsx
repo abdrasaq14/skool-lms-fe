@@ -7,6 +7,9 @@ import academicReferencesReducer from "../states/applicationDetails/academicRefe
 import fundingInformationReducer from "../states/applicationDetails/fundingInformationSlice";
 import disabilityDetailsReducer from "../states/applicationDetails/disabilityDetailsSlice";
 import personalStatementReducer from "../states/applicationDetails/personalStatementSlice";
+import uploadPassportReducer from "../states/applicationDetails/uploadPasswordSlice"
+import englishQualificationReducer from "../states/applicationDetails/englishQualificationSlice";
+
 
 const persistConfig = {
   key: "root",
@@ -21,8 +24,7 @@ const persistedReducer = persistReducer(
     employmentDetails: employmentDetailsReducer,
     academicReferences: academicReferencesReducer,
     disabilityDetails: disabilityDetailsReducer,
-    fundingInformation: fundingInformationReducer,
-
+    englishQualificationReducer: englishQualificationReducer,
   })
 );
 
