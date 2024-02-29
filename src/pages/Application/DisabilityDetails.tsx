@@ -1,84 +1,108 @@
 import MainButton from "../../components/MainButton";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ApplicationHeader from "../../components/applicationComponents/ApplicationHeader";
 import { useDispatch, useSelector } from "react-redux";
-import { updateDetails, disabilityDetailsState } from "../../states/applicationDetails/disabilityDetailsSlice";
+import { updateDetails } from "../../states/applicationDetails/disabilityDetailsSlice";
+import { useNavigate } from "react-router-dom";
+import { RootState } from "../../store/store";
 
+export default function DisabilityDetails() {
+  const disabilityDetailsRedux = useSelector(
+    (state: RootState) => state.disabilityDetails.disabilityDetails
+  );
+  console.log(disabilityDetailsRedux);
+  const [disabilityDetails, setDisabilityDetails] = useState<string | null>(
+    null
+  );
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-export default function DisabilityDetails(){
-    const [ disabilityDetails, setDisabilityDetails ] = useState("");
-    const dispatch = useDispatch()
-    const answer = useSelector(( state: disabilityDetailsState) => state.disabilityDetails)
-
-    console.log(answer);
-    
-    
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        
-        dispatch(updateDetails(disabilityDetails))
+  useEffect(() => {
+    const storedValue = localStorage.getItem("disabilityDetails");
+    if (storedValue !== "" && storedValue !== null) {
+      setDisabilityDetails(JSON.parse(storedValue));
     }
+  }, []);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (disabilityDetails !== "" && disabilityDetails !== null) {
+      dispatch(updateDetails(disabilityDetails));
+      navigate("/dashboard/application");
+    }
+  };
 
 
-    return (
-        <>
-         <ApplicationHeader header_text="Return to Application Home"/>
-    
-          <div className=" w-8/12 mx-auto text-center mt-12">
-            
-            <div className=" text-black w-3/12 mx-auto font-semibold text-2xl mb-4">
-              <h3>Disability</h3>
-            </div>
-            <div>
-              <p>
-               Learning may be impacted by certain disabilities, so we want to help you from application to study. Learn more about our definition of a disability and the ways that our team can assist you. Nothing you are uncomfortable sharing has to be disclosed, and doing so won't have an impact on your application. If you would like, you can provide us with this information in the future.
-              </p>
-              <p>
-                There are some courses that have competency requirements that we are unable to modify.Please use the button on the left to get in touch with us if you have any concerns about these might affect you.
-              </p>
-              <p>We can talk to you about reasonable adjustments, competency standards, and support arrangements as soon as you disclose your disability</p>
-            </div>
-    
-            <div>
-              <form onSubmit={handleSubmit} className=" w-5/12 mx-auto mt-8 flex flex-col gap-3">
-    
-              <div className="w-9/12 mx-auto">
-                <div className=" text-left mb-3">Please select an option</div>
+  const handleRadioChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedOption = e.target.value;
+    setDisabilityDetails(selectedOption);
+    localStorage.setItem("disabilityDetails", JSON.stringify(selectedOption));
+  };
 
-                <div>
-  <div className="relative mt-2 rounded-md shadow-sm py-1.5 w-11/12 mx-auto ">
-    <input type="text" className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-    onChange={() => setDisabilityDetails(disabilityDetails)}
-    />
-    <div className="absolute inset-y-0 right-0 flex items-center bg-black w-full rounded-lg ">
-     
-      <select className="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm w-full">
-      <option>Physical Disabilities</option>
-        <option>Sensory Disabilities</option>
-        <option>Cognitive/Neurological Disabilities</option>
-        <option>Psychiatric/Mental Health Disabilities</option>
-        <option>Chronic Health Disabilities</option>
-        <option>Invisible Disabilities</option>
-        <option>Temporary Disabilities</option>
-        <option>Developmental Disabilities</option>
-        <option>Others/Prefer Not to say</option>
-        <option>No Disability</option>
-      </select>
-    </div>
-  </div>
-</div>
-    
-               </div> 
-    
-                <div className="mt-4 w-11/12 mx-auto">
-                <MainButton button_text="Save and Continue" />
-                </div>
-    
-                
-              </form>
+  return (
+    <>
+      <ApplicationHeader
+        linkTo="/dashboard/application"
+        header_text="Return to Application Home"
+      />
+
+      <div className=" w-8/12 mx-auto text-center mt-12">
+        <div className=" text-black w-3/12 mx-auto font-semibold text-2xl mb-4">
+          <h3>Disability</h3>
+        </div>
+        <div>
+          <p>
+            Learning may be impacted by certain disabilities, so we want to help
+            you from application to study. Learn more about our definition of a
+            disability and the ways that our team can assist you. Nothing you
+            are uncomfortable sharing has to be disclosed, and doing so won't
+            have an impact on your application. If you would like, you can
+            provide us with this information in the future.
+          </p>
+          <p>
+            There are some courses that have competency requirements that we are
+            unable to modify.Please use the button on the left to get in touch
+            with us if you have any concerns about these might affect you.
+          </p>
+          <p>
+            We can talk to you about reasonable adjustments, competency
+            standards, and support arrangements as soon as you disclose your
+            disability
+          </p>
+        </div>
+
+        <div>
+          <form
+            onSubmit={handleSubmit}
+            className=" w-5/12 mx-auto mt-8 flex flex-col gap-3"
+          >
+            <div className="w-9/12 mx-auto">
+              <div className=" text-left mb-3">Please select an option</div>
+
             </div>
-          </div>
-        </>
-      );
+
+            <div className=" w-11/12 mx-auto">
+            <select
+                      className="h-full rounded-md border border-gray-400 bg-transparent py-3 pl-2 pr-20 text-gray-600 sm:text-md w-full mb-4 placeholder:text-gray-950"
+                      onChange={handleRadioChange}
+                    >
+                      <option value="">Select an option</option>
+                      <option value="Physical Disabilities">Physical Disabilities</option>
+                      <option value="Sensory Disabilities">Sensory Disabilities</option>
+                      <option value="Cognitive/Neurological Disabilities">Cognitive/Neurological Disabilities</option>
+                      <option value="Psychiatric/Mental Health Disabilities">Psychiatric/Mental Health Disabilities</option>
+                      <option value="Chronic Health Disabilities">Chronic Health Disabilities</option>
+                      <option value="Invisible Disabilities">Invisible Disabilities</option>
+                      <option value="Temporary Disabilities">Temporary Disabilities</option>
+                      <option value="Developmental Disabilities">Developmental Disabilities</option>
+                      <option value="Others/Prefer Not to say">Others/Prefer Not to say</option>
+                      <option value="No Disability">No Disability</option>
+                    </select>
+              <MainButton button_text="Save and Continue" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </>
+  );
 }
-

@@ -15,10 +15,7 @@ const disabilityDetailsSlice = createSlice({
     initialState,
     reducers: {
         updateDetails: (state, action: PayloadAction<Partial<disabilityDetailsState['disabilityDetails']>>) => {
-            // state.userDetails = {
-            //     ...state.userDetails,
-            //     ...action.payload
-            // }
+      
             state.disabilityDetails = action.payload
         },
         fetchDetails: (state) => {
