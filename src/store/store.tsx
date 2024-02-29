@@ -4,6 +4,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import employmentDetailsReducer from "../states/applicationDetails/employmentDetailsSlice";
 import academicReferencesReducer from "../states/applicationDetails/academicReferencesSlice";
+import personalStatementReducer from "../states/applicationDetails/personalStatementSlice";
 
 const persistConfig = {
   key: "root",
@@ -14,6 +15,7 @@ const persistedReducer = persistReducer(
   persistConfig,
   combineReducers({
     userDetails: userDetailsReducer,
+    personalStatement: personalStatementReducer,
     employmentDetails: employmentDetailsReducer,
     academicReferences: academicReferencesReducer,
   })

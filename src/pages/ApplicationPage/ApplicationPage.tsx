@@ -9,6 +9,7 @@ function ApplicationPage() {
 
   const academicReferencesFilled = useSelector((state: RootState) => state.academicReferences.academicReferences);
   const employmentDetailsFilled = useSelector((state: RootState) => state.employmentDetails.employmentDetails);
+  const personalStatementFilled = useSelector((state: RootState) => state.personalStatement.personalStatement);
 
 
   return (
@@ -47,12 +48,14 @@ function ApplicationPage() {
       <div className="flex-wrap">
 
         <div className="flex flex-wrap justify-center space-x-5 mt-5">
-          {/* <ApplicationContainer header_text="Personal Statement" paragraph_text="Explain your application for this course." link_to="/dashboard/application/personal-statement" isFilled={}/>
+          <ApplicationContainer header_text="Personal Statement" paragraph_text="Explain your application for this course." link_to="/dashboard/application/personal-statement" isFilled={personalStatementFilled}/>
 
-          <ApplicationContainer header_text="Add qualifications" paragraph_text="Please list any credentials you have not yet disclosed to us." link_to="/dashboard/application/add-qualifications" isFilled={}/> */}
+          {/* <ApplicationContainer header_text="Add qualifications" paragraph_text="Please list any credentials you have not yet disclosed to us." link_to="/dashboard/application/add-qualifications" isFilled={false}/> */}
         </div>
 
         <div className="flex flex-wrap justify-center space-x-5 mt-5">
+          {/* <ApplicationContainer header_text="Personal Statement" paragraph_text="Explain your application for this course." link_to="/dashboard/application/personal-statement" isFilled={true}/> */}
+
           <ApplicationContainer header_text="Academic references" paragraph_text="We require feedback regarding your suitability from prior instructors." link_to="/dashboard/application/academic-references" isFilled={academicReferencesFilled}/>
 
           <ApplicationContainer header_text="Employment details" paragraph_text="Tell us about your past employment experience." link_to="/dashboard/application/employment-details" isFilled={employmentDetailsFilled}/>
