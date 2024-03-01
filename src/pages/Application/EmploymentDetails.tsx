@@ -1,16 +1,14 @@
 import MainButton from "../../components/MainButton";
 import { useEffect, useState } from "react";
 import ApplicationHeader from "../../components/applicationComponents/ApplicationHeader";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateDetails } from "../../states/applicationDetails/employmentDetailsSlice";
 // import { employmentDetailsState } from "../../states/applicationDetails/employmentDetailsSlice";
 import { useNavigate } from "react-router-dom";
-import { RootState } from "../../store/store";
+
 
 function EmploymentDetails() {
 
-  const employmentDetailsRedux = useSelector((state: RootState) => state.academicReferences.academicReferences);
-  console.log(employmentDetailsRedux)
   const [employmentDetails, setEmploymentDetails] = useState<boolean | null>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -20,7 +18,7 @@ function EmploymentDetails() {
     if (storedValue !== null) {
       setEmploymentDetails(JSON.parse(storedValue));
     }
-  }, []);
+  }, [employmentDetails]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

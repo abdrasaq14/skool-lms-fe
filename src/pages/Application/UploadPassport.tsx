@@ -6,7 +6,7 @@ import {
   updateDetails,
   fetchDetails,
   deleteDetails,
-} from '../../states/applicationDetails/uploadPasswordSlice';
+} from '../../states/applicationDetails/uploadPassportSlice';
 import ApplicationHeader from '../../components/applicationComponents/ApplicationHeader';
 import MainButton from '../../components/MainButton';
 import { RootState } from '../../store/store'; 

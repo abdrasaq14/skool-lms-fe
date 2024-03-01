@@ -1,28 +1,30 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-export interface fundingInformationState {
-   fundingInformation: string;
+
+interface fundingInformationState {
+    fundingInformation: string;
 }
 
 const initialState: fundingInformationState = {
     fundingInformation: ""
 };
-
+  
 const fundingInformationSlice = createSlice({
     name: 'fundingInformation',
     initialState,
     reducers: {
-        updateFundingInformation: (state, action: PayloadAction<Partial<fundingInformationState>>) => {
-            state.fundingInformation = action.payload.fundingInformation || initialState.fundingInformation;
+        updateFundingInformation: (state, action: PayloadAction<string>) => {
+            state.fundingInformation = action.payload;
         },
         fetchFundingInformation: (state) => {
-            state.fundingInformation = localStorage.getItem('fundingInformation') || initialState.fundingInformation;
+            state.fundingInformation = localStorage.getItem('fundingInformation') ?? "";
         },
         deleteFundingInformation: (state) => {
             state.fundingInformation = initialState.fundingInformation;
         }
     }
 });
+  
 
 export const { updateFundingInformation, fetchFundingInformation, deleteFundingInformation } = fundingInformationSlice.actions;
 

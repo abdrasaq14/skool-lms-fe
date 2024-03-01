@@ -1,18 +1,15 @@
 import MainButton from "../../components/MainButton";
 import { useEffect, useState } from "react";
 import ApplicationHeader from "../../components/applicationComponents/ApplicationHeader";
-import { useDispatch, useSelector } from "react-redux";
-import { updateDetails } from "../../states/applicationDetails/employmentDetailsSlice";
+import { useDispatch } from "react-redux";
+import { updateDetails } from "../../states/applicationDetails/englishQualificationSlice";
 // import { employmentDetailsState } from "../../states/applicationDetails/employmentDetailsSlice";
 import { useNavigate } from "react-router-dom";
-import { RootState } from "../../store/store";
 
 
 
 function EnglishQualification() {
 
-  const englishQualificationRedux = useSelector((state: RootState) => state.academicReferences.academicReferences);
-  console.log(englishQualificationRedux)
   const [englishQualification, setEnglishQualification] = useState<boolean | null>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
