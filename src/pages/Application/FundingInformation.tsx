@@ -1,43 +1,44 @@
 import MainButton from "../../components/MainButton";
 import { useState, useEffect } from "react";
 import ApplicationHeader from "../../components/applicationComponents/ApplicationHeader";
-import { useDispatch, useSelector } from "react-redux";
-import { updateDetails } from "../../states/applicationDetails/disabilityDetailsSlice";
+import { useDispatch } from "react-redux";
+import { updateFundingInformation } from "../../states/applicationDetails/fundingInformationSlice";
+
 import { useNavigate } from "react-router-dom";
-import { RootState } from "../../store/store";
 
 export default function FundingInformation() {
-  const fundingInformationRedux = useSelector(
-    (state: RootState) => state.fundingInformation.fundingInformation
-  );
-  console.log(fundingInformationRedux);
-  const [fundingInformation, setFundingInformation] = useState<string>(
-    ""
-  );
+  
+
+  const [fundingInformation, setFundingInformation] = useState<string>("");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedValue = localStorage.getItem("fundingInformation");
     if (storedValue !== null) {
-      setFundingInformation(JSON.parse(storedValue));
+      setFundingInformation(storedValue);
     }
   }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (fundingInformation.trim() !== "") {
-      dispatch(updateDetails(fundingInformation));
+    console.log(fundingInformation);
+
+    if (fundingInformation) {
+      dispatch(updateFundingInformation(fundingInformation));
       navigate("/dashboard/application");
     }
   };
 
   const handleRadioChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
+    console.log(value)
     setFundingInformation(value);
-    localStorage.setItem("fundingInformation", JSON.stringify(value));
+    localStorage.setItem("fundingInformation", value); // No need to stringify the value
   };
+  
 
   return (
     <>
@@ -78,7 +79,9 @@ export default function FundingInformation() {
                 <option value="Personal Savings">Personal Savings</option>
                 <option value="Family Support">Family Support</option>
                 <option value="Scholarships">Scholarships</option>
-                <option value="Employer Sponsorship">Employer Sponsorship</option>
+                <option value="Employer Sponsorship">
+                  Employer Sponsorship
+                </option>
                 <option value="Government Funding">Government Funding</option>
                 <option value="Loans">Loans</option>
                 <option value="Grants">Grants</option>

@@ -11,9 +11,7 @@ export default function DisabilityDetails() {
     (state: RootState) => state.disabilityDetails.disabilityDetails
   );
   console.log(disabilityDetailsRedux);
-  const [disabilityDetails, setDisabilityDetails] = useState<string | null>(
-    null
-  );
+  const [disabilityDetails, setDisabilityDetails] = useState<string>("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -85,6 +83,7 @@ export default function DisabilityDetails() {
             <select
                       className="h-full rounded-md border border-gray-400 bg-transparent py-3 pl-2 pr-20 text-gray-600 sm:text-md w-full mb-4 placeholder:text-gray-950"
                       onChange={handleRadioChange}
+                      value={disabilityDetails}
                     >
                       <option value="">Select an option</option>
                       <option value="Physical Disabilities">Physical Disabilities</option>

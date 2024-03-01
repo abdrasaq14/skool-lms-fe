@@ -1,11 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface personalStatementState {
-  personalStatement: string | null;
+  personalStatement: string;
 }
 
 const initialState: personalStatementState = {
-  personalStatement: null,
+  personalStatement: "",
 };
 
 const personalStatementSlice = createSlice({

@@ -38,7 +38,7 @@ function LandingPage() {
 
             if(res.data.message){
               
-                navigate(`/dashboard/onboarding`);
+                navigate(`/dashboard/application`);
             }
             else if(res.data.error){
                 setError(res.data.error)

@@ -7,8 +7,9 @@ import academicReferencesReducer from "../states/applicationDetails/academicRefe
 import fundingInformationReducer from "../states/applicationDetails/fundingInformationSlice";
 import disabilityDetailsReducer from "../states/applicationDetails/disabilityDetailsSlice";
 import personalStatementReducer from "../states/applicationDetails/personalStatementSlice";
-import uploadPassportReducer from "../states/applicationDetails/uploadPasswordSlice"
+import uploadPassportReducer from "../states/applicationDetails/uploadPassportSlice"
 import englishQualificationReducer from "../states/applicationDetails/englishQualificationSlice";
+import qualificationsReducer from "../states/applicationDetails/qualificationsSLice"
 
 
 const persistConfig = {
@@ -24,7 +25,10 @@ const persistedReducer = persistReducer(
     employmentDetails: employmentDetailsReducer,
     academicReferences: academicReferencesReducer,
     disabilityDetails: disabilityDetailsReducer,
-    englishQualificationReducer: englishQualificationReducer,
+    englishQualification: englishQualificationReducer,
+    fundingInformation: fundingInformationReducer,
+    uploadPassport: uploadPassportReducer,
+    qualifications: qualificationsReducer
   })
 );
 
