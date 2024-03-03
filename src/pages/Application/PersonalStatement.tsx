@@ -48,12 +48,6 @@ function PersonalStatement() {
     setPersonalStatement(value);
   };
 
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> 133c2e244906331809a672c09bc6b540cc03a304
   const modules = {
     toolbar: [
       ["bold", "italic", "underline", "strike", "link"],
