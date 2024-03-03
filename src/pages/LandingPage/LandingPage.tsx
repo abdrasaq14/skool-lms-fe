@@ -15,46 +15,12 @@ function LandingPage() {
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
 
-    const handleLogin = async (e: FormEvent) => {
-        e.preventDefault();
-
-        if (!email || !password) {
-            setError("All fields are required, try again");
-            setTimeout(() => {
-              setError("");
-            }, 3000);
-            return;
-          }
-
-          try {
-            console.log(email, password)
-
-            const res = await axiosInstance.post("/users/login", {
-                email: email,
-                password: password
-
-            }
-            )
-            console.log(res)
-
-            if(res.data.message){
-              
-                navigate(`/dashboard/application`);
-            }
-            else if(res.data.error){
-                setError(res.data.error)
-                setTimeout(() => {
-                  setError("");
-                }, 3000);
-                return
-            }
-            
-          } catch (error) {
-            setError(`${error}`);
-            console.log(error)
-            
-          }
-        
+    if (!email || !password) {
+      setError("All fields are required, try again");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+      return;
     }
 
     try {
