@@ -12,8 +12,11 @@ import DisabilityDetails from "./pages/Application/DisabilityDetails";
 import ApplicationPage from "./pages/ApplicationPage/ApplicationPage";
 import AcademicReferences from "./pages/Application/AcademicReferences";
 import UploadPassport from "./pages/Application/UploadPassport";
-import PersonalStatement from "./pages/Application/PersonalStatement";
 import ApplicationView from "./pages/ApplictionView";
+import EnglishQualification from "./pages/Application/EnglishLang";
+import Qualification from "./pages/Application/Qualifications";
+import FundingInformation from "./pages/Application/FundingInformation";
+import PersonalStatement from "./pages/Application/PersonalStatement";
 
 
 
@@ -29,10 +32,17 @@ function App() {
         <Route path="/reset-password" element={<ResetPasswordForm />} />
         <Route path="/new-password/:token" element={<NewPasswordForm />} />
         <Route path="/dashboard/onboarding" element={<ApplicationView />} />
+
+
+        <Route path="/dashboard/application" element={<ApplicationPage />} />
+
+        <Route path="/dashboard/application/personal-statement" element={<PersonalStatement />} />
+
         <Route
           path="/dashboard/application/employment-details"
           element={<EmploymentDetails />}
         />
+        
         <Route
           path="/dashboard/application/academic-references"
           element={<AcademicReferences />}
@@ -48,7 +58,17 @@ function App() {
           path="/dashboard/application/personal-statement"
           element={<PersonalStatement />}
         />
+        <Route path="/dashboard/application/disability-details" element={<DisabilityDetails />} />
+        
+        <Route path="/dashboard/application/upload-passport" element={<UploadPassport />} />
+        <Route path="/dashboard/application/english-qualification" element={<EnglishQualification />} />
+        <Route path="/dashboard/application/qualifications" element={<Qualification />} />
+        <Route path="/dashboard/application/funding-information" element={<FundingInformation />} />
+        
       </Routes>
+
+
+
     </>
   );
 }

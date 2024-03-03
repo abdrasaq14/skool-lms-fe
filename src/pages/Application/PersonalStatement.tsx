@@ -17,17 +17,12 @@ function PersonalStatement() {
   );
   console.log(personalStatementRedux);
 
-  const [personalStatement, setPersonalStatement] = useState<string | null>(
-    null
-  );
+  const [personalStatement, setPersonalStatement] = useState<string>("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedValue = localStorage.getItem    
-    ("personalStatement");
-    console.log(storedValue);
-    
+    const storedValue = localStorage.getItem("personalStatement");
     if (storedValue !== null) {
       setPersonalStatement(storedValue);
     }
@@ -37,7 +32,9 @@ function PersonalStatement() {
     e.preventDefault();
 
     if (personalStatement !== null) {
-      dispatch(updatePersonalStatement(personalStatement));
+      const strippedValue = stripHtmlTags(personalStatement);
+      dispatch(updatePersonalStatement(strippedValue));
+      localStorage.setItem("personalStatement", strippedValue);
       navigate("/dashboard/application");
     }
   };
@@ -48,14 +45,15 @@ function PersonalStatement() {
   };
 
   const handleValueChange = (value: string) => {
-    const strippedValue = stripHtmlTags(value);
-    setPersonalStatement(strippedValue);
-    localStorage.setItem("personalStatement", strippedValue);
+    setPersonalStatement(value);
   };
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 133c2e244906331809a672c09bc6b540cc03a304
   const modules = {
     toolbar: [
       ["bold", "italic", "underline", "strike", "link"],
@@ -111,6 +109,7 @@ function PersonalStatement() {
                 formats={formats}
                 placeholder="Type your message"
                 onChange={handleValueChange}
+                value={personalStatement}
               />
             </div>
 

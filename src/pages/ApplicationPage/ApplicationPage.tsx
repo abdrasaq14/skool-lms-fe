@@ -8,9 +8,15 @@ import { RootState } from "../../store/store"
 function ApplicationPage() {
 
   const academicReferencesFilled = useSelector((state: RootState) => state.academicReferences.academicReferences);
+  const qualificationsFilled = useSelector((state: RootState) => state.qualifications.qualificationDetails);
   const employmentDetailsFilled = useSelector((state: RootState) => state.employmentDetails.employmentDetails);
   const disabilityDetailsFilled = useSelector((state: RootState) => state.disabilityDetails.disabilityDetails);
   const personalStatementFilled = useSelector((state: RootState) => state.personalStatement.personalStatement);
+  const fundingInformationFilled = useSelector((state: RootState) => state.fundingInformation.fundingInformation);
+  const englishQualificationFilled = useSelector((state: RootState) => state.englishQualification.englishQualification);
+  const uploadPassportFilled = useSelector((state: RootState) => state.uploadPassport.currentImage);
+
+  console.log(fundingInformationFilled)
 
 
   return (
@@ -51,29 +57,30 @@ function ApplicationPage() {
         <div className="flex flex-wrap justify-center space-x-5 mt-5">
           <ApplicationContainer header_text="Personal Statement" paragraph_text="Explain your application for this course." link_to="/dashboard/application/personal-statement" isFilled={personalStatementFilled}/>
 
-          {/* <ApplicationContainer header_text="Add qualifications" paragraph_text="Please list any credentials you have not yet disclosed to us." link_to="/dashboard/application/add-qualifications" isFilled={false}/> */}
+          <ApplicationContainer header_text="Add qualifications" paragraph_text="Please list any credentials you have not yet disclosed to us." link_to="/dashboard/application/qualifications" isFilled={qualificationsFilled}/>
         </div>
 
         <div className="flex flex-wrap justify-center space-x-5 mt-5">
-          {/* <ApplicationContainer header_text="Personal Statement" paragraph_text="Explain your application for this course." link_to="/dashboard/application/personal-statement" isFilled={true}/> */}
 
           <ApplicationContainer header_text="Academic references" paragraph_text="We require feedback regarding your suitability from prior instructors." link_to="/dashboard/application/academic-references" isFilled={academicReferencesFilled}/>
 
           <ApplicationContainer header_text="Employment details" paragraph_text="Tell us about your past employment experience." link_to="/dashboard/application/employment-details" isFilled={employmentDetailsFilled}/>
 
+          
+        </div>
+
+        <div className="flex flex-wrap justify-center space-x-5 mt-5">
+          <ApplicationContainer header_text="Funding information" paragraph_text="Describe your payment plan for the course to us." link_to="/dashboard/application/funding-information" isFilled={fundingInformationFilled}/>
+
           <ApplicationContainer header_text="Disability" paragraph_text="Tell us about any disabilities you may have, if that makes you comfortable" link_to="/dashboard/application/disability-details" isFilled={disabilityDetailsFilled} />
+          
+
         </div>
 
         <div className="flex flex-wrap justify-center space-x-5 mt-5">
-          {/* <ApplicationContainer header_text="Funding information" paragraph_text="Describe your payment plan for the course to us." link_to="/dashboard/application/funding-information" isFilled={}/>
+          <ApplicationContainer header_text="Passport upload" paragraph_text="Upload a picture of the photo page from your passport." link_to="/dashboard/application/upload-passport" isFilled={uploadPassportFilled}/>
 
-          <ApplicationContainer header_text="Disability" paragraph_text="Tell us about any disabilities you may have, if that makes you comfortable." link_to="/dashboard/application/disability" isFilled={}/>        */}
-        </div>
-
-        <div className="flex flex-wrap justify-center space-x-5 mt-5">
-          {/* <ApplicationContainer header_text="Passport upload" paragraph_text="Upload a picture of the photo page from your passport." link_to="/dashboard/application/passport-upload" isFilled={}/>
-
-          <ApplicationContainer header_text="English language qualification" paragraph_text="Tell us about any education you have received in English." link_to="/dashboard/application/english-language-qualification" isFilled={}/>        */}
+          <ApplicationContainer header_text="English language qualification" paragraph_text="Tell us about any education you have received in English." link_to="/dashboard/application/english-qualification" isFilled={englishQualificationFilled}/>       
         </div>
 
       </div>
