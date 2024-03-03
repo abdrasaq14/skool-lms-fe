@@ -17,7 +17,8 @@ import ApplicantDashboard from './pages/ApplicantDashboard/Dashboard'
 import Layout from './components/ApplicantDashboardComponents/shared/Layout'
 import Register from './pages/ApplicantDashboard/Register'
 import Dashboard from './pages/ApplicantDashboard/Dashboard'
-import Products from './pages/ApplicantDashboard/Products'import ApplicationView from "./pages/ApplictionView";
+import Products from './pages/ApplicantDashboard/Products'
+import ApplicationView from "./pages/ApplictionView";
 import EnglishQualification from "./pages/Application/EnglishLang";
 import Qualification from "./pages/Application/Qualifications";
 import FundingInformation from "./pages/Application/FundingInformation";
