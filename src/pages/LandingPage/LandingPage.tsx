@@ -32,9 +32,12 @@ function LandingPage() {
             })
             console.log(res)
 
-            if (res.data.message) {
-                navigate(`/dashboard`)
-            } else if (res.data.error) {
+
+            if(res.data.message){
+              
+                navigate(`/dashboard/application`);
+            }
+            else if(res.data.error){
                 setError(res.data.error)
                 setTimeout(() => {
                     setError('')

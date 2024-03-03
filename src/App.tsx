@@ -8,6 +8,7 @@ import ResetPasswordForm from './pages/ResetPassword/ResetPassword'
 import NewPasswordForm from './pages/ResetPassword/NewPassword'
 import CheckEmail from './pages/OtpVerification/CheckEmail'
 import EmploymentDetails from './pages/Application/EmploymentDetails'
+import DisabilityDetails from "./pages/Application/DisabilityDetails";
 import ApplicationPage from './pages/ApplicationPage/ApplicationPage'
 import AcademicReferences from './pages/Application/AcademicReferences'
 import UploadPassport from './pages/Application/UploadPassport'
@@ -16,7 +17,13 @@ import ApplicantDashboard from './pages/ApplicantDashboard/Dashboard'
 import Layout from './components/ApplicantDashboardComponents/shared/Layout'
 import Register from './pages/ApplicantDashboard/Register'
 import Dashboard from './pages/ApplicantDashboard/Dashboard'
-import Products from './pages/ApplicantDashboard/Products'
+import Products from './pages/ApplicantDashboard/Products'import ApplicationView from "./pages/ApplictionView";
+import EnglishQualification from "./pages/Application/EnglishLang";
+import Qualification from "./pages/Application/Qualifications";
+import FundingInformation from "./pages/Application/FundingInformation";
+import PersonalStatement from "./pages/Application/PersonalStatement";
+
+
 
 function App() {
     return (

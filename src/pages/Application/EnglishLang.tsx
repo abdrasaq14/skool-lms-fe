@@ -2,36 +2,37 @@ import MainButton from "../../components/MainButton";
 import { useEffect, useState } from "react";
 import ApplicationHeader from "../../components/applicationComponents/ApplicationHeader";
 import { useDispatch } from "react-redux";
-import { updateDetails } from "../../states/applicationDetails/employmentDetailsSlice";
+import { updateDetails } from "../../states/applicationDetails/englishQualificationSlice";
 // import { employmentDetailsState } from "../../states/applicationDetails/employmentDetailsSlice";
 import { useNavigate } from "react-router-dom";
 
 
-function EmploymentDetails() {
 
-  const [employmentDetails, setEmploymentDetails] = useState<boolean | null>(null);
+function EnglishQualification() {
+
+  const [englishQualification, setEnglishQualification] = useState<boolean | null>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedValue = localStorage.getItem("employmentDetails");
+    const storedValue = localStorage.getItem("englishQualification");
     if (storedValue !== null) {
-      setEmploymentDetails(JSON.parse(storedValue));
+      setEnglishQualification(JSON.parse(storedValue));
     }
-  }, [employmentDetails]);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-  if (employmentDetails !== null) { 
-    dispatch(updateDetails(employmentDetails));
+  if (englishQualification !== null) { 
+    dispatch(updateDetails(englishQualification));
     navigate("/dashboard/application");
    }
   }; 
 
   const handleRadioChange = (value: boolean) => {
-    setEmploymentDetails(value);
-    localStorage.setItem("employmentDetails", JSON.stringify(value));
+    setEnglishQualification(value);
+    localStorage.setItem("englishQualification", JSON.stringify(value));
   };
 
   return (
@@ -41,24 +42,21 @@ function EmploymentDetails() {
       <div className=" w-9/12 mx-auto text-center mt-12">
         
         <div className=" text-black w-3/12 mx-auto font-semibold text-2xl mb-4">
-          <h3>Employment Details</h3>
+          <h3>English language qualification</h3>
         </div>
         <div>
           <p>
-            Tell us about your past employment experience. If you don't have
-            any, you can still apply.
+           Before you begin your course, we will need an examination of your English language proficiency 
+uploading your documentation as soon as possible will be ideal.
           </p>
-          <p>
-            An offer on your application is more likely if it includes
-            references
-          </p>
+    
         </div>
 
         <div>
           <form onSubmit={handleSubmit} className=" w-5/12 mx-auto mt-8 flex flex-col gap-3">
 
           <div className="w-9/12 mx-auto">
-            <div className=" text-left mb-3">Do you have any work experience ?</div>
+            <div className=" text-left mb-3">Do you have an English language qualification ?</div>
 
             
                 <div>
@@ -68,7 +66,7 @@ function EmploymentDetails() {
                   className=""
                   name="answer"
                   id="answerYes"
-                  checked={employmentDetails === true}
+                  checked={englishQualification === true}
                   onChange={() => handleRadioChange(true)}
                 />
                 <span className="">Yes</span>
@@ -82,7 +80,7 @@ function EmploymentDetails() {
                   className=""
                   name="answer"
                   id="answerNO"
-                  checked={employmentDetails === false}
+                  checked={englishQualification === false}
                   onChange={() => handleRadioChange(false)}
                 />
                 <span className="">No</span>
@@ -96,6 +94,7 @@ function EmploymentDetails() {
             <MainButton button_text="Save and Continue" />
             </div>
 
+            
           </form>
         </div>
       </div>
@@ -103,4 +102,4 @@ function EmploymentDetails() {
   );
 }
 
-export default EmploymentDetails;
+export default EnglishQualification;
