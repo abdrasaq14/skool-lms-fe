@@ -85,7 +85,7 @@ export const Steptwo: React.FC<IStepProps> = ({
             document matches exactly.
           </p>
 
-          <div className="w-[500px] h-[866px] p-8 rounded-lg gap-[10px] shadow-lg flex flex-col justify-center">
+          <div className="rounded-lg shadow-lg lg:w-5/6 ">
             <div>
               <label htmlFor="firstname">First Name</label>
               <input
@@ -167,7 +167,7 @@ export const Steptwo: React.FC<IStepProps> = ({
             </div>
 
             <div>
-              <label htmlFor="birthCountry">
+              <label htmlFor="birthCountry" className="text-nowrap">
                 Country of permanent residence
               </label>
               <select
