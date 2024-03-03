@@ -84,7 +84,8 @@ export const Stepone: React.FC<IStepProps> = ({
             for you
           </p>
 
-          <div className="w-[500px] h-[597px] px-6 rounded-[16px] gap-[10px] shadow-lg flex flex-col justify-center">
+          
+          <div className="shadow-lg rounded-md">
             <div>
               <label htmlFor="courseType">Course type</label>
               <select
@@ -196,3 +197,5 @@ export const Stepone: React.FC<IStepProps> = ({
     </div>
   );
 };
+
+

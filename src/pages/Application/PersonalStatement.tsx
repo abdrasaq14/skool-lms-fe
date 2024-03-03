@@ -54,11 +54,6 @@ function PersonalStatement() {
   };
 
 
-//   const handleValueChange = (value: string) => {
-//     setPersonalStatement(value);
-//     localStorage.setItem("personalStatement", value);
-//   };
-
 
 
   const modules = {
