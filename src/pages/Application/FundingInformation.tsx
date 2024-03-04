@@ -1,10 +1,11 @@
 import MainButton from "../../components/MainButton";
 import { useState, useEffect } from "react";
 import ApplicationHeader from "../../components/applicationComponents/ApplicationHeader";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateFundingInformation } from "../../states/applicationDetails/fundingInformationSlice";
 
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../store/store";
 
 export default function FundingInformation() {
   
@@ -14,17 +15,17 @@ export default function FundingInformation() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const storedValue = useSelector((state: RootState) => state.fundingInformation.fundingInformation);
+
   useEffect(() => {
-    const storedValue = localStorage.getItem("fundingInformation");
-    if (storedValue !== null) {
+
+    if (storedValue !== null && storedValue !== "") {
       setFundingInformation(storedValue);
     }
-  }, []);
+  }, [storedValue]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    console.log(fundingInformation);
 
     if (fundingInformation) {
       dispatch(updateFundingInformation(fundingInformation));
@@ -34,9 +35,8 @@ export default function FundingInformation() {
 
   const handleRadioChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
-    console.log(value)
     setFundingInformation(value);
-    localStorage.setItem("fundingInformation", value); // No need to stringify the value
+  
   };
   
 

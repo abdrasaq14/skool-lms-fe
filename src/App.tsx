@@ -19,7 +19,7 @@ import Register from './pages/ApplicantDashboard/Register'
 import Dashboard from './pages/ApplicantDashboard/Dashboard'
 import Products from './pages/ApplicantDashboard/Products'
 import ApplicationView from "./pages/ApplictionView";
-import EnglishQualification from "./pages/Application/EnglishLang";
+import EnglishQualification from "./pages/Application/EnglishQualification";
 import Qualification from "./pages/Application/Qualifications";
 import FundingInformation from "./pages/Application/FundingInformation";
 import PersonalStatement from "./pages/Application/PersonalStatement";

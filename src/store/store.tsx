@@ -41,3 +41,10 @@ export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
+
+
+// Function to purge persisted state
+
+// export const clearPersistedState = async () => {
+//   await persistor.purge(); // Clear persisted state from storage
+// };

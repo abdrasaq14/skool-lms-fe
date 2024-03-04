@@ -12,21 +12,19 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 function PersonalStatement() {
-  const personalStatementRedux = useSelector(
-    (state: RootState) => state.personalStatement.personalStatement
-  );
-  console.log(personalStatementRedux);
 
   const [personalStatement, setPersonalStatement] = useState<string>("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const storedValue = useSelector(
+    (state: RootState) => state.personalStatement.personalStatement
+  )
 
   useEffect(() => {
-    const storedValue = localStorage.getItem("personalStatement");
-    if (storedValue !== null) {
+    if (storedValue !== "" && storedValue !== null) {
       setPersonalStatement(storedValue);
     }
-  }, []);
+  }, [storedValue]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,7 +32,6 @@ function PersonalStatement() {
     if (personalStatement !== null) {
       const strippedValue = stripHtmlTags(personalStatement);
       dispatch(updatePersonalStatement(strippedValue));
-      localStorage.setItem("personalStatement", strippedValue);
       navigate("/dashboard/application");
     }
   };
