@@ -1,5 +1,5 @@
-import React, { useRef, ChangeEvent, DragEvent, useState } from "react";
-import { useDispatch } from 'react-redux';
+import React, { useRef, ChangeEvent, DragEvent, useState, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import {
   setCurrentImage,
   setUploadedImage,
@@ -8,12 +8,17 @@ import {
 import ApplicationHeader from '../../components/applicationComponents/ApplicationHeader';
 import MainButton from '../../components/MainButton';
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../store/store";
 
 function UploadPassport() {
   const [uploadedImage, setUploadedImageLocally] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const storedValue = useSelector(
+    (state: RootState) => state.uploadPassport.uploadedImage
+  );
 
   const handleClick = () => {
     if (fileInputRef.current) {
@@ -47,19 +52,30 @@ function UploadPassport() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (uploadedImage) {
       dispatch(setUploadedImage(uploadedImage));
       dispatch(setCurrentImage(uploadedImage));
       navigate("/dashboard/application");
     }
-  };
+  }
+
+  useEffect(() => {
+
+    if (storedValue) {
+
+      console.log("Stored value:", storedValue);
+      setUploadedImageLocally(storedValue);
+    }
+  }, [storedValue]);
+  
 
   return (
     <>
       <ApplicationHeader linkTo="/dashboard/application" header_text="Return to Application Home" />
 
       <div
-        className="w-9/12 mx-auto text-center mt-12"
+        className="w-9/12 mx-auto text-center mt-10 mb-32"
         onDragOver={handleDragOver}
         onDrop={handleDrop}
       >
@@ -77,7 +93,21 @@ function UploadPassport() {
             onClick={handleClick}
           >
             {uploadedImage ? (
-              <img src={uploadedImage} className="mx-auto pt-12 pb-4 w-2/12" alt="Uploaded" />
+              <div>
+                <img src={uploadedImage} className="mx-auto pt-6 pb-4 w-7/12" alt="Uploaded image" />
+                <h5 className="text-black text-2xl mb-4 ">
+                  Drop your files here or{" "}
+                  <span className="text-green-500 cursor-pointer">browse</span>
+                </h5>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+
+              </div>
+              
             ) : (
               <div>
                 <img
