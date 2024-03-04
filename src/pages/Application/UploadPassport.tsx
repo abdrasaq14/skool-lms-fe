@@ -1,22 +1,20 @@
-import React, { useRef, ChangeEvent, DragEvent } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useRef, ChangeEvent, DragEvent, useState } from "react";
+import { useDispatch } from 'react-redux';
 import {
   setCurrentImage,
   setUploadedImage,
-  updateDetails,
-  fetchDetails,
-  deleteDetails,
+  // updateDetails,
 } from '../../states/applicationDetails/uploadPassportSlice';
 import ApplicationHeader from '../../components/applicationComponents/ApplicationHeader';
 import MainButton from '../../components/MainButton';
-import { RootState } from '../../store/store'; 
+import { useNavigate } from "react-router-dom";
 
 function UploadPassport() {
-  const dispatch = useDispatch();
-  const { currentImage, uploadedImage } = useSelector((state: RootState) => state.uploadPassport);
+  const [uploadedImage, setUploadedImageLocally] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
- 
   const handleClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -41,29 +39,20 @@ function UploadPassport() {
   const handleFile = (selectedFile: File | undefined) => {
     if (selectedFile) {
       const imageUrl = URL.createObjectURL(selectedFile);
-      dispatch(setUploadedImage(imageUrl));
-      dispatch(setCurrentImage(imageUrl));
+      setUploadedImageLocally(imageUrl);
     } else {
-      dispatch(setUploadedImage(null));
+      setUploadedImageLocally(null);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(updateDetails({ currentImage, uploadedImage }));
+    if (uploadedImage) {
+      dispatch(setUploadedImage(uploadedImage));
+      dispatch(setCurrentImage(uploadedImage));
+      navigate("/dashboard/application");
+    }
   };
-
-  React.useEffect(() => {
-    dispatch(fetchDetails());
-    
-  }, [dispatch]);
-
-
-  React.useEffect(() => {
-    return () => {
-      dispatch(deleteDetails());
-    };
-  }, [dispatch]);
 
   return (
     <>
@@ -92,7 +81,7 @@ function UploadPassport() {
             ) : (
               <div>
                 <img
-                  src={currentImage}
+                  src="/images/drag-drop.png"
                   className="mx-auto pt-12 pb-4 w-2/12"
                   alt="Drag and drop area"
                 />
@@ -109,7 +98,7 @@ function UploadPassport() {
               </div>
             )}
 
-            <h4 className="pb-12 text-gray-400 text-2xl">Maximum size: 50MB</h4>
+            <h4 className="pb-12 text-gray-400 text-2xl">Maximum size: 2MB</h4>
           </div>
           <div className="mt-4 w-5/12 mx-auto">
             <MainButton button_text="Save and Continue" />
@@ -121,4 +110,3 @@ function UploadPassport() {
 }
 
 export default UploadPassport;
-

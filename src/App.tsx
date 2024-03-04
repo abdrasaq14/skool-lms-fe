@@ -43,29 +43,9 @@ function App() {
         <Route path="/dashboard/application" element={<ApplicationPage />} />
 
         <Route path="/dashboard/application/personal-statement" element={<PersonalStatement />} />
-
-        <Route
-          path="/dashboard/application/employment-details"
-          element={<EmploymentDetails />}
-        />
-        
-        <Route
-          path="/dashboard/application/academic-references"
-          element={<AcademicReferences />}
-        />
-        <Route path="/dashboard/application/employment-details" element={<EmploymentDetails />} />
-        <Route path="/dashboard/application/disability-details" element={<DisabilityDetails />} />
-        <Route path="/dashboard/application" element={<ApplicationPage />} />
-        <Route
-          path="/dashboard/application/upload-passport"
-          element={<UploadPassport />}
-        />
-        <Route
-          path="/dashboard/application/personal-statement"
-          element={<PersonalStatement />}
-        />
-        <Route path="/dashboard/application/disability-details" element={<DisabilityDetails />} />
-        
+        <Route path="/dashboard/application/academic-references" element={<AcademicReferences />} />
+        <Route path="/dashboard/application/employment-details" element={<EmploymentDetails />} />    
+        <Route path="/dashboard/application/disability-details" element={<DisabilityDetails />} />     
         <Route path="/dashboard/application/upload-passport" element={<UploadPassport />} />
         <Route path="/dashboard/application/english-qualification" element={<EnglishQualification />} />
         <Route path="/dashboard/application/qualifications" element={<Qualification />} />
