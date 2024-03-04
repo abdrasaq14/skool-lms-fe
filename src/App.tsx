@@ -21,6 +21,9 @@ import EnglishQualification from "./pages/Application/EnglishQualification";
 import Qualification from "./pages/Application/Qualifications";
 import FundingInformation from "./pages/Application/FundingInformation";
 import PersonalStatement from "./pages/Application/PersonalStatement";
+import ApplicationViewPage from "./pages/ApplicationViewPage/ApplicationViewPage";
+
+
 import { ProtectedRoute } from "./components/protectedRoutes/ProtectedRoute";
 
 function App() {
@@ -95,6 +98,19 @@ function App() {
             </ProtectedRoute>
           }
         />
+        
+        <Route
+          path="/dashboard/application/academic-references"
+          element={<AcademicReferences />}
+        />
+        <Route path="/dashboard/application/disability-details" element={<DisabilityDetails />} />
+        
+        <Route path="/dashboard/application/upload-passport" element={<UploadPassport />} />
+        <Route path="/dashboard/application/english-qualification" element={<EnglishQualification />} />
+        <Route path="/dashboard/application/qualifications" element={<Qualification />} />
+        <Route path="/dashboard/application/funding-information" element={<FundingInformation />} />
+        <Route path="/dashboard/application-view" element={<ApplicationViewPage />} />
+        
       </Routes>
     </>
   );
