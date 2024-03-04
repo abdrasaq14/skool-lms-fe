@@ -1,10 +1,10 @@
 import MainButton from "../../components/MainButton";
 import { useEffect, useState } from "react";
 import ApplicationHeader from "../../components/applicationComponents/ApplicationHeader";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateDetails } from "../../states/applicationDetails/employmentDetailsSlice";
-// import { employmentDetailsState } from "../../states/applicationDetails/employmentDetailsSlice";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../store/store";
 
 
 function EmploymentDetails() {
@@ -12,13 +12,14 @@ function EmploymentDetails() {
   const [employmentDetails, setEmploymentDetails] = useState<boolean | null>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const storedValue = useSelector((state: RootState) => state.employmentDetails.employmentDetails);
 
   useEffect(() => {
-    const storedValue = localStorage.getItem("employmentDetails");
+
     if (storedValue !== null) {
-      setEmploymentDetails(JSON.parse(storedValue));
+      setEmploymentDetails(storedValue);
     }
-  }, [employmentDetails]);
+  }, [storedValue]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,7 +32,6 @@ function EmploymentDetails() {
 
   const handleRadioChange = (value: boolean) => {
     setEmploymentDetails(value);
-    localStorage.setItem("employmentDetails", JSON.stringify(value));
   };
 
   return (

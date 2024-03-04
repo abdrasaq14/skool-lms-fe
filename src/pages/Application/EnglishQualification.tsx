@@ -1,11 +1,10 @@
 import MainButton from "../../components/MainButton";
 import { useEffect, useState } from "react";
 import ApplicationHeader from "../../components/applicationComponents/ApplicationHeader";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateDetails } from "../../states/applicationDetails/englishQualificationSlice";
-// import { employmentDetailsState } from "../../states/applicationDetails/employmentDetailsSlice";
 import { useNavigate } from "react-router-dom";
-
+import { RootState } from "../../store/store";
 
 
 function EnglishQualification() {
@@ -13,13 +12,14 @@ function EnglishQualification() {
   const [englishQualification, setEnglishQualification] = useState<boolean | null>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const storedValue = useSelector((state: RootState) => state.englishQualification.englishQualification);
 
   useEffect(() => {
-    const storedValue = localStorage.getItem("englishQualification");
+   
     if (storedValue !== null) {
-      setEnglishQualification(JSON.parse(storedValue));
+      setEnglishQualification(storedValue);
     }
-  }, []);
+  }, [storedValue]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,7 +32,7 @@ function EnglishQualification() {
 
   const handleRadioChange = (value: boolean) => {
     setEnglishQualification(value);
-    localStorage.setItem("englishQualification", JSON.stringify(value));
+
   };
 
   return (
@@ -56,7 +56,7 @@ uploading your documentation as soon as possible will be ideal.
           <form onSubmit={handleSubmit} className=" w-5/12 mx-auto mt-8 flex flex-col gap-3">
 
           <div className="w-9/12 mx-auto">
-            <div className=" text-left mb-3">Do you have an English language qualification ?</div>
+            <div className=" text-left mb-3">Do you have an English language qualification?</div>
 
             
                 <div>

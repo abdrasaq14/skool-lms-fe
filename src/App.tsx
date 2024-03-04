@@ -12,36 +12,91 @@ import DisabilityDetails from "./pages/Application/DisabilityDetails";
 import ApplicationPage from "./pages/ApplicationPage/ApplicationPage";
 import AcademicReferences from "./pages/Application/AcademicReferences";
 import UploadPassport from "./pages/Application/UploadPassport";
+//Applicant dashboard routes
+import ApplicantDashboard from "./pages/ApplicantDashboard/Dashboard";
+import Layout from "./components/ApplicantDashboardComponents/shared/Layout";
+import Products from "./pages/ApplicantDashboard/Products";
 import ApplicationView from "./pages/ApplictionView";
-import EnglishQualification from "./pages/Application/EnglishLang";
+import EnglishQualification from "./pages/Application/EnglishQualification";
 import Qualification from "./pages/Application/Qualifications";
 import FundingInformation from "./pages/Application/FundingInformation";
 import PersonalStatement from "./pages/Application/PersonalStatement";
 import ApplicationViewPage from "./pages/ApplicationViewPage/ApplicationViewPage";
 
 
+import { ProtectedRoute } from "./components/protectedRoutes/ProtectedRoute";
 
 function App() {
   return (
     <>
       <Routes>
         {/* <Route path="/signup" element={<TestPage />} /> */}
-
         <Route path="/" element={<LandingPage />} />
         <Route path="/register" element={<SignUpPage />} />
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/reset-password" element={<ResetPasswordForm />} />
         <Route path="/new-password/:token" element={<NewPasswordForm />} />
-        <Route path="/dashboard/onboarding" element={<ApplicationView />} />
 
+        {/* Protected Routes after logging - Dashboard related routes. */}
+        <Route path="/dashboard/*"
+          
+          element={
+            <ProtectedRoute>
 
-        <Route path="/dashboard/application" element={<ApplicationPage />} />
+              <Routes>
+              
+              {/* Dashboard route, include sidebar links inside dashboard path */}
+              <Route  element={<Layout />}>
+                <Route index element={<ApplicantDashboard />} />
+                <Route path="products" element={<Products />} />
+              </Route>
 
-        <Route path="/dashboard/application/personal-statement" element={<PersonalStatement />} />
+              {/*  */}
 
-        <Route
-          path="/dashboard/application/employment-details"
-          element={<EmploymentDetails />}
+              <Route path="onboarding" element={<ApplicationView />} />
+              <Route
+                path="application"
+                element={<ApplicationPage />}
+              />
+              <Route
+                path="application/personal-statement"
+                element={<PersonalStatement />}
+              />
+              <Route
+                path="application/employment-details"
+                element={<EmploymentDetails />}
+              />
+              <Route
+                path="application/academic-references"
+                element={<AcademicReferences />}
+              />
+              
+              <Route
+                path="application/disability-details"
+                element={<DisabilityDetails />}
+              />
+              
+              <Route
+                path="application/upload-passport"
+                element={<UploadPassport />}
+              />
+              
+              <Route
+                path="application/english-qualification"
+                element={<EnglishQualification />}
+              />
+              <Route
+                path="application/qualifications"
+                element={<Qualification />}
+              />
+              <Route
+                path="application/funding-information"
+                element={<FundingInformation />}
+              />
+            </Routes>
+
+            </ProtectedRoute>
+          }
         />
         
         <Route
@@ -57,9 +112,6 @@ function App() {
         <Route path="/dashboard/application-view" element={<ApplicationViewPage />} />
         
       </Routes>
-
-
-
     </>
   );
 }

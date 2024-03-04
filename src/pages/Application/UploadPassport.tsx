@@ -1,22 +1,25 @@
-import React, { useRef, ChangeEvent, DragEvent } from "react";
+import React, { useRef, ChangeEvent, DragEvent, useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setCurrentImage,
   setUploadedImage,
-  updateDetails,
-  fetchDetails,
-  deleteDetails,
+  // updateDetails,
 } from '../../states/applicationDetails/uploadPassportSlice';
 import ApplicationHeader from '../../components/applicationComponents/ApplicationHeader';
 import MainButton from '../../components/MainButton';
-import { RootState } from '../../store/store'; 
+import { useNavigate } from "react-router-dom";
+import { RootState } from "../../store/store";
 
 function UploadPassport() {
-  const dispatch = useDispatch();
-  const { currentImage, uploadedImage } = useSelector((state: RootState) => state.uploadPassport);
+  const [uploadedImage, setUploadedImageLocally] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
- 
+  const storedValue = useSelector(
+    (state: RootState) => state.uploadPassport.uploadedImage
+  );
+
   const handleClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -41,36 +44,38 @@ function UploadPassport() {
   const handleFile = (selectedFile: File | undefined) => {
     if (selectedFile) {
       const imageUrl = URL.createObjectURL(selectedFile);
-      dispatch(setUploadedImage(imageUrl));
-      dispatch(setCurrentImage(imageUrl));
+      setUploadedImageLocally(imageUrl);
     } else {
-      dispatch(setUploadedImage(null));
+      setUploadedImageLocally(null);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(updateDetails({ currentImage, uploadedImage }));
-  };
 
-  React.useEffect(() => {
-    dispatch(fetchDetails());
-    
-  }, [dispatch]);
+    if (uploadedImage) {
+      dispatch(setUploadedImage(uploadedImage));
+      dispatch(setCurrentImage(uploadedImage));
+      navigate("/dashboard/application");
+    }
+  }
 
+  useEffect(() => {
 
-  React.useEffect(() => {
-    return () => {
-      dispatch(deleteDetails());
-    };
-  }, [dispatch]);
+    if (storedValue) {
+
+      console.log("Stored value:", storedValue);
+      setUploadedImageLocally(storedValue);
+    }
+  }, [storedValue]);
+  
 
   return (
     <>
       <ApplicationHeader linkTo="/dashboard/application" header_text="Return to Application Home" />
 
       <div
-        className="w-9/12 mx-auto text-center mt-12"
+        className="w-9/12 mx-auto text-center mt-10 mb-32"
         onDragOver={handleDragOver}
         onDrop={handleDrop}
       >
@@ -88,11 +93,25 @@ function UploadPassport() {
             onClick={handleClick}
           >
             {uploadedImage ? (
-              <img src={uploadedImage} className="mx-auto pt-12 pb-4 w-2/12" alt="Uploaded" />
+              <div>
+                <img src={uploadedImage} className="mx-auto pt-6 pb-4 w-7/12" alt="Uploaded image" />
+                <h5 className="text-black text-2xl mb-4 ">
+                  Drop your files here or{" "}
+                  <span className="text-green-500 cursor-pointer">browse</span>
+                </h5>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+
+              </div>
+              
             ) : (
               <div>
                 <img
-                  src={currentImage}
+                  src="/images/drag-drop.png"
                   className="mx-auto pt-12 pb-4 w-2/12"
                   alt="Drag and drop area"
                 />
@@ -109,7 +128,7 @@ function UploadPassport() {
               </div>
             )}
 
-            <h4 className="pb-12 text-gray-400 text-2xl">Maximum size: 50MB</h4>
+            <h4 className="pb-12 text-gray-400 text-2xl">Maximum size: 2MB</h4>
           </div>
           <div className="mt-4 w-5/12 mx-auto">
             <MainButton button_text="Save and Continue" />
@@ -121,4 +140,3 @@ function UploadPassport() {
 }
 
 export default UploadPassport;
-
