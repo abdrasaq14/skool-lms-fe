@@ -13,7 +13,7 @@ function ApplicationContainer({ header_text, paragraph_text, link_to, isFilled }
   const isEmpty = isStateEmpty(isFilled);
 
   return (
-    <div className={`h-32 w-4/12 flex px-5 rounded-xl border border-green-500 ${isEmpty ? "bg-white" : "bg-green-600"} shadow-card justify-between items-center`}>
+    <div className={`application-container h-32 w-4/12 flex px-5 rounded-xl border border-green-500 ${isEmpty ? "bg-white" : "bg-green-600"} shadow-card justify-between items-center`}>
       <div className="w-56 flex-shrink-0">
         <div className={`font-inter font-semibold text-lg mb-2 ${isEmpty ? "text-black" : "text-white"}`}>
           <h3>{header_text}</h3>
@@ -26,7 +26,9 @@ function ApplicationContainer({ header_text, paragraph_text, link_to, isFilled }
 
       <div className="flex-shrink-0 ml-auto">
         <Link to={link_to}>
-          <button className={`py-2 px-3 rounded-md ${isEmpty ? "bg-green-600" : "bg-gray-500"} text-white text-xs`}>{isEmpty ? "Start Now" : "Edit Details"}</button>
+          <button className={`py-2 px-3 rounded-md  text-white text-xs`} style={{ backgroundColor: isEmpty ? "#34A853" : "#667085" }}>
+            {isEmpty ? "Start Now" : "Edit Details"}
+          </button>
         </Link>
       </div>
 

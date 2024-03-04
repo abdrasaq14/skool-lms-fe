@@ -56,7 +56,7 @@ uploading your documentation as soon as possible will be ideal.
           <form onSubmit={handleSubmit} className=" w-5/12 mx-auto mt-8 flex flex-col gap-3">
 
           <div className="w-9/12 mx-auto">
-            <div className=" text-left mb-3">Do you have an English language qualification ?</div>
+            <div className=" text-left mb-3">Do you have an English language qualification?</div>
 
             
                 <div>
