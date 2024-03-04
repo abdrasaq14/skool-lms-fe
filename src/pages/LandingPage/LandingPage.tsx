@@ -6,11 +6,14 @@ import "./LandingPage.css";
 import { ChangeEvent, FormEvent, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 
+
 function LandingPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
@@ -33,6 +36,7 @@ function LandingPage() {
       console.log(res);
 
       if (res.data.message) {
+       
         navigate(`/dashboard/onboarding`);
       } else if (res.data.error) {
         console.log(res.data.error);

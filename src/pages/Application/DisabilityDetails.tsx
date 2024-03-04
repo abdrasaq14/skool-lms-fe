@@ -15,12 +15,16 @@ export default function DisabilityDetails() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const storedValue = useSelector((state: RootState) => state.disabilityDetails.disabilityDetails);
+
   useEffect(() => {
-    const storedValue = localStorage.getItem("disabilityDetails");
+
     if (storedValue !== "" && storedValue !== null) {
-      setDisabilityDetails(JSON.parse(storedValue));
+      setDisabilityDetails(storedValue);
     }
-  }, []);
+  }, [storedValue]);
+
+  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -34,7 +38,6 @@ export default function DisabilityDetails() {
   const handleRadioChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedOption = e.target.value;
     setDisabilityDetails(selectedOption);
-    localStorage.setItem("disabilityDetails", JSON.stringify(selectedOption));
   };
 
   return (

@@ -1,64 +1,35 @@
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
-
-
-interface UserDetailsState{
-    userDetails: {
-        firstName: string,
-        lastName: string,
-        email: string,
-        phone: string,
-        country: string,
-
-    }
+interface UserDetailsState {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    country: string;
 }
 
 const initialState: UserDetailsState = {
-    userDetails:{
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        country: "",
-    }
-}
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    country: '',
+};
 
 const userDetailsSlice = createSlice({
     name: 'userDetails',
     initialState,
     reducers: {
-        updateDetails: (state, action: PayloadAction<Partial<UserDetailsState['userDetails']>>) => {
-            state.userDetails = {
-                ...state.userDetails,
-                ...action.payload
-            }
-   
+        login: (state, action) => {
+            return {
+                ...state,
+                ...action.payload,
+            };
         },
-        fetchDetails: (state) => {
-            
-            state.userDetails = localStorage.getItem('userDetails') ? JSON.parse(localStorage.getItem('userDetails') as string) : initialState.userDetails;
-        },
-        deleteDetails: (state) => {
-            state.userDetails = initialState.userDetails;
-        }
-        
+        logout: () => initialState,
     },
-    extraReducers: (builder) => {
-        builder.addCase(fetchDataAsync.fulfilled, (state, action) => {
-            state.userDetails = action.payload
-        })
-    }
-})
+});
 
-export const fetchDataAsync = createAsyncThunk(
-    "userDetails/fetchDataAsync", 
-    async () => {
-        const response = await fetch("")
-        return response.json()
-    }
-)
+export const { login, logout } = userDetailsSlice.actions;
 
-export const { updateDetails, fetchDetails } = userDetailsSlice.actions
-
-
-export default userDetailsSlice.reducer
+export default userDetailsSlice.reducer;
