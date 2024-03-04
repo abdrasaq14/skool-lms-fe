@@ -17,6 +17,7 @@ import EnglishQualification from "./pages/Application/EnglishLang";
 import Qualification from "./pages/Application/Qualifications";
 import FundingInformation from "./pages/Application/FundingInformation";
 import PersonalStatement from "./pages/Application/PersonalStatement";
+import ApplicationViewPage from "./pages/ApplicationViewPage/ApplicationViewPage";
 
 
 
@@ -53,6 +54,7 @@ function App() {
         <Route path="/dashboard/application/english-qualification" element={<EnglishQualification />} />
         <Route path="/dashboard/application/qualifications" element={<Qualification />} />
         <Route path="/dashboard/application/funding-information" element={<FundingInformation />} />
+        <Route path="/dashboard/application-view" element={<ApplicationViewPage />} />
         
       </Routes>
 
