@@ -7,6 +7,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 
 
+
 function LandingPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -17,6 +18,7 @@ function LandingPage() {
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
+
 
     if (!email || !password) {
       setError("All fields are required, try again");
@@ -36,10 +38,11 @@ function LandingPage() {
       console.log(res);
 
       if (res.data.message) {
-       
+        localStorage.setItem("token", res.data.token);
         navigate(`/dashboard/onboarding`);
-      } else if (res.data.error) {
-        console.log(res.data.error);
+      } 
+      
+      else if (res.data.error) {
         setError(res.data.error);
         setTimeout(() => {
           setError("");
