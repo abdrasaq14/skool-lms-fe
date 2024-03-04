@@ -9,7 +9,6 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-// console.log(process.env.REACT_APP_BACKEND_URL);
 
 axiosInstance.interceptors.request.use(
   (config) => {
