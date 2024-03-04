@@ -45,7 +45,7 @@ function App() {
               {/* Dashboard route, include sidebar links inside dashboard path */}
               <Route  element={<Layout />}>
                 <Route index element={<ApplicantDashboard />} />
-                <Route path="/dashboard/products" element={<Products />} />
+                <Route path="products" element={<Products />} />
               </Route>
 
               {/*  */}
