@@ -4,8 +4,16 @@ import ApplicationContainer from "../../components/applicationComponents/Applica
 import ApplicationHeader from "../../components/applicationComponents/ApplicationHeader"
 import "./ApplicationPage.css"
 import { RootState } from "../../store/store"
+import { useState } from "react";
+import axiosInstance from "../../utils/axiosInstance";
+import { useNavigate } from "react-router-dom";
+
 
 function ApplicationPage() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const navigate = useNavigate();
+
 
   const academicReferencesFilled = useSelector((state: RootState) => state.academicReferences.academicReferences);
   const qualificationsFilled = useSelector((state: RootState) => state.qualifications.qualificationDetails);
@@ -17,6 +25,45 @@ function ApplicationPage() {
   const uploadPassportFilled = useSelector((state: RootState) => state.uploadPassport.uploadedImage);
 
   const isAllCardsFilled = academicReferencesFilled != null && qualificationsFilled && employmentDetailsFilled != null && disabilityDetailsFilled && personalStatementFilled && fundingInformationFilled && englishQualificationFilled != null && uploadPassportFilled;
+
+  const handleSubmit = async () => {
+    if (!isAllCardsFilled) {
+      return; // Do not submit if all cards are not filled
+    }
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      // Make a POST request to the backend endpoint
+      const res = await axiosInstance.post("/users/professional-application", {
+        personalStatement: personalStatementFilled,
+        addQualification: qualificationsFilled,
+        academicReference: academicReferencesFilled,
+        employmentDetails: employmentDetailsFilled,
+        fundingInformation: fundingInformationFilled,
+        disability: disabilityDetailsFilled,
+        passportUpload: uploadPassportFilled,
+        englishLanguageQualification: englishQualificationFilled
+      });
+      console.log(res);
+
+      if (res.status === 201) {
+        navigate("/dashboard");
+      }
+
+      else {
+        // Handle other response status codes (e.g., 4xx, 5xx)
+        setSubmitError("An error occurred while submitting the application. Please try again later.");
+      }
+      
+    } catch (error) {
+      console.error("Error submitting application:", error);
+      setSubmitError("An error occurred while submitting the application. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
 
   return (
@@ -81,7 +128,8 @@ function ApplicationPage() {
       </div>
 
       <div className="submit-application-button mt-5 mx-auto mb-14" style={{ width: '25.5%' }}>
-          <MainButton customClassName={isAllCardsFilled ? "" : "opacity-50"} button_text="Submit Application" disableHover={!isAllCardsFilled} />
+          <MainButton customClassName={isAllCardsFilled ? "" : "opacity-50"} button_text="Submit Application" disableHover={!isAllCardsFilled || isSubmitting} onClick={handleSubmit}/>
+          {submitError && <p className="text-red-500 mt-2">{submitError}</p>}
       </div>
     </div>
     </>
