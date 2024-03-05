@@ -3,6 +3,7 @@ interface MainButtonProps {
     button_text: string;
     customClassName?: string;
     disableHover?: boolean;
+    onClick?: () => void;
   }
   export default function MainButton(props: MainButtonProps) {
     const buttonClass = `main-btn-component bg-green-600 ${
@@ -12,7 +13,7 @@ interface MainButtonProps {
     const cursorStyle = props.disableHover ? 'default' : 'cursor-pointer';
 
     return (
-      <button type="submit" className={buttonClass}  style={{ cursor: cursorStyle, pointerEvents: props.disableHover ? 'none' : 'auto' }}>
+      <button type="submit" className={buttonClass}  style={{ cursor: cursorStyle, pointerEvents: props.disableHover ? 'none' : 'auto' }} onClick={props.onClick}>
         {props.button_text}
       </button>
     );
