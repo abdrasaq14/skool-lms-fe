@@ -22,7 +22,8 @@ import Qualification from "./pages/Application/Qualifications";
 import FundingInformation from "./pages/Application/FundingInformation";
 import PersonalStatement from "./pages/Application/PersonalStatement";
 import ApplicationViewPage from "./pages/ApplicationViewPage/ApplicationViewPage";
-
+//Admin dashboard routes
+import ApplicationStatesPage from "./pages/ApplicationStatesPage/ApplicationStatesPage";
 
 import { ProtectedRoute } from "./components/protectedRoutes/ProtectedRoute";
 
@@ -38,79 +39,94 @@ function App() {
         <Route path="/new-password/:token" element={<NewPasswordForm />} />
 
         {/* Protected Routes after logging - Dashboard related routes. */}
-        <Route path="/dashboard/*"
-          
+        <Route
+          path="/dashboard/*"
           element={
             <ProtectedRoute>
-
               <Routes>
-              
-              {/* Dashboard route, include sidebar links inside dashboard path */}
-              <Route  element={<Layout />}>
-                <Route index element={<ApplicantDashboard />} />
-                <Route path="products" element={<Products />} />
-              </Route>
+                {/* Dashboard route, include sidebar links inside dashboard path */}
+                <Route element={<Layout />}>
+                  <Route index element={<ApplicantDashboard />} />
+                  <Route path="products" element={<Products />} />
+                </Route>
 
-              {/*  */}
+                {/*  */}
 
-              <Route path="onboarding" element={<ApplicationView />} />
-              <Route
-                path="application"
-                element={<ApplicationPage />}
-              />
-              <Route
-                path="application/personal-statement"
-                element={<PersonalStatement />}
-              />
-              <Route
-                path="application/employment-details"
-                element={<EmploymentDetails />}
-              />
-              <Route
-                path="application/academic-references"
-                element={<AcademicReferences />}
-              />
-              
-              <Route
-                path="application/disability-details"
-                element={<DisabilityDetails />}
-              />
-              
-              <Route
-                path="application/upload-passport"
-                element={<UploadPassport />}
-              />
-              
-              <Route
-                path="application/english-qualification"
-                element={<EnglishQualification />}
-              />
-              <Route
-                path="application/qualifications"
-                element={<Qualification />}
-              />
-              <Route
-                path="application/funding-information"
-                element={<FundingInformation />}
-              />
-            </Routes>
+                <Route path="onboarding" element={<ApplicationView />} />
+                <Route path="application" element={<ApplicationPage />} />
+                <Route
+                  path="application/personal-statement"
+                  element={<PersonalStatement />}
+                />
+                <Route
+                  path="application/employment-details"
+                  element={<EmploymentDetails />}
+                />
+                <Route
+                  path="application/academic-references"
+                  element={<AcademicReferences />}
+                />
 
+                <Route
+                  path="application/disability-details"
+                  element={<DisabilityDetails />}
+                />
+
+                <Route
+                  path="application/upload-passport"
+                  element={<UploadPassport />}
+                />
+
+                <Route
+                  path="application/english-qualification"
+                  element={<EnglishQualification />}
+                />
+                <Route
+                  path="application/qualifications"
+                  element={<Qualification />}
+                />
+                <Route
+                  path="application/funding-information"
+                  element={<FundingInformation />}
+                />
+                <Route
+                  path="admin/applications-section"
+                  element={<ApplicationStatesPage />}
+                />
+              </Routes>
             </ProtectedRoute>
           }
         />
-        
+
         <Route
           path="/dashboard/application/academic-references"
           element={<AcademicReferences />}
         />
-        <Route path="/dashboard/application/disability-details" element={<DisabilityDetails />} />
-        
-        <Route path="/dashboard/application/upload-passport" element={<UploadPassport />} />
-        <Route path="/dashboard/application/english-qualification" element={<EnglishQualification />} />
-        <Route path="/dashboard/application/qualifications" element={<Qualification />} />
-        <Route path="/dashboard/application/funding-information" element={<FundingInformation />} />
-        <Route path="/dashboard/application-view" element={<ApplicationViewPage />} />
-        
+        <Route
+          path="/dashboard/application/disability-details"
+          element={<DisabilityDetails />}
+        />
+
+        <Route
+          path="/dashboard/application/upload-passport"
+          element={<UploadPassport />}
+        />
+        <Route
+          path="/dashboard/application/english-qualification"
+          element={<EnglishQualification />}
+        />
+        <Route
+          path="/dashboard/application/qualifications"
+          element={<Qualification />}
+        />
+        <Route
+          path="/dashboard/application/funding-information"
+          element={<FundingInformation />}
+        />
+        <Route
+          path="/dashboard/application-view"
+          element={<ApplicationViewPage />}
+        />
       </Routes>
     </>
   );
