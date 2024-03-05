@@ -16,7 +16,6 @@ function ApplicationPage() {
   const englishQualificationFilled = useSelector((state: RootState) => state.englishQualification.englishQualification);
   const uploadPassportFilled = useSelector((state: RootState) => state.uploadPassport.currentImage);
 
-  console.log(fundingInformationFilled)
 
 
   return (

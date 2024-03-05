@@ -8,23 +8,22 @@ import { updateDetails } from "../../states/applicationDetails/academicReference
 import { RootState } from "../../store/store"
 
 const AcademicReferences = () => {
-  const academicReferencesRedux = useSelector((state: RootState) => state.academicReferences.academicReferences);
-  console.log(academicReferencesRedux)
+  const storedValue = useSelector((state: RootState) => state.academicReferences.academicReferences);
+ 
   const [academicReferences, setAcademicReferences] = useState<boolean | null>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedValue = localStorage.getItem("academicReferences");
     if (storedValue !== null) {
-      setAcademicReferences(JSON.parse(storedValue));
+      setAcademicReferences(storedValue);
     }
-  }, []);
+  }, [storedValue]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-  if (academicReferences !== undefined) { 
+  if (academicReferences !== null) { 
     dispatch(updateDetails(academicReferences));
     navigate("/dashboard/application");
    }
@@ -32,7 +31,6 @@ const AcademicReferences = () => {
 
   const handleRadioChange = (value: boolean) => {
     setAcademicReferences(value);
-    localStorage.setItem("academicReferences", JSON.stringify(value));
   };
 
   return (

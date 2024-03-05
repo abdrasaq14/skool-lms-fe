@@ -10,11 +10,11 @@ import { QualificationDetailsState } from "../../states/applicationDetails/quali
 
 const Qualification = () => {
 
-  const qualificationsRedux = useSelector(
+  const storedValue = useSelector(
     (state: RootState) => state.qualifications.qualificationDetails
   );
-
-  console.log(qualificationsRedux)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<Partial<QualificationDetailsState['qualificationDetails']>>({
     institutionName: "",
@@ -24,17 +24,15 @@ const Qualification = () => {
     qualificationType: "",
     countryOfInstitution: "",
   });
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  
 
 
   useEffect(() => {
-    // Retrieve data from local storage and update form data
-    const storedFormData = localStorage.getItem("qualificationFormData");
-    if (storedFormData) {
-      setFormData(JSON.parse(storedFormData));
+ 
+    if (storedValue !== null && storedValue !== undefined) {
+      setFormData(storedValue);
     }
-  }, [formData]);
+  }, [storedValue]);
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,16 +54,17 @@ const Qualification = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (formData !== null) { 
+    if(!formData.institutionName || !formData.fieldOfStudy || !formData.yearOfGraduation || !formData.gradeOrCGPA || !formData.qualificationType || !formData.countryOfInstitution) {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    else if (formData !== null) { 
       dispatch(updateDetails(formData));
       navigate("/dashboard/application");
      }
     };
-
-    // Dispatch action to update global state with form data
-    dispatch(updateDetails(formData));
-    // Store form data in local storage
-    localStorage.setItem("qualificationFormData", JSON.stringify(formData));
+  
   ;
 
   return (
@@ -138,12 +137,12 @@ const Qualification = () => {
                 Grade or CGPA:
                 <input
                   type="text"
-                  name="grade"
+                  name="gradeOrCGPA"
                   value={formData.gradeOrCGPA}
                   onChange={handleChange}
                   required
                   placeholder="Enter Grade or CGPA"
-                  className="block w-full border-2 rounded-lg border-gray-200 py-2.5 px-3 text-sm focus:border-black"
+                  className="block w-full border-2 rounded-lg text-black border-gray-200 py-2.5 px-3 text-sm focus:border-black"
                 />
               </label>
             </div>
