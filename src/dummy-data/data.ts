@@ -49,9 +49,9 @@ const data: Data = {
       countryOfInstition: "Countryland",
     },
   ],
-  academicReferences: true,
+  academicReferences: false,
   englishProficiency: false,
-  workExperience: true,
+  workExperience: false,
   funding: "Scholarship",
   disablity: "None",
   // documents: Buffer.from(

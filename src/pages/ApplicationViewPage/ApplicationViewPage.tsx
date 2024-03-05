@@ -158,7 +158,7 @@ const ApplicationViewPage = () => {
 
           <div className="mt-5">
             <h1 className="text-black font-bold text-base"> About:</h1>
-            <p className="text-black font-light text-sm mt-2">{data.about}</p>
+            <p className="text-black font-light text-sm mt-2 w-11/12">{data.about}</p>
           </div>
 
           <div className="mt-5">
