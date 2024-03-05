@@ -70,7 +70,10 @@ export const Steptwo: React.FC<IStepProps> = ({
 
   return (
     <div>
-      <div onClick={handlePreviousStep} className="flex flex-row fixed top-4">
+      <div
+        onClick={handlePreviousStep}
+        className="flex flex-row fixed top-10 left-[120px]"
+      >
         <button className="pr-2 ">
           {" "}
           <FaArrowLeftLong />
@@ -151,7 +154,7 @@ export const Steptwo: React.FC<IStepProps> = ({
                   value={formData.gender}
                   onChange={handleSelectChange}
                 >
-                  <option value="">Male</option>
+                  <option value="">Select..</option>
                   {gender.map((type, index) => (
                     <option key={index} value={type}>
                       {type}
@@ -169,7 +172,7 @@ export const Steptwo: React.FC<IStepProps> = ({
                   value={formData.birthCountry}
                   onChange={handleSelectChange}
                 >
-                  <option value="">Nigeria</option>
+                  <option value="">Select..</option>
                   {birthCountry.map((type, index) => (
                     <option key={index} value={type}>
                       {type}
@@ -189,7 +192,7 @@ export const Steptwo: React.FC<IStepProps> = ({
                   value={formData.residenceCountry}
                   onChange={handleSelectChange}
                 >
-                  <option value="">Nigeria</option>
+                  <option value="">Select..</option>
                   {residenceCountry.map((type, index) => (
                     <option key={index} value={type}>
                       {type}
@@ -207,7 +210,7 @@ export const Steptwo: React.FC<IStepProps> = ({
                   value={formData.nationality}
                   onChange={handleSelectChange}
                 >
-                  <option value="">Nigeria</option>
+                  <option value="">Select..</option>
                   {nationality.map((type, index) => (
                     <option key={index} value={type}>
                       {type}
@@ -221,7 +224,7 @@ export const Steptwo: React.FC<IStepProps> = ({
                   type="submit"
                   className="w-full bg-green-700 rounded-lg border p-3 text-white font-semibold text-center transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-indigo-500"
                 >
-                  Save and continue
+                  Submit
                 </button>
               </div>
             </div>

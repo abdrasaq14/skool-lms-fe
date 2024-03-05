@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
 interface IStepProps {
@@ -46,9 +47,14 @@ export const Stepone: React.FC<IStepProps> = ({
     changeActiveStep(2);
   };
 
-  const handlePreviousStep = () => {
-    changeActiveStep(0); // Assuming 0 is the index for the previous step
-  };
+  // const YourComponent = () => {
+  // const history = useHistory();
+
+  // const handlePreviousStep = () => {
+  //   history.push('/users/login');
+  // };
+
+
 
   const handleSelectChange = (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -62,16 +68,19 @@ export const Stepone: React.FC<IStepProps> = ({
   };
 
   return (
-    <div>
-      <div onClick={handlePreviousStep} className="flex flex-row fixed top-4">
+    <div className="w-full">
+      <div className="flex flex-row fixed top-10 left-[120px] ">
         <button className="pr-2 ">
-          {" "}
           <FaArrowLeftLong />
         </button>
-        <button className="transition-transform transform hover:scale-105 hidden md:block">
+        <Link
+          to="/"
+          className="transition-transform transform hover:scale-105 hidden md:block text-slate-900"
+        >
           Return to log in
-        </button>
+        </Link>
       </div>
+
       <div className="flex items-center justify-center py-6 w-3/4 mx-auto">
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-4">
