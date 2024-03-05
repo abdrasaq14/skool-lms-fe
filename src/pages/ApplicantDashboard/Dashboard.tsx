@@ -1,4 +1,3 @@
-import React from 'react'
 import DashboardStatsGrid from '../../components/ApplicantDashboardComponents/DashboardStatsGrid'
 import RecentOrders from '../../components/ApplicantDashboardComponents/RecentApplications'
 
