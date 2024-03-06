@@ -27,8 +27,18 @@ const steponeDataSlice = createSlice({
         ...action.payload,
       };
     },
+    clearFormDataOne(state) {
+      return {
+        ...state,
+        courseType: "",
+        studyMode: "",
+        courseSearch: "",
+        entryYear: "",
+        entryMonth: "",
+      };
+    }
   },
 });
 
-export const { updateFormData } = steponeDataSlice.actions;
+export const { updateFormData, clearFormDataOne } = steponeDataSlice.actions;
 export default steponeDataSlice.reducer;

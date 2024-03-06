@@ -35,7 +35,7 @@ import { ReactNode, useEffect } from "react";
         } 
         
         else if (res.status === 200 && res.data.user) {
-          console.log(res.data.user);
+          
           dispatch(login(res.data.user));
           
         }

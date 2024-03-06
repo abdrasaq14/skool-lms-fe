@@ -37,10 +37,18 @@ function LandingPage() {
       });
       console.log(res);
 
-      if (res.data.message) {
+      if (res.data.userNotOnboarded) {
         localStorage.setItem("token", res.data.token);
         navigate(`/dashboard/onboarding`);
-      } 
+      }
+      else if(res.data.userOnboarded){
+        localStorage.setItem("token", res.data.token);
+        navigate(`/dashboard`);
+      }
+      else if(res.data.adminSuccessMessage){
+        localStorage.setItem("token", res.data.token);
+        navigate(`admin/applications-section`)
+      }
       
       else if (res.data.error) {
         setError(res.data.error);

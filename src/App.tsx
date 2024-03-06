@@ -25,7 +25,6 @@ import PersonalStatement from "./pages/Application/PersonalStatement";
 import Settings from "./pages/ApplicantDashboard/Settings";
 import Profile from "./pages/ApplicantDashboard/Profile";
 
-
 //Admin dashboard routes
 import ApplicationStatesPage from "./pages/ApplicationStatesPage/ApplicationStatesPage";
 import ApplicationViewPage from "./pages/ApplicationViewPage/ApplicationViewPage";
@@ -53,15 +52,14 @@ function App() {
                 <Route element={<Layout />}>
                   <Route index element={<ApplicantDashboard />} />
                   <Route path="products" element={<Products />} />
-                  <Route path="settings" element={<Settings/>}/>
-                  <Route path="profile" element={<Profile/>}/>
+                  <Route path="settings" element={<Settings />} />
+                  <Route path="profile" element={<Profile />} />
                 </Route>
 
                 {/*  */}
 
                 <Route path="onboarding" element={<ApplicationView />} />
                 <Route path="application" element={<ApplicationPage />} />
-                
 
                 <Route
                   path="application/personal-statement"
@@ -98,42 +96,18 @@ function App() {
                   path="application/funding-information"
                   element={<FundingInformation />}
                 />
-                <Route
-                  path="admin/applications-section"
-                  element={<ApplicationStatesPage />}
-                />
               </Routes>
             </ProtectedRoute>
           }
         />
 
         <Route
-          path="/dashboard/application/academic-references"
-          element={<AcademicReferences />}
-        />
-        <Route
-          path="/dashboard/application/disability-details"
-          element={<DisabilityDetails />}
+          path="admin/applications-section"
+          element={<ApplicationStatesPage />}
         />
 
         <Route
-          path="/dashboard/application/upload-passport"
-          element={<UploadPassport />}
-        />
-        <Route
-          path="/dashboard/application/english-qualification"
-          element={<EnglishQualification />}
-        />
-        <Route
-          path="/dashboard/application/qualifications"
-          element={<Qualification />}
-        />
-        <Route
-          path="/dashboard/application/funding-information"
-          element={<FundingInformation />}
-        />
-        <Route
-          path="/dashboard/application-view"
+          path="admin/dashboard/application-view"
           element={<ApplicationViewPage />}
         />
       </Routes>
