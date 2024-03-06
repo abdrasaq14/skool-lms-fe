@@ -69,6 +69,7 @@ function ApplicationView() {
                             birthCountry={["Nigeria"]}
                             residenceCountry={["Nigeria"]}
                             nationality={["Nigeria"]}
+                           
                             
                             />,
       },
