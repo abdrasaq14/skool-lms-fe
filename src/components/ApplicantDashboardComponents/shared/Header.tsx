@@ -9,6 +9,12 @@ import { RootState } from "../../../store/store";
 export default function Header() {
   const navigate = useNavigate();
 
+  const logout = () => {
+    localStorage.removeItem('token');
+    navigate("/")
+
+}
+
   const user = useSelector((state: RootState) => state.userDetails);
 
   return (
@@ -151,12 +157,13 @@ export default function Header() {
               <Menu.Item>
                 {({ active }) => (
                   <div
+                  onClick={logout}
                     className={classNames(
                       active && "bg-gray-100",
                       "active:bg-gray-200 rounded-sm px-4 py-2 text-gray-700 cursor-pointer focus:bg-gray-200"
                     )}
                   >
-                    Sign out
+                    Logout
                   </div>
                 )}
               </Menu.Item>

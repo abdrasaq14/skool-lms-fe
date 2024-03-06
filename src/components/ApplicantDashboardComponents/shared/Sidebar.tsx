@@ -1,6 +1,6 @@
-import React from 'react'
+
 import classNames from 'classnames'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import decagonLogo from '/images/decagon-logo.png'
 import { HiOutlineLogout } from 'react-icons/hi'
 import { DASHBOARD_SIDEBAR_LINKS, DASHBOARD_SIDEBAR_BOTTOM_LINKS } from '../../../lib/constants' //The dashboard sidebar links are imported from the constants file
@@ -9,6 +9,15 @@ const linkClass =
     'flex items-center gap-4 px-3 py-2 hover:bg-emerald-300 hover:text-white hover:no-underline active:bg-neutral-600 rounded-sm text-base'
 
 export default function Sidebar() {
+
+    const navigate = useNavigate();
+
+    const logout = () => {
+        localStorage.removeItem('token');
+        navigate("/")
+
+    }
+
     return (
         <div className="bg-white  w-60 p-3 flex flex-col">
             <div className="flex items-center gap-2 px-1 py-3">
@@ -26,10 +35,10 @@ export default function Sidebar() {
                 {DASHBOARD_SIDEBAR_BOTTOM_LINKS.map((link) => (
                     <SidebarLink key={link.key} link={link} />
                 ))}
-                <div className={classNames(linkClass, 'cursor-pointer text-red-500')}>
-                    <span className="text-xl">
+                <div onClick={logout} className={classNames(linkClass, 'cursor-pointer text-red-500')}>
+                    <button className="text-xl">
                         <HiOutlineLogout />
-                    </span>
+                    </button>
                     Logout
                 </div>
             </div>
