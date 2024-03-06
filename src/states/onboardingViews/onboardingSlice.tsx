@@ -2,27 +2,45 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
  
 export interface OnboardingDetailsState {
 onboardingDetails: {
-    institutionName: string;
-    fieldOfStudy: string;
-    yearOfGraduation: string;
-    gradeOrCGPA: string;
-    qualificationType: string;
-    countryOfInstitution: string;
+    name: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    gender: string;
+    phone: string;
+    birthCountry: string;
+    residenceCountry: string;
+    nationality: string;
+    courseType: string;
+    studyMode: string;
+    courseSearch: string;
+    entryYear: string;
+    entryMonth: string;
   };
 }
  
 const initialState: OnboardingDetailsState = {
 onboardingDetails: {
-    institutionName: "",
-    fieldOfStudy: "",
-    yearOfGraduation: "",
-    gradeOrCGPA: "",
-    qualificationType: "",
-    countryOfInstitution: "",
+    name: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    gender: "",
+    phone: "",
+    birthCountry: "",
+    residenceCountry: "",
+    nationality: "",
+    courseType: "",
+    studyMode: "",
+    courseSearch: "",
+    entryYear: "",
+    entryMonth: ""
   },
 };
  
-const qualificationSlice = createSlice({
+const onboardingSlice = createSlice({
   name: 'onboardingDetails',
   initialState,
   reducers: {
@@ -39,6 +57,7 @@ const qualificationSlice = createSlice({
  
  
  
-export const { updateDetails } = qualificationSlice.actions;
+export const { updateDetails } = onboardingSlice.actions;
  
-export default qualificationSlice.reducer;
+export default onboardingSlice.reducer;
+

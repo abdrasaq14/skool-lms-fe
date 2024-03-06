@@ -10,6 +10,9 @@ import personalStatementReducer from "../states/applicationDetails/personalState
 import uploadPassportReducer from "../states/applicationDetails/uploadPassportSlice"
 import englishQualificationReducer from "../states/applicationDetails/englishQualificationSlice";
 import qualificationsReducer from "../states/applicationDetails/qualificationsSLice"
+import onboardingReducer from "../states/onboardingViews/onboardingSlice";
+import formDataReducer from "../states/onboardingViews/formDataSlice"
+import stepOneDataReducer from "../states/onboardingViews/stepOneDataSlice";
 
 
 const persistConfig = {
@@ -28,7 +31,13 @@ const persistedReducer = persistReducer(
     englishQualification: englishQualificationReducer,
     fundingInformation: fundingInformationReducer,
     uploadPassport: uploadPassportReducer,
-    qualifications: qualificationsReducer
+    qualifications: qualificationsReducer,
+    onboarding: onboardingReducer,
+
+    formData: formDataReducer,
+    stepOneData: stepOneDataReducer,
+    
+
   })
 );
 

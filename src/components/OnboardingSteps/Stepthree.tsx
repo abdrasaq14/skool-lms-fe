@@ -1,135 +1,749 @@
-// import { IStepProps } from "./Stepone";
+// import { useState } from "react";
+// import { FaArrowLeftLong } from "react-icons/fa6";
+// import { useDispatch, useSelector } from "react-redux";
+// import { RootState } from "../../store/store";
+// import { updateFormData } from "../../states/onboardingViews/formDataSlice";
 
-// export const Stepthree: React.FC<IStepProps> = ({changeActiveStep}) => {
-
-//      const completeSteps = () => {
-//         changeActiveStep(4);
-
-//         // Do something with the data
-//         //Push to new route or the server
-
-
-//         }
-
-
-//     return (
-
-       
-//         <div>
-//   <h2 className="sr-only">Steps</h2>
-
-//   <div className="after:mt-4 after:block after:h-1 after:w-full after:rounded-lg after:bg-gray-200">
-//     <ol className="grid grid-cols-3 text-sm font-medium text-gray-500">
-//       <li className="relative flex justify-start text-blue-600">
-//         <span className="absolute -bottom-[1.75rem] start-0 rounded-full bg-blue-600 text-white">
-//           <svg
-//             className="h-5 w-5"
-//             xmlns="http://www.w3.org/2000/svg"
-//             viewBox="0 0 20 20"
-//             fill="currentColor"
-//           >
-//             <path
-//               fillRule="evenodd"
-//               d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-//               clipRule="evenodd"
-//             />
-//           </svg>
-//         </span>
-
-//         <span className="hidden sm:block"> Details </span>
-
-//         <svg
-//           className="size-6 sm:hidden"
-//           xmlns="http://www.w3.org/2000/svg"
-//           fill="none"
-//           viewBox="0 0 24 24"
-//           stroke="currentColor"
-//           strokeWidth="2"
-//         >
-//           <path
-//             strokeLinecap="round"
-//             strokeLinejoin="round"
-//             d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"
-//           />
-//         </svg>
-//       </li>
-
-//       <li className="relative flex justify-center text-blue-600">
-//         <span
-//           className="absolute -bottom-[1.75rem] left-1/2 -translate-x-1/2 rounded-full bg-blue-600 text-white"
-//         >
-//           <svg
-//             className="h-5 w-5"
-//             xmlns="http://www.w3.org/2000/svg"
-//             viewBox="0 0 20 20"
-//             fill="currentColor"
-//           >
-//             <path
-//               fillRule="evenodd"
-//               d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-//               clipRule="evenodd"
-//             />
-//           </svg>
-//         </span>
-
-//         <span className="hidden sm:block"> Address </span>
-
-//         <svg
-//           className="mx-auto size-6 sm:hidden"
-//           xmlns="http://www.w3.org/2000/svg"
-//           fill="none"
-//           viewBox="0 0 24 24"
-//           stroke="currentColor"
-//           strokeWidth="2"
-//         >
-//           <path
-//             strokeLinecap="round"
-//             strokeLinejoin="round"
-//             d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-//           />
-//           <path
-//             strokeLinecap="round"
-//             strokeLinejoin="round"
-//             d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-//           />
-//         </svg>
-//       </li>
-
-//       <li className="relative flex justify-end">
-//         <span className="absolute -bottom-[1.75rem] end-0 rounded-full bg-gray-600 text-white">
-//           <svg
-//             className="h-5 w-5"
-//             xmlns="http://www.w3.org/2000/svg"
-//             viewBox="0 0 20 20"
-//             fill="currentColor"
-//           >
-//             <path
-//               fillRule="evenodd"
-//               d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-//               clipRule="evenodd"
-//             />
-//           </svg>
-//         </span>
-
-//         <span className="hidden sm:block"> Payment </span>
-
-//         <svg
-//           className="size-6 sm:hidden"
-//           xmlns="http://www.w3.org/2000/svg"
-//           fill="none"
-//           viewBox="0 0 24 24"
-//           stroke="currentColor"
-//           strokeWidth="2"
-//         >
-//           <path
-//             strokeLinecap="round"
-//             strokeLinejoin="round"
-//             d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
-//           />
-//         </svg>
-//       </li>
-//     </ol>
-//   </div>
-// </div>
-//     )
+// interface IStepProps {
+//   changeActiveStep: (step: number) => void;
+//   gender: string[];
+//   birthCountry: string[];
+//   residenceCountry: string[];
+//   nationality: string[];
+//   // Define courseType as a prop
 // }
+
+// interface IFormData {
+//   firstName: string;
+//   lastName: string;
+//   email: string;
+//   phone: string;
+//   gender: string;
+//   birthCountry: string;
+//   residenceCountry: string;
+//   nationality: string;
+// }
+
+// export const Steptwo: React.FC<IStepProps> = ({
+//   changeActiveStep,
+//   gender,
+//   birthCountry,
+//   residenceCountry,
+//   nationality,
+// }) => {
+//   const [localFormData, setLocalFormData] = useState<IFormData>({
+//     firstName: "",
+//     lastName: "",
+//     email: "",
+//     phone: "",
+//     gender: "",
+//     birthCountry: "",
+//     residenceCountry: "",
+//     nationality: "",
+//   });
+
+//   const formData = useSelector((state: RootState) => state.formData);
+//   const dispatch = useDispatch();
+
+//   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+//     e.preventDefault();
+//     changeActiveStep(2);
+//   };
+
+//   const handlePreviousStep = () => {
+//     changeActiveStep(1); // Assuming 0 is the index for the previous step
+//   };
+
+//   const handleSelectChange = (
+//     e: React.ChangeEvent<HTMLSelectElement>
+//   ): void => {
+//     const { name, value } = e.target;
+
+//     setFormData((prevData) => ({
+//       ...prevData,
+//       [name]: value,
+//     }));
+//   };
+
+//   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+//     const { name, value } = e.target;
+
+//     // setFormData((prevData) => ({
+//     //   ...prevData,
+//     //   [name]: value,
+//     // }));
+
+//      dispatch(updateFormData({ [name]: value }));
+//   };
+
+//   return (
+//     <div>
+//       <div
+//         onClick={handlePreviousStep}
+//         className="flex flex-row fixed top-10 left-[120px]"
+//       >
+//         <button className="pr-2 ">
+//           {" "}
+//           <FaArrowLeftLong />
+//         </button>
+//         <button className="transition-transform transform hover:scale-105 hidden md:block">
+//           Return to find your course
+//         </button>
+//       </div>
+//       <div className="flex items-center justify-center py-6 w-3/4 mx-auto">
+//         <form onSubmit={handleSubmit}>
+//           <div className="flex flex-col gap-4 items-center">
+//             <div className="font-inter text-2xl font-semibold leading-10 tracking-tighter text-center">
+//               Start your application
+//             </div>
+
+//             <p className="text-base font-normal leading-6 tracking-tighter text-center py-5">
+//               We need more information about you before we can begin processing
+//               your application. Some of them have been completed for you by us.
+//               Verify that the information on your passport or other travel
+//               document matches exactly.
+//             </p>
+
+//             <div className="w-[500px] h-[866px] p-8 rounded-lg gap-[10px] shadow-lg flex flex-col justify-center">
+//               <div>
+//                 <label htmlFor="firstName">First Name</label>
+//                 <input
+//                   name="firstName"
+//                   type="text"
+//                   id="firstName"
+//                   value={formData.firstName}
+//                   onChange={handleInputChange}
+//                   className="w-full rounded-lg border border-gray-600 p-4 pe-12 text-sm shadow-sm"
+//                 />
+//               </div>
+
+//               <div>
+//                 <label htmlFor="lastname">Last Name</label>
+//                 <input
+//                   name="lastName"
+//                   type="text"
+//                   id="lastName"
+//                   value={formData.lastName}
+//                   onChange={handleInputChange}
+//                   className="w-full rounded-lg border border-gray-600 p-4 pe-12 text-sm shadow-sm"
+//                 />
+//               </div>
+
+//               <div>
+//                 <label htmlFor="email">Email Address</label>
+//                 <input
+//                   name="email"
+//                   type="email"
+//                   id="email"
+//                   value={formData.email}
+//                   onChange={handleInputChange}
+//                   className="w-full rounded-lg border border-gray-600 p-4 pe-12 text-sm shadow-sm"
+//                 />
+//               </div>
+
+//               <div>
+//                 <label htmlFor="email">Phone Number</label>
+//                 <input
+//                   name="phone"
+//                   type="text"
+//                   id="phone"
+//                   value={formData.phone}
+//                   onChange={handleInputChange}
+//                   className="w-full rounded-lg border border-gray-600 p-4 pe-12 text-sm shadow-sm"
+//                 />
+//               </div>
+
+//               <div>
+//                 <label htmlFor="gender">Gender</label>
+//                 <select
+//                   className="w-full rounded-lg border border-gray-600 p-4  text-sm shadow-sm"
+//                   name="gender"
+//                   id="gender"
+//                   value={formData.gender}
+//                   onChange={handleSelectChange}
+//                 >
+//                   <option value="">Select..</option>
+//                   {gender.map((type, index) => (
+//                     <option key={index} value={type}>
+//                       {type}
+//                     </option>
+//                   ))}
+//                 </select>
+//               </div>
+
+//               <div>
+//                 <label htmlFor="birthCountry">Country of birth</label>
+//                 <select
+//                   className="w-full rounded-lg border border-gray-600 p-4  text-sm shadow-sm"
+//                   name="birthCountry"
+//                   id="birthCountry"
+//                   value={formData.birthCountry}
+//                   onChange={handleSelectChange}
+//                 >
+//                   <option value="">Select..</option>
+//                   {birthCountry.map((type, index) => (
+//                     <option key={index} value={type}>
+//                       {type}
+//                     </option>
+//                   ))}
+//                 </select>
+//               </div>
+
+//               <div>
+//                 <label htmlFor="birthCountry">
+//                   Country of permanent residence
+//                 </label>
+//                 <select
+//                   className="w-full rounded-lg border border-gray-600 p-4  text-sm shadow-sm"
+//                   name="residenceCountry"
+//                   id="residenceCountry"
+//                   value={formData.residenceCountry}
+//                   onChange={handleSelectChange}
+//                 >
+//                   <option value="">Select..</option>
+//                   {residenceCountry.map((type, index) => (
+//                     <option key={index} value={type}>
+//                       {type}
+//                     </option>
+//                   ))}
+//                 </select>
+//               </div>
+
+//               <div>
+//                 <label htmlFor="birthCountry">Nationality</label>
+//                 <select
+//                   className="w-full rounded-lg border border-gray-600 p-4  text-sm shadow-sm"
+//                   name="nationality"
+//                   id="nationality"
+//                   value={formData.nationality}
+//                   onChange={handleSelectChange}
+//                 >
+//                   <option value="">Select..</option>
+//                   {nationality.map((type, index) => (
+//                     <option key={index} value={type}>
+//                       {type}
+//                     </option>
+//                   ))}
+//                 </select>
+//               </div>
+
+//               <div className="flex justify-between items-center py-7">
+//                 <button
+//                   type="submit"
+//                   className="w-full bg-green-700 rounded-lg border p-3 text-white font-semibold text-center transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-indigo-500"
+//                 >
+//                   Submit
+//                 </button>
+//               </div>
+//             </div>
+//           </div>
+//         </form>
+//       </div>
+//     </div>
+//   );
+// };
+
+
+
+// import { useState } from "react";
+// import { FaArrowLeftLong } from "react-icons/fa6";
+// import { useDispatch, useSelector } from "react-redux";
+// import { RootState } from "../../store/store";
+// import { updateFormData } from "../../states/onboardingViews/formDataSlice";
+
+// interface IStepProps {
+//   changeActiveStep: (step: number) => void;
+//   gender: string[];
+//   birthCountry: string[];
+//   residenceCountry: string[];
+//   nationality: string[];
+//   // Define courseType as a prop
+// }
+
+// interface IFormData {
+//   firstName: string;
+//   lastName: string;
+//   email: string;
+//   phone: string;
+//   gender: string;
+//   birthCountry: string;
+//   residenceCountry: string;
+//   nationality: string;
+// }
+
+// export const Steptwo: React.FC<IStepProps> = ({
+//   changeActiveStep,
+//   gender,
+//   birthCountry,
+//   residenceCountry,
+//   nationality,
+// }) => {
+//   const [localFormData, setLocalFormData] = useState<IFormData>({
+//     firstName: "",
+//     lastName: "",
+//     email: "",
+//     phone: "",
+//     gender: "",
+//     birthCountry: "",
+//     residenceCountry: "",
+//     nationality: "",
+//   });
+
+//   const formData = useSelector((state: RootState) => state.formData);
+//   const dispatch = useDispatch();
+
+//   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+//     e.preventDefault();
+//     changeActiveStep(2);
+//   };
+
+//   const handlePreviousStep = () => {
+//     changeActiveStep(1); // Assuming 0 is the index for the previous step
+//   };
+
+//   const handleSelectChange = (
+//     e: React.ChangeEvent<HTMLSelectElement>
+//   ): void => {
+//     const { name, value } = e.target;
+
+//     setFormData((prevData) => ({
+//       ...prevData,
+//       [name]: value,
+//     }));
+//   };
+
+//   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+//     const { name, value } = e.target;
+
+//     // setFormData((prevData) => ({
+//     //   ...prevData,
+//     //   [name]: value,
+//     // }));
+
+//      dispatch(updateFormData({ [name]: value }));
+//   };
+
+//   return (
+//     <div>
+//       <div
+//         onClick={handlePreviousStep}
+//         className="flex flex-row fixed top-10 left-[120px]"
+//       >
+//         <button className="pr-2 ">
+//           {" "}
+//           <FaArrowLeftLong />
+//         </button>
+//         <button className="transition-transform transform hover:scale-105 hidden md:block">
+//           Return to find your course
+//         </button>
+//       </div>
+//       <div className="flex items-center justify-center py-6 w-3/4 mx-auto">
+//         <form onSubmit={handleSubmit}>
+//           <div className="flex flex-col gap-4 items-center">
+//             <div className="font-inter text-2xl font-semibold leading-10 tracking-tighter text-center">
+//               Start your application
+//             </div>
+
+//             <p className="text-base font-normal leading-6 tracking-tighter text-center py-5">
+//               We need more information about you before we can begin processing
+//               your application. Some of them have been completed for you by us.
+//               Verify that the information on your passport or other travel
+//               document matches exactly.
+//             </p>
+
+//             <div className="w-[500px] h-[866px] p-8 rounded-lg gap-[10px] shadow-lg flex flex-col justify-center">
+//               <div>
+//                 <label htmlFor="firstName">First Name</label>
+//                 <input
+//                   name="firstName"
+//                   type="text"
+//                   id="firstName"
+//                   value={formData.firstName}
+//                   onChange={handleInputChange}
+//                   className="w-full rounded-lg border border-gray-600 p-4 pe-12 text-sm shadow-sm"
+//                 />
+//               </div>
+
+//               <div>
+//                 <label htmlFor="lastname">Last Name</label>
+//                 <input
+//                   name="lastName"
+//                   type="text"
+//                   id="lastName"
+//                   value={formData.lastName}
+//                   onChange={handleInputChange}
+//                   className="w-full rounded-lg border border-gray-600 p-4 pe-12 text-sm shadow-sm"
+//                 />
+//               </div>
+
+//               <div>
+//                 <label htmlFor="email">Email Address</label>
+//                 <input
+//                   name="email"
+//                   type="email"
+//                   id="email"
+//                   value={formData.email}
+//                   onChange={handleInputChange}
+//                   className="w-full rounded-lg border border-gray-600 p-4 pe-12 text-sm shadow-sm"
+//                 />
+//               </div>
+
+//               <div>
+//                 <label htmlFor="email">Phone Number</label>
+//                 <input
+//                   name="phone"
+//                   type="text"
+//                   id="phone"
+//                   value={formData.phone}
+//                   onChange={handleInputChange}
+//                   className="w-full rounded-lg border border-gray-600 p-4 pe-12 text-sm shadow-sm"
+//                 />
+//               </div>
+
+//               <div>
+//                 <label htmlFor="gender">Gender</label>
+//                 <select
+//                   className="w-full rounded-lg border border-gray-600 p-4  text-sm shadow-sm"
+//                   name="gender"
+//                   id="gender"
+//                   value={formData.gender}
+//                   onChange={handleSelectChange}
+//                 >
+//                   <option value="">Select..</option>
+//                   {gender.map((type, index) => (
+//                     <option key={index} value={type}>
+//                       {type}
+//                     </option>
+//                   ))}
+//                 </select>
+//               </div>
+
+//               <div>
+//                 <label htmlFor="birthCountry">Country of birth</label>
+//                 <select
+//                   className="w-full rounded-lg border border-gray-600 p-4  text-sm shadow-sm"
+//                   name="birthCountry"
+//                   id="birthCountry"
+//                   value={formData.birthCountry}
+//                   onChange={handleSelectChange}
+//                 >
+//                   <option value="">Select..</option>
+//                   {birthCountry.map((type, index) => (
+//                     <option key={index} value={type}>
+//                       {type}
+//                     </option>
+//                   ))}
+//                 </select>
+//               </div>
+
+//               <div>
+//                 <label htmlFor="birthCountry">
+//                   Country of permanent residence
+//                 </label>
+//                 <select
+//                   className="w-full rounded-lg border border-gray-600 p-4  text-sm shadow-sm"
+//                   name="residenceCountry"
+//                   id="residenceCountry"
+//                   value={formData.residenceCountry}
+//                   onChange={handleSelectChange}
+//                 >
+//                   <option value="">Select..</option>
+//                   {residenceCountry.map((type, index) => (
+//                     <option key={index} value={type}>
+//                       {type}
+//                     </option>
+//                   ))}
+//                 </select>
+//               </div>
+
+//               <div>
+//                 <label htmlFor="birthCountry">Nationality</label>
+//                 <select
+//                   className="w-full rounded-lg border border-gray-600 p-4  text-sm shadow-sm"
+//                   name="nationality"
+//                   id="nationality"
+//                   value={formData.nationality}
+//                   onChange={handleSelectChange}
+//                 >
+//                   <option value="">Select..</option>
+//                   {nationality.map((type, index) => (
+//                     <option key={index} value={type}>
+//                       {type}
+//                     </option>
+//                   ))}
+//                 </select>
+//               </div>
+
+//               <div className="flex justify-between items-center py-7">
+//                 <button
+//                   type="submit"
+//                   className="w-full bg-green-700 rounded-lg border p-3 text-white font-semibold text-center transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-indigo-500"
+//                 >
+//                   Submit
+//                 </button>
+//               </div>
+//             </div>
+//           </div>
+//         </form>
+//       </div>
+//     </div>
+//   );
+// };
+
+
+
+
+import { FaArrowLeftLong } from "react-icons/fa6";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { updateFormData } from "../../states/onboardingViews/formDataSlice";
+
+interface IStepProps {
+  changeActiveStep: (step: number) => void;
+  nationality: string[];
+}
+
+// interface IFormData {
+//   firstName: string;
+//   lastName: string;
+//   email: string;
+//   phone: string;
+//   gender: string;
+//   birthCountry: string;
+//   residenceCountry: string;
+//   nationality: string;
+// }
+
+// export const Steptwo: React.FC<IStepProps> = ({
+//   changeActiveStep,
+//   nationality,
+// }) => {
+//   const [localFormData, setLocalFormData] = useState<IFormData>({
+//     firstName: "",
+//     lastName: "",
+//     email: "",
+//     phone: "",
+//     gender: "",
+//     birthCountry: "",
+//     residenceCountry: "",
+//     nationality: "",
+//   });
+
+//   const dispatch = useDispatch();
+
+//   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+//     e.preventDefault();
+//     changeActiveStep(2);
+//   };
+
+//   const handlePreviousStep = () => {
+//     changeActiveStep(1); // Assuming 0 is the index for the previous step
+//   };
+
+//   const handleSelectChange = (
+//     e: React.ChangeEvent<HTMLSelectElement>
+//   ): void => {
+//     const { name, value } = e.target;
+
+//     setLocalFormData((prevData) => ({
+//       ...prevData,
+//       [name]: value,
+//     }));
+//   };
+
+//   const formData = useSelector((state: RootState) => state.formData);
+
+
+//   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+//     const { name, value } = e.target;
+
+//     dispatch(updateFormData({ [name]: value }));
+//   };
+
+//   return (
+//     <div>
+//       <div
+//         onClick={handlePreviousStep}
+//         className="flex flex-row fixed top-10 left-[120px]"
+//       >
+//         <button className="pr-2 ">
+//           {" "}
+//           <FaArrowLeftLong />
+//         </button>
+//         <button className="transition-transform transform hover:scale-105 hidden md:block">
+//           Return to find your course
+//         </button>
+//       </div>
+//       <div className="flex items-center justify-center py-6 w-3/4 mx-auto">
+//         <form onSubmit={handleSubmit}>
+//           <div className="flex flex-col gap-4 items-center">
+//             <div className="font-inter text-2xl font-semibold leading-10 tracking-tighter text-center">
+//               Start your application
+//             </div>
+
+//             <p className="text-base font-normal leading-6 tracking-tighter text-center py-5">
+//               We need more information about you before we can begin processing
+//               your application. Some of them have been completed for you by us.
+//               Verify that the information on your passport or other travel
+//               document matches exactly.
+//             </p>
+
+//             <div className="w-[500px] h-[866px] p-8 rounded-lg gap-[10px] shadow-lg flex flex-col justify-center">
+//               <div>
+//                 <label htmlFor="firstName">First Name</label>
+//                 <input
+//                   name="firstName"
+//                   type="text"
+//                   id="firstName"
+//                   value={localFormData.firstName}
+//                   onChange={handleInputChange}
+//                   className="w-full rounded-lg border border-gray-600 p-4 pe-12 text-sm shadow-sm"
+//                 />
+//               </div>
+
+//               {/* Other input fields */}
+
+//               <div>
+//                 <label htmlFor="nationality">Nationality</label>
+//                 <select
+//                   className="w-full rounded-lg border border-gray-600 p-4  text-sm shadow-sm"
+//                   name="nationality"
+//                   id="nationality"
+//                   value={localFormData.nationality}
+//                   onChange={handleSelectChange}
+//                 >
+//                   <option value="">Select..</option>
+//                   {nationality.map((type, index) => (
+//                     <option key={index} value={type}>
+//                       {type}
+//                     </option>
+//                   ))}
+//                 </select>
+//               </div>
+
+//               <div className="flex justify-between items-center py-7">
+//                 <button
+//                   type="submit"
+//                   className="w-full bg-green-700 rounded-lg border p-3 text-white font-semibold text-center transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-indigo-500"
+//                 >
+//                   Submit
+//                 </button>
+//               </div>
+//             </div>
+//           </div>
+//         </form>
+//       </div>
+//     </div>
+//   );
+// };
+
+
+
+
+export const Steptwo: React.FC<IStepProps> = ({
+  changeActiveStep,
+  nationality,
+}) => {
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+    changeActiveStep(2);
+  };
+
+  const handlePreviousStep = () => {
+    changeActiveStep(1);
+  };
+
+  const handleSelectChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ): void => {
+    const { name, value } = e.target;
+    dispatch(updateFormData({ [name]: value }));
+  };
+
+  const formData = useSelector((state: RootState) => state.formData);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = e.target;
+    dispatch(updateFormData({ [name]: value }));
+  };
+
+  return (
+    <div>
+      <div
+        onClick={handlePreviousStep}
+        className="flex flex-row fixed top-10 left-[120px]"
+      >
+        <button className="pr-2 ">
+          <FaArrowLeftLong />
+        </button>
+        <button className="transition-transform transform hover:scale-105 hidden md:block">
+          Return to find your course
+        </button>
+      </div>
+      <div className="flex items-center justify-center py-6 w-3/4 mx-auto">
+        <form onSubmit={handleSubmit}>
+          <div className="flex flex-col gap-4 items-center">
+            <div className="font-inter text-2xl font-semibold leading-10 tracking-tighter text-center">
+              Start your application
+            </div>
+            <p className="text-base font-normal leading-6 tracking-tighter text-center py-5">
+              We need more information about you before we can begin processing
+              your application. Some of them have been completed for you by us.
+              Verify that the information on your passport or other travel
+              document matches exactly.
+            </p>
+            <div className="w-[500px] h-[866px] p-8 rounded-lg gap-[10px] shadow-lg flex flex-col justify-center">
+              <div>
+                <label htmlFor="firstName">First Name</label>
+                <input
+                  name="firstName"
+                  type="text"
+                  id="firstName"
+                  value={formData.firstName}
+                  onChange={handleInputChange}
+                  className="w-full rounded-lg border border-gray-600 p-4 pe-12 text-sm shadow-sm"
+                />
+              </div>
+
+
+
+
+              {/* Other input fields */}
+              <div>
+                <label htmlFor="nationality">Nationality</label>
+                <select
+                  className="w-full rounded-lg border border-gray-600 p-4 text-sm shadow-sm"
+                  name="nationality"
+                  id="nationality"
+                  value={formData.nationality}
+                  onChange={handleSelectChange}
+                >
+                  <option value="">Select..</option>
+                  {nationality.map((type, index) => (
+                    <option key={index} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="flex justify-between items-center py-7">
+                <button
+                  type="submit"
+                  className="w-full bg-green-700 rounded-lg border p-3 text-white font-semibold text-center transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-indigo-500"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+
+
+

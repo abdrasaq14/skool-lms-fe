@@ -1,6 +1,10 @@
-import { useState } from "react";
+
+
 import { Link } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { updateFormData } from "../../states/onboardingViews/stepOneDataSlice";
 
 interface IStepProps {
   changeActiveStep: (step: number) => void;
@@ -12,16 +16,16 @@ interface IStepProps {
   // Define courseType as a prop
 }
 
-interface IFormData {
-  name: string;
-  email: string;
-  password: string;
-  courseType: string;
-  studyMode: string;
-  courseSearch: string;
-  entryYear: number;
-  entryMonth: string;
-}
+// interface IFormData {
+//   name: string;
+//   email: string;
+//   password: string;
+//   courseType: string;
+//   studyMode: string;
+//   courseSearch: string;
+//   entryYear: number;
+//   entryMonth: string;
+// }
 
 export const Stepone: React.FC<IStepProps> = ({
   changeActiveStep,
@@ -31,16 +35,19 @@ export const Stepone: React.FC<IStepProps> = ({
   entryYear,
   entryMonth,
 }) => {
-  const [formData, setFormData] = useState<IFormData>({
-    name: " ",
-    email: " ",
-    password: " ",
-    courseType: "",
-    studyMode: " ",
-    courseSearch: " ",
-    entryYear: 0,
-    entryMonth: " ",
-  });
+
+  const dispatch = useDispatch();
+
+  // const [formData, setFormData] = useState<IFormData>({
+  //   name: " ",
+  //   email: " ",
+  //   password: " ",
+  //   courseType: "",
+  //   studyMode: " ",
+  //   courseSearch: " ",
+  //   entryYear: 0,
+  //   entryMonth: " ",
+  // });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -60,12 +67,21 @@ export const Stepone: React.FC<IStepProps> = ({
     e: React.ChangeEvent<HTMLSelectElement>
   ): void => {
     const { name, value } = e.target;
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    dispatch(updateFormData({ [name]: value }));
   };
+
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     [name]: value,
+  //   }));
+  // };
+
+   const formData = useSelector((state: RootState) => state.stepOneData);
+
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  //   const { name, value } = e.target;
+  //   dispatch(updateFormData({ [name]: value }));
+  // };
 
   return (
     <div className="w-full">
@@ -81,7 +97,7 @@ export const Stepone: React.FC<IStepProps> = ({
         </Link>
       </div>
 
-      <div className="flex items-center justify-center py-6 w-3/4 mx-auto">
+      <div className="flex items-center justify-center py-6 w-3/4 mx-auto pt-9">
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-4">
             <div className="font-inter text-2xl font-semibold leading-10 tracking-tighter text-center">
