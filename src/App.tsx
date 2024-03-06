@@ -12,6 +12,7 @@ import DisabilityDetails from "./pages/Application/DisabilityDetails";
 import ApplicationPage from "./pages/ApplicationPage/ApplicationPage";
 import AcademicReferences from "./pages/Application/AcademicReferences";
 import UploadPassport from "./pages/Application/UploadPassport";
+
 //Applicant dashboard routes
 import ApplicantDashboard from "./pages/ApplicantDashboard/Dashboard";
 import Layout from "./components/ApplicantDashboardComponents/shared/Layout";
@@ -21,9 +22,13 @@ import EnglishQualification from "./pages/Application/EnglishQualification";
 import Qualification from "./pages/Application/Qualifications";
 import FundingInformation from "./pages/Application/FundingInformation";
 import PersonalStatement from "./pages/Application/PersonalStatement";
-import ApplicationViewPage from "./pages/ApplicationViewPage/ApplicationViewPage";
+import Settings from "./pages/ApplicantDashboard/Settings";
+import Profile from "./pages/ApplicantDashboard/Profile";
+
+
 //Admin dashboard routes
 import ApplicationStatesPage from "./pages/ApplicationStatesPage/ApplicationStatesPage";
+import ApplicationViewPage from "./pages/ApplicationViewPage/ApplicationViewPage";
 
 import { ProtectedRoute } from "./components/protectedRoutes/ProtectedRoute";
 
@@ -48,12 +53,16 @@ function App() {
                 <Route element={<Layout />}>
                   <Route index element={<ApplicantDashboard />} />
                   <Route path="products" element={<Products />} />
+                  <Route path="settings" element={<Settings/>}/>
+                  <Route path="profile" element={<Profile/>}/>
                 </Route>
 
                 {/*  */}
 
                 <Route path="onboarding" element={<ApplicationView />} />
                 <Route path="application" element={<ApplicationPage />} />
+                
+
                 <Route
                   path="application/personal-statement"
                   element={<PersonalStatement />}
