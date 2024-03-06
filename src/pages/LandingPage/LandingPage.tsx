@@ -95,7 +95,7 @@ function LandingPage() {
                 Email Address
               </label>
 
-              <div className="relative">
+              <div className="relative mt-1">
                 <input
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setEmail(e.target.value)
@@ -130,7 +130,7 @@ function LandingPage() {
                 Password
               </label>
 
-              <div className="relative">
+              <div className="relative mt-1">
                 <input
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setPassword(e.target.value)
