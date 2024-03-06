@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { updateFormData } from "../../states/onboardingViews/formDataSlice";
 import axiosInstance from "../../utils/axiosInstance";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface IStepProps {
   changeActiveStep: (step: number) => void;
@@ -27,10 +29,12 @@ export const Steptwo: React.FC<IStepProps> = ({
 
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Selector hook to access Redux state
   const stepOneFormData = useSelector((state: RootState) => state.stepOneData);
   const stepTwoFormData = useSelector((state: RootState) => state.formData);
+  const userDetails = useSelector((state: RootState) => state.userDetails);
 
 
 
@@ -44,7 +48,10 @@ export const Steptwo: React.FC<IStepProps> = ({
       applicationType: stepTwoFormData
     });
 
-    console.log(res.data.message)
+
+    if(res.data.successMessage){
+      navigate("/dashboard")
+    }
 
     
 
@@ -75,6 +82,16 @@ export const Steptwo: React.FC<IStepProps> = ({
     const { name, value } = e.target;
     dispatch(updateFormData({ [name]: value }));
   };
+
+  useEffect(() => {
+    dispatch(updateFormData({
+      firstName: userDetails.firstName,
+      lastName: userDetails.lastName,
+      email: userDetails.email,
+      phone: userDetails.phone,
+      residenceCountry: userDetails.country
+    }))
+  }, [])
 
   return (
     <div>

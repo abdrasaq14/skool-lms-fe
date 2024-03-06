@@ -26,7 +26,7 @@ const FormStepper: React.FC<FormStepperProps> = ({ activeStep, steps, changeActi
                 <li key={value} className='relative flex justify-center text-blue-600'>
                   <div className='justify-center p-4 text-white flex gap-3 items-center'>
                     <div
-                      className={`flex align-center justify-center items-center rounded-full w-8 h-8 ${activeStep === value ? 'bg-green-400' : "bg-gray-400"}
+                      className={` cursor-pointer flex align-center justify-center items-center rounded-full w-8 h-8 ${activeStep === value ? 'bg-green-400' : "bg-gray-400"}
                       ${isStepComplete(value) ? "bg-green" : "bg-gray-400"}`}
                       onClick={() => handleStepClick(value)} // Handle step click
                     >
