@@ -1,15 +1,16 @@
 import ApplicationHeader from "../../components/applicationComponents/ApplicationHeader";
-import avatar from "/images/avatar.png";
+// import avatar from "/images/avatar.png";
 import Dots from "/images/Dots.png";
-import { useState } from "react";
-import data from "../../dummy-data/data";
-import PageDownload from "../../components/DownloadFunction/PageDownload";
+import { useState, useEffect } from "react";
+import axios from "axios";
+// import data from "../../dummy-data/data";
 
 const ApplicationViewPage = () => {
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [Data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  console.log(data);
   
 
   const toggleDropdown = () => {
@@ -21,18 +22,44 @@ const ApplicationViewPage = () => {
     setDropdownOpen(false);
   };
 
+  useEffect(() => {
+    const fetchApplicationData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/admin/professional-applications/${match.params.id}`
+        );
+        setData(response.data);
+      } catch (error) {
+        console.error("Error fetching application data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchApplicationData();
+  }, [match.params.id]);
+
   const renderQualifications = () => {
-    return data.Qualification.map((qualification, index) => (
-      <div key={index}  >
-        <h2 className="mt-2 font-semibold text-sm">
-          {qualification.areaOfStudy}, {qualification.institutionName}
-        </h2>
-        <p className="text-gray-500 font-light text-sm">
-          {qualification.yearOfGraduation.toLocaleDateString()}
-        </p>
-      </div>
-    ));
+    if (Data && Data.addQualification) {
+      return Data.addQualification.map((qualification, index) => (
+        <div key={index}>
+          <h2 className="mt-2 font-semibold text-sm">
+            {qualification.fieldOfStudy}, {qualification.institutionName}
+          </h2>
+          <p className="text-gray-500 font-light text-sm">
+            {qualification.yearOfGraduation.toLocaleDateString()}
+          </p>
+        </div>
+      ));
+    }
+    return null;
   };
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  const passport = Buffer.from(Data.passportUpload.data);
 
   return (
     <div id="pdf-content">
@@ -44,7 +71,12 @@ const ApplicationViewPage = () => {
         <div>
           <div className="h-[120px] top-92 left-211.5 gap-24 bg-green-500 p-4 rounded-t-2xl flex justify-between">
             <div className="w-200 h-120 top-32 left-32 rounded-full">
-              <img src={avatar} alt="passport" />
+              <img
+                src={`data:image/png;base64,${passport.toString(
+                  "base64"
+                )}`}
+                alt="passport"
+              />
             </div>
             <div className="mt-40">
               <img
@@ -85,9 +117,12 @@ const ApplicationViewPage = () => {
 
         <div className="w-8/12 h-10rem mt-1">
           <div>
-            <h2 className="text-black font-bold text-lg"> {data.name} </h2>
+            <h2 className="text-black font-bold text-lg">
+              {" "}
+              {Data.user.firstName} {Data.user.lastName}
+            </h2>
             <p className="text-gray-500 font-light text-sm mt-2">
-              {data.degree}
+              {Data.degree}
             </p>
           </div>
 
@@ -115,7 +150,9 @@ const ApplicationViewPage = () => {
                   d="M17.8 14h0a7 7 0 1 0-11.5 0h0l.1.3.3.3L12 21l5.1-6.2.6-.7.1-.2Z"
                 />
               </svg>
-              <p className="ml-2 font-medium text-sm">{data.location}</p>
+              <p className="ml-2 font-medium text-sm">
+                {Data.user.countryOfResidence}
+              </p>
             </div>
             <div className="flex items-center justify-between">
               <div className="flex items-center justify-between">
@@ -134,7 +171,9 @@ const ApplicationViewPage = () => {
                     d="m18.4 14.8-1.2-1.3a1.7 1.7 0 0 0-2.4 0l-.7.7a1.7 1.7 0 0 1-2.4 0l-1.9-1.9a1.7 1.7 0 0 1 0-2.4l.7-.6a1.7 1.7 0 0 0 0-2.5L9.2 5.6a1.6 1.6 0 0 0-2.4 0c-3.2 3.2-1.7 6.9 1.5 10 3.2 3.3 7 4.8 10.1 1.6a1.6 1.6 0 0 0 0-2.4Z"
                   />
                 </svg>
-                <p className="ml-2 font-medium text-sm">{data.phone}</p>
+                <p className="ml-2 font-medium text-sm">
+                  {Data.user.phoneNumber}
+                </p>
               </div>
             </div>
             <div className="flex items-center justify-between">
@@ -152,13 +191,15 @@ const ApplicationViewPage = () => {
                   d="m3.5 5.5 7.9 6c.4.3.8.3 1.2 0l7.9-6M4 19h16c.6 0 1-.4 1-1V6c0-.6-.4-1-1-1H4a1 1 0 0 0-1 1v12c0 .6.4 1 1 1Z"
                 />
               </svg>
-              <p className="ml-2 font-medium text-sm">{data.email}</p>
+              <p className="ml-2 font-medium text-sm">{Data.user.email}</p>
             </div>
           </div>
 
           <div className="mt-5">
             <h1 className="text-black font-bold text-base"> About:</h1>
-            <p className="text-black font-light text-sm mt-2 w-11/12">{data.about}</p>
+            <p className="text-black font-light text-sm mt-2 w-11/12">
+              {Data.personalStatement}
+            </p>
           </div>
 
           <div className="mt-5">
@@ -169,7 +210,7 @@ const ApplicationViewPage = () => {
           <div className="mt-5">
             <h1 className="text-black font-bold text-base">Work Experience:</h1>
             <p className="text-gray-500 font-light text-sm ml-5">
-              {data.workExperience
+              {Data.employmentDetails
                 ? "Available Work Experience"
                 : "No Work Experience"}
             </p>
@@ -179,18 +220,20 @@ const ApplicationViewPage = () => {
             <h1 className="text-black font-bold text-base">
               Funding Information:
             </h1>
-            <p className="text-black font-light text-sm ml-5">{data.funding}</p>
+            <p className="text-black font-light text-sm ml-5">
+              {Data.fundingInformation}
+            </p>
           </div>
 
           <div className="mt-5">
             <h1 className="text-black font-bold text-base">Disabilty</h1>
             <p className="text-black font-light text-sm ml-5">
-              {data.disablity}
+              {Data.disablity}
             </p>
           </div>
 
           <div className="mt-5">
-            {data.academicReferences ? (
+            {Data.academicReference ? (
               <h1 className="w-1/4 text-black font-light text-sm ml-5 flex items-center justify-between">
                 <svg
                   className="w-6 h-6 text-green-400 dark:text-white"
@@ -232,7 +275,7 @@ const ApplicationViewPage = () => {
           </div>
 
           <div className="mt-5">
-            {data.englishProficiency ? (
+            {Data.englishLanguageQualification ? (
               <h1 className="w-1/3 text-black font-light text-sm ml-5 flex items-center justify-between">
                 <svg
                   className="w-6 h-6 text-green-400 dark:text-white"
