@@ -26,14 +26,11 @@ interface CourseDetails{
 
 }
 
-
-
 export default function RecentApplications() {
 
     const [ userDetails, setUserDetails ] = useState<UserDetails | null>(null)
     const [ courseDetails, setCourseDetails] = useState<CourseDetails | null>(null)
     const [ applicationDetails, setApplicationDetails] = useState({})
-
 
     useEffect(() => {
 
