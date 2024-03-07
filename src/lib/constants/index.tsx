@@ -2,7 +2,7 @@ import {
     HiOutlineViewGrid,
     HiOutlineCube,
     HiOutlineBell,
-    HiOutlineAnnotation,
+    HiOutlineUser,
     HiOutlineQuestionMarkCircle,
     HiOutlineCog
 } from 'react-icons/hi'
@@ -23,14 +23,14 @@ export const DASHBOARD_SIDEBAR_LINKS = [
     {
         key: 'Notifications',
         label: 'Notifications',
-        path: '/dashboard/notifications',
+        path: '#',
         icon: <HiOutlineBell />
     },
     {
-        key: 'messages',
-        label: 'Messages',
-        path: '/dashboard/messages',
-        icon: <HiOutlineAnnotation />
+        key: 'Profile',
+        label: 'Profile',
+        path: '/dashboard/profile',
+        icon: <HiOutlineUser />
     }
 ]
 
@@ -44,7 +44,7 @@ export const DASHBOARD_SIDEBAR_BOTTOM_LINKS = [
     {
         key: 'support',
         label: 'Help & Support',
-        path: '/dashboard/support',
+        path: '#',
         icon: <HiOutlineQuestionMarkCircle />
     }
 ]

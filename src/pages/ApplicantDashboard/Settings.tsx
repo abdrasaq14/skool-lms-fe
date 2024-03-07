@@ -54,15 +54,15 @@ function ChangePassword() {
   };
 
   return (
-    <div className="pt-10">
-      <div className="w-4/12 mx-auto text-center bg-gray-200 border rounded-xl py-8">
-        <h2 className="text-[1.5rem]">Change Password</h2>
+    <div className="p-10">
+      <div className="w-10/12 bg-white border rounded-xl py-8 px-8">
+        <h2 className="text-[1.5rem] mb-8">Change Password</h2>
 
-        <form className="w-9/12 mx-auto py-2 px-2 mt-2" onSubmit={handleSubmit}>
+        <form className="w-full py-2 mt-2" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-4 text-left">
             {errorMessage && (
               <div
-                className="bg-red-100 border border-red-400 text-red-700 py-1 rounded my-1 relative text-center"
+                className="bg-red-100 border border-red-400 text-red-700 py-2 rounded-lg my-1 relative text-center"
                 role="alert"
               >
                 <span className=" text-xs">{errorMessage}</span>
@@ -72,7 +72,7 @@ function ChangePassword() {
             {successMessage && (
               <div>
                 <div
-                  className="bg-green-100 border border-green-400 text-green-700 py-1 rounded my-1 relative text-center"
+                  className="bg-green-100 border border-green-400 text-green-700 py-2 rounded-lg my-1 relative text-center"
                   role="alert"
                 >
                   <span className=" text-xs">{successMessage}</span>
@@ -84,7 +84,7 @@ function ChangePassword() {
               <label htmlFor="currentPassword">Current Password</label>
               <input
                 onChange={(e) => setCurrentPassword(e.target.value)}
-                className="rounded-lg border border-gray-200 py-2 px-2 text-sm shadow-lg"
+                className="rounded-lg border border-gray-200 py-2 px-4 text-sm focus:outline-none focus:border-green-600 "
                 type="password"
                 name="currentPassword"
                 id="currentPassword"
@@ -96,7 +96,7 @@ function ChangePassword() {
               <label htmlFor="newPassword">New Password</label>
               <input
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="rounded-lg border border-gray-200 py-2 px-2 text-sm shadow-lg"
+                className="rounded-lg border border-gray-200 py-2 px-4 text-sm focus:outline-none focus:border-green-600 "
                 type="password"
                 name="newPassword"
                 id="newPassword"
@@ -107,7 +107,7 @@ function ChangePassword() {
               <label htmlFor="confirmPassword">Confirm Password</label>
               <input
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="rounded-lg border border-gray-200 py-2 px-2 text-sm shadow-lg"
+                className="rounded-lg border border-gray-200 py-2 px-4 text-sm focus:outline-none focus:border-green-600"
                 type="password"
                 name="confirmPassword"
                 id="confirmPassword"
