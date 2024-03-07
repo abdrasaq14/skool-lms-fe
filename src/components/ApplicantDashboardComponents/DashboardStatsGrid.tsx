@@ -2,7 +2,10 @@ import React from 'react'
 import { IoBagHandle, IoPieChart, IoCart } from 'react-icons/io5'
 import { HiOutlineDocumentText } from 'react-icons/hi'
 
+
 export default function DashboardStatsGrid() {
+
+
     return (
         <div className="flex gap-4">
             <BoxWrapper>
@@ -12,7 +15,7 @@ export default function DashboardStatsGrid() {
                 <div className="pl-4">
                     <span className="text-sm text-gray-500 font-light">Total Applications</span>
                     <div className="flex items-center">
-                        <strong className="text-xl text-emerald-700 font-semibold">54232</strong>
+                        <strong className="text-xl text-emerald-700 font-semibold">1</strong>
                     </div>
                 </div>
             </BoxWrapper>
@@ -23,7 +26,7 @@ export default function DashboardStatsGrid() {
                 <div className="pl-4">
                     <span className="text-sm text-gray-500 font-light">Applications accepted</span>
                     <div className="flex items-center">
-                        <strong className="text-xl text-emerald-700 font-semibold">3423</strong>
+                        <strong className="text-xl text-emerald-700 font-semibold">0</strong>
                     </div>
                 </div>
             </BoxWrapper>
@@ -35,7 +38,7 @@ export default function DashboardStatsGrid() {
                 <div className="pl-4">
                     <span className="text-sm text-gray-500 font-light"> Applications Pending </span>
                     <div className="flex items-center">
-                        <strong className="text-xl text-emerald-700 font-semibold">123</strong>
+                        <strong className="text-xl text-emerald-700 font-semibold">1</strong>
                     </div>
                 </div>
             </BoxWrapper>
@@ -48,7 +51,7 @@ export default function DashboardStatsGrid() {
                 <div className="pl-4">
                     <span className="text-sm text-gray-500 font-light"> Applications Rejected </span>
                     <div className="flex items-center">
-                        <strong className="text-xl text-emerald-700 font-semibold">16432</strong>
+                        <strong className="text-xl text-emerald-700 font-semibold">0</strong>
                     </div>
                 </div>
             </BoxWrapper>
