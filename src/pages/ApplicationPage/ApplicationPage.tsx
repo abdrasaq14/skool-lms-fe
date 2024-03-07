@@ -48,18 +48,16 @@ function ApplicationPage() {
       });
       console.log(res);
 
-      if (res.status === 201) {
+      if (res.data.message) {
         navigate("/dashboard");
       }
 
       else {
-        // Handle other response status codes (e.g., 4xx, 5xx)
-        setSubmitError("An error occurred while submitting the application. Please try again later.");
+        setSubmitError(res.data.error);
       }
       
-    } catch (error) {
-      console.error("Error submitting application:", error);
-      setSubmitError("An error occurred while submitting the application. Please try again later.");
+    } catch (error: string | any) {
+      setSubmitError(error.message);
     } finally {
       setIsSubmitting(false);
     }
