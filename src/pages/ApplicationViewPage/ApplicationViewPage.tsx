@@ -1,10 +1,10 @@
 import ApplicationHeader from "../../components/applicationComponents/ApplicationHeader";
-// import avatar from "/images/avatar.png";
 import Dots from "/images/Dots.png";
 import { useState, useEffect } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import PageDownload from "../../components/DownloadFunction/PageDownload";
 
 interface Data {
   user: {
@@ -128,14 +128,6 @@ const ApplicationViewPage = () => {
   if (loading) {
     return <p>Loading...</p>;
   }
-
-  // const getBase64Image = (buffer: number[]) => {
-  //   const binary = String.fromCharCode.apply(null, buffer);
-  //   return `data:image/png;base64,${btoa(binary)}`;
-  // };
-
-  // const base64Image = Data.passportUpload.data.toString();
-  // console.log(base64Image);
 
   const base64Image = Data.passportUpload.data.reduce(
     (acc, current) => acc + String.fromCharCode(current),
@@ -399,7 +391,7 @@ const ApplicationViewPage = () => {
 
           <div className="mt-10 flex items-center justify-between w-1/3">
             <h1 className="text-black font-light text-sm"> Documents</h1>
-            {/* <PageDownload /> */}
+            <PageDownload />
           </div>
         </div>
       </div>
