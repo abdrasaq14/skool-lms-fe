@@ -12,6 +12,7 @@ import DisabilityDetails from "./pages/Application/DisabilityDetails";
 import ApplicationPage from "./pages/ApplicationPage/ApplicationPage";
 import AcademicReferences from "./pages/Application/AcademicReferences";
 import UploadPassport from "./pages/Application/UploadPassport";
+
 //Applicant dashboard routes
 import ApplicantDashboard from "./pages/ApplicantDashboard/Dashboard";
 import Layout from "./components/ApplicantDashboardComponents/shared/Layout";
@@ -21,9 +22,12 @@ import EnglishQualification from "./pages/Application/EnglishQualification";
 import Qualification from "./pages/Application/Qualifications";
 import FundingInformation from "./pages/Application/FundingInformation";
 import PersonalStatement from "./pages/Application/PersonalStatement";
-import ApplicationViewPage from "./pages/ApplicationViewPage/ApplicationViewPage";
+import Settings from "./pages/ApplicantDashboard/Settings";
+import Profile from "./pages/ApplicantDashboard/Profile";
+
 //Admin dashboard routes
 import ApplicationStatesPage from "./pages/ApplicationStatesPage/ApplicationStatesPage";
+import ApplicationViewPage from "./pages/ApplicationViewPage/ApplicationViewPage";
 
 import { ProtectedRoute } from "./components/protectedRoutes/ProtectedRoute";
 
@@ -51,12 +55,15 @@ function App() {
                 <Route element={<Layout />}>
                   <Route index element={<ApplicantDashboard />} />
                   <Route path="products" element={<Products />} />
+                  <Route path="settings" element={<Settings />} />
+                  <Route path="profile" element={<Profile />} />
                 </Route>
 
                 {/*  */}
 
                 <Route path="onboarding" element={<ApplicationView />} />
                 <Route path="application" element={<ApplicationPage />} />
+
                 <Route
                   path="application/personal-statement"
                   element={<PersonalStatement />}
@@ -92,39 +99,22 @@ function App() {
                   path="application/funding-information"
                   element={<FundingInformation />}
                 />
+<<<<<<< HEAD
                
+=======
+>>>>>>> 37e0d19525af1865c3605f28243b955273cd9457
               </Routes>
             </ProtectedRoute>
           }
         />
 
         <Route
-          path="/dashboard/application/academic-references"
-          element={<AcademicReferences />}
-        />
-        <Route
-          path="/dashboard/application/disability-details"
-          element={<DisabilityDetails />}
+          path="admin/applications-section"
+          element={<ApplicationStatesPage />}
         />
 
         <Route
-          path="/dashboard/application/upload-passport"
-          element={<UploadPassport />}
-        />
-        <Route
-          path="/dashboard/application/english-qualification"
-          element={<EnglishQualification />}
-        />
-        <Route
-          path="/dashboard/application/qualifications"
-          element={<Qualification />}
-        />
-        <Route
-          path="/dashboard/application/funding-information"
-          element={<FundingInformation />}
-        />
-        <Route
-          path="/dashboard/application-view"
+          path="admin/dashboard/application-view"
           element={<ApplicationViewPage />}
         />
       </Routes>

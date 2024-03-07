@@ -3,7 +3,7 @@ import avatar from "/images/avatar.png";
 import Dots from "/images/Dots.png";
 import { useState } from "react";
 import data from "../../dummy-data/data";
-import PageDownload from "../../components/DownloadFunction/pageDownload";
+import PageDownload from "../../components/DownloadFunction/PageDownload";
 
 const ApplicationViewPage = () => {
 

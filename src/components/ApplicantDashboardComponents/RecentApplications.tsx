@@ -3,15 +3,7 @@ import { Link } from 'react-router-dom'
 import { getApplicationStatus } from '../../lib/helpers'
 
 const ApplicationData = [
-    {
-        id: '4',
-        company_id: '5624',
-        applicant_id: '97652',
-        company_name: 'Maxer Technologies1',
-        application_date: '2022-05-14T05:24:00',
-        application_status: 'APPLIED',
-        company_address: 'Orchid Road, Lekki'
-    },
+   
     {
         id: '3',
         company_id: '5627',
@@ -28,15 +20,6 @@ const ApplicationData = [
         company_name: 'Maxer Technologies',
         application_date: '2022-05-14T05:24:00',
         application_status: 'ACCEPTED',
-        company_address: 'Orchid Road, Lekki'
-    },
-    {
-        id: '6',
-        company_id: '5627',
-        applicant_id: '97632',
-        company_name: 'Maxer Technologies',
-        application_date: '2022-05-14T05:24:00',
-        application_status: 'DELIVERED',
         company_address: 'Orchid Road, Lekki'
     },
     {

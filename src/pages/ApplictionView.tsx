@@ -3,8 +3,6 @@ import FormStepper from "../components/Steppers/Stepper";
 import { Stepone } from "../components/OnboardingSteps/Stepone";
 import { Steptwo } from "../components/OnboardingSteps/Steptwo";
 
-
-
 function ApplicationView() {
   const [activeStep, setActiveStep] = useState(1);
 
@@ -28,34 +26,26 @@ function ApplicationView() {
               "Others",
             ]}
             studyMode={["Part Time", "Full Time"]}
-
             courseSearch={[
               "Accounting",
               "Biology",
               "Computer Science",
               "Economics",
             ]}
-
-            entryYear={[
-                2024,
-                2025,
-                2026,
-            ]}
-
+            entryYear={[2024, 2025, 2026]}
             entryMonth={[
-                "January",
-                "February",
-                "March",
-                "April",
-                "May",
-                "June",
-                "July",
-                "August",
-                "September",
-                "October",
-                "November",
-                "December",
-            
+              "January",
+              "February",
+              "March",
+              "April",
+              "May",
+              "June",
+              "July",
+              "August",
+              "September",
+              "October",
+              "November",
+              "December",
             ]}
           />
         ),
@@ -63,20 +53,17 @@ function ApplicationView() {
       {
         label: "Start your application",
         value: 2,
-        component: <Steptwo changeActiveStep={setActiveStep}
-        
-                            gender={["Male", "Female"]}
-                            birthCountry={["Nigeria"]}
-                            residenceCountry={["Nigeria"]}
-                            nationality={["Nigeria"]}
-                            
-                            />,
+        component: (
+          <Steptwo
+            changeActiveStep={setActiveStep}
+            gender={["Male", "Female"]}
+            birthCountry={["Nigeria"]}
+            residenceCountry={["Nigeria"]}
+            nationality={["Nigeria"]}
+          />
+        ),
       },
-    //   {
-    //     label: "Step 3",
-    //     value: 3,
-    //     component: <Stepthree changeActiveStep={setActiveStep} />,
-    //   },
+      
     ],
     []
   );

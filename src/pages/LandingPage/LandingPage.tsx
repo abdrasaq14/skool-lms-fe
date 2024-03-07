@@ -37,14 +37,17 @@ function LandingPage() {
       });
       console.log(res);
 
-      if (res.data.message) {
+      if (res.data.userNotOnboarded) {
         localStorage.setItem("token", res.data.token);
-        navigate("/dashboard/onboarding");
-      } else if (res.data.adminSuccessMessage){
-        console.log(res.data.adminSuccessMessage);
-        console.log(res.data.token);
+        navigate(`/dashboard/onboarding`);
+      }
+      else if(res.data.userOnboarded){
         localStorage.setItem("token", res.data.token);
-        navigate("admin/applications-section");
+        navigate(`/dashboard`);
+      }
+      else if(res.data.adminSuccessMessage){
+        localStorage.setItem("token", res.data.token);
+        navigate(`admin/applications-section`)
       }
       
       else if (res.data.error) {
@@ -100,7 +103,7 @@ function LandingPage() {
                 Email Address
               </label>
 
-              <div className="relative">
+              <div className="relative mt-1">
                 <input
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setEmail(e.target.value)
@@ -135,7 +138,7 @@ function LandingPage() {
                 Password
               </label>
 
-              <div className="relative">
+              <div className="relative mt-1">
                 <input
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setPassword(e.target.value)

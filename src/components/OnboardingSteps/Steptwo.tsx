@@ -1,78 +1,109 @@
-import { useState } from "react";
+
+
+
+// import { Link } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { updateFormData } from "../../states/onboardingViews/formDataSlice";
+import { clearFormDataOne } from "../../states/onboardingViews/stepOneDataSlice";
+import { clearFormDataTwo } from "../../states/onboardingViews/formDataSlice";
+import axiosInstance from "../../utils/axiosInstance";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface IStepProps {
   changeActiveStep: (step: number) => void;
+  nationality: string[];
   gender: string[];
   birthCountry: string[];
   residenceCountry: string[];
-  nationality: string[];
-  // Define courseType as a prop
 }
 
-interface IFormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  gender: string;
-  birthCountry: string;
-  residenceCountry: string;
-  nationality: string;
-}
 
 export const Steptwo: React.FC<IStepProps> = ({
   changeActiveStep,
+  nationality,
   gender,
   birthCountry,
   residenceCountry,
-  nationality,
 }) => {
-  const [formData, setFormData] = useState<IFormData>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    gender: "",
-    birthCountry: "",
-    residenceCountry: "",
-    nationality: "",
-  });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // Selector hook to access Redux state
+  const stepOneFormData = useSelector((state: RootState) => state.stepOneData);
+  const stepTwoFormData = useSelector((state: RootState) => state.formData);
+  const userDetails = useSelector((state: RootState) => state.userDetails);
+
+
+
+  const handleSubmit =  async(e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     changeActiveStep(2);
-  };
+
+  try {
+    const res =  await axiosInstance.post("/users/onboarding", {
+      course: stepOneFormData,
+      applicationType: stepTwoFormData
+    });
+
+
+    if(res.data.successMessage){
+      navigate("/dashboard")
+      dispatch(clearFormDataOne());
+      dispatch(clearFormDataTwo());
+    }
+
+    
+
+
+  } catch (error) {
+
+    console.log(error)
+
+  }
+
+};
+
 
   const handlePreviousStep = () => {
-    changeActiveStep(1); // Assuming 0 is the index for the previous step
+    changeActiveStep(1);
   };
 
   const handleSelectChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ): void => {
     const { name, value } = e.target;
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    dispatch(updateFormData({ [name]: value }));
   };
+
+  const formData = useSelector((state: RootState) => state.formData);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    dispatch(updateFormData({ [name]: value }));
   };
+
+  useEffect(() => {
+    dispatch(updateFormData({
+      firstName: userDetails.firstName,
+      lastName: userDetails.lastName,
+      email: userDetails.email,
+      phone: userDetails.phone,
+      residenceCountry: userDetails.country
+    }))
+  }, [])
 
   return (
     <div>
-      <div onClick={handlePreviousStep} className="flex flex-row fixed top-4">
+      <div
+        onClick={handlePreviousStep}
+        className="flex flex-row fixed top-10 left-[120px]"
+      >
         <button className="pr-2 ">
-          {" "}
           <FaArrowLeftLong />
         </button>
         <button className="transition-transform transform hover:scale-105 hidden md:block">
@@ -85,14 +116,12 @@ export const Steptwo: React.FC<IStepProps> = ({
             <div className="font-inter text-2xl font-semibold leading-10 tracking-tighter text-center">
               Start your application
             </div>
-
             <p className="text-base font-normal leading-6 tracking-tighter text-center py-5">
               We need more information about you before we can begin processing
               your application. Some of them have been completed for you by us.
               Verify that the information on your passport or other travel
               document matches exactly.
             </p>
-
             <div className="w-[500px] h-[866px] p-8 rounded-lg gap-[10px] shadow-lg flex flex-col justify-center">
               <div>
                 <label htmlFor="firstName">First Name</label>
@@ -151,7 +180,7 @@ export const Steptwo: React.FC<IStepProps> = ({
                   value={formData.gender}
                   onChange={handleSelectChange}
                 >
-                  <option value="">Male</option>
+                  <option value="">Select..</option>
                   {gender.map((type, index) => (
                     <option key={index} value={type}>
                       {type}
@@ -169,7 +198,7 @@ export const Steptwo: React.FC<IStepProps> = ({
                   value={formData.birthCountry}
                   onChange={handleSelectChange}
                 >
-                  <option value="">Nigeria</option>
+                  <option value="">Select..</option>
                   {birthCountry.map((type, index) => (
                     <option key={index} value={type}>
                       {type}
@@ -189,7 +218,7 @@ export const Steptwo: React.FC<IStepProps> = ({
                   value={formData.residenceCountry}
                   onChange={handleSelectChange}
                 >
-                  <option value="">Nigeria</option>
+                  <option value="">Select..</option>
                   {residenceCountry.map((type, index) => (
                     <option key={index} value={type}>
                       {type}
@@ -198,16 +227,17 @@ export const Steptwo: React.FC<IStepProps> = ({
                 </select>
               </div>
 
+              {/* Other input fields */}
               <div>
-                <label htmlFor="birthCountry">Nationality</label>
+                <label htmlFor="nationality">Nationality</label>
                 <select
-                  className="w-full rounded-lg border border-gray-600 p-4  text-sm shadow-sm"
+                  className="w-full rounded-lg border border-gray-600 p-4 text-sm shadow-sm"
                   name="nationality"
                   id="nationality"
                   value={formData.nationality}
                   onChange={handleSelectChange}
                 >
-                  <option value="">Nigeria</option>
+                  <option value="">Select..</option>
                   {nationality.map((type, index) => (
                     <option key={index} value={type}>
                       {type}
@@ -215,13 +245,13 @@ export const Steptwo: React.FC<IStepProps> = ({
                   ))}
                 </select>
               </div>
-
               <div className="flex justify-between items-center py-7">
                 <button
+                  
                   type="submit"
                   className="w-full bg-green-700 rounded-lg border p-3 text-white font-semibold text-center transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-indigo-500"
                 >
-                  Save and continue
+                  Submit
                 </button>
               </div>
             </div>
@@ -231,3 +261,7 @@ export const Steptwo: React.FC<IStepProps> = ({
     </div>
   );
 };
+
+
+
+

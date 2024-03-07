@@ -2,12 +2,7 @@
 
 export function getApplicationStatus(status: string) {
     switch (status) {
-        case 'APPLIED':
-            return (
-                <span className="capitalize py-1 px-2 rounded-md text-xs text-sky-600 bg-sky-100">
-                    {status.replace(/_/g, ' ').toLowerCase()}
-                </span>
-            )
+    
         case 'REJECTED':
             return (
                 <span className="capitalize py-1 px-2 rounded-md text-xs text-orange-600 bg-orange-100">
@@ -27,11 +22,5 @@ export function getApplicationStatus(status: string) {
                 </span>
             )
 
-        default:
-            return (
-                <span className="capitalize py-1 px-2 rounded-md text-xs text-gray-600 bg-gray-100">
-                    {status.replace('_', ' ').toLowerCase()}
-                </span>
-            )
     }
 }
