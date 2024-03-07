@@ -6,7 +6,7 @@ export default function PageDownload() {
       const input = document.getElementById('pdf-content');
   
       html2canvas(input as HTMLElement)
-        .then((canvas: { toDataURL: (arg0: string) => any; }) => {
+        .then((canvas) => {
           const imgData = canvas.toDataURL('image/png');
           const pdf = new jsPDF();
           const imgProps = pdf.getImageProperties(imgData);

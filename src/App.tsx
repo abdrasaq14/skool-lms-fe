@@ -41,7 +41,10 @@ function App() {
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/reset-password" element={<ResetPasswordForm />} />
         <Route path="/new-password/:token" element={<NewPasswordForm />} />
-
+        <Route
+                  path="/admin/applications-section"
+                  element={<ApplicationStatesPage />}
+                />
         {/* Protected Routes after logging - Dashboard related routes. */}
         <Route
           path="/dashboard/*"
@@ -96,6 +99,7 @@ function App() {
                   path="application/funding-information"
                   element={<FundingInformation />}
                 />
+               
               </Routes>
             </ProtectedRoute>
           }

@@ -1,17 +1,12 @@
 import classNames from 'classnames'
 import { Link } from 'react-router-dom'
 
+
 const NotificationsData = [
-    {
-        id: '3433',
-        company_name: 'Google',
-        notification_thumbnail: 'https://source.unsplash.com/100x100?macbook',
-        notification_status: 'Accepted'
-    },
     {
         id: '3432',
         company_name: 'Decagon',
-        notification_thumbnail: 'https://source.unsplash.com/100x100?macbook',
+        notification_thumbnail: '/images/decagon-logo.png',
         notification_status: 'Rejected'
     }
 ]
@@ -29,15 +24,15 @@ function Notifications() {
                     >
                         <div className="w-10 h-10 min-w-[2.5rem] bg-gray-200 rounded-sm">
                             <img
-                                className="w-full h-full object-cover rounded-sm"
+                                className=" object-contain rounded-sm w-full h-full "
                                 src={notification.notification_thumbnail}
                                 alt={notification.company_name}
                             />
                         </div>
                         <div className="ml-4 flex-1">
                             <p className="text-sm text-gray-800  ">
-                                {notification.company_name}
-                                {notification.notification_status === 'Rejected' ? 'Rejected' : 'Accepted'} Your
+                                {notification.company_name} {" "}
+                                {notification.notification_status === 'Rejected' ? 'Rejected' : 'Accepted'}  Your
                                 Application
                             </p>
                             <span
