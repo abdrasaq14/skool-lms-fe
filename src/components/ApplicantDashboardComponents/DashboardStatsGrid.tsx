@@ -17,18 +17,19 @@ export default function DashboardStatsGrid() {
                 </div>
             </BoxWrapper>
             <BoxWrapper>
-                <div className="rounded-full h-12 w-12 flex items-center justify-center bg-orange-600">
+                <div className="rounded-full h-12 w-12 flex items-center justify-center bg-green-600">
                     <IoPieChart className="text-2xl text-white" />
                 </div>
                 <div className="pl-4">
-                    <span className="text-sm text-gray-500 font-light">Replied</span>
+                    <span className="text-sm text-gray-500 font-light">Applications accepted</span>
                     <div className="flex items-center">
                         <strong className="text-xl text-emerald-700 font-semibold">3423</strong>
                     </div>
                 </div>
             </BoxWrapper>
+
             <BoxWrapper>
-                <div className="rounded-full h-12 w-12 flex items-center justify-center bg-yellow-400">
+                <div className="rounded-full h-12 w-12 flex items-center justify-center bg-gray-700">
                     <HiOutlineDocumentText className="text-2xl text-white" />
                 </div>
                 <div className="pl-4">
@@ -38,8 +39,10 @@ export default function DashboardStatsGrid() {
                     </div>
                 </div>
             </BoxWrapper>
+
+
             <BoxWrapper>
-                <div className="rounded-full h-12 w-12 flex items-center justify-center bg-green-600">
+                <div className="rounded-full h-12 w-12 flex items-center justify-center bg-orange-600">
                     <IoCart className="text-2xl text-white" />
                 </div>
                 <div className="pl-4">

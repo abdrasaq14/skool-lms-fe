@@ -68,18 +68,18 @@ function Profile() {
 
   return (
     <div>
-      <div className=" w-5/12 mx-auto py-6 bg-gray-200 rounded-xl">
-        <h1 className="text-center text-[1.5rem] mb-8">My Profile</h1>
+      <div className=" w-10/12  py-6 px-12 bg-white rounded-xl mt-6">
+        <h1 className="text-left text-[1.5rem] mb-4">My Profile</h1>
 
         <div>
           <form
             onSubmit={handleSubmit}
-            className=" w-10/12 mx-auto flex flex-col gap-6 py-6 px-4 bg-white rounded-lg"
+            className=" w-full flex flex-col justify-start gap-6 py-6  rounded-lg"
             action=""
           >
             {errorMessage && (
               <div
-                className="bg-red-100 border border-red-400 text-red-700 py-1 rounded my-1 relative text-center"
+                className="bg-red-100 border border-red-400 text-red-700 py-2 rounded-lg my-1 relative text-center text-base"
                 role="alert"
               >
                 <span className=" text-xs">{errorMessage}</span>
@@ -89,7 +89,7 @@ function Profile() {
             {successMessage && (
               <div>
                 <div
-                  className="bg-green-100 border border-green-400 text-green-700 py-1 rounded my-1 relative text-center"
+                  className="bg-green-100 border border-green-400 text-green-700 py-2 rounded-lg my-1 relative text-center text-base"
                   role="alert"
                 >
                   <span className=" text-xs">{successMessage}</span>
@@ -97,12 +97,12 @@ function Profile() {
               </div>
             )}
 
-            <div className="flex gap-4 items-center w-10/12 mx-auto">
-              <label className="w-6/12" htmlFor="firstName">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="firstName">
                 First Name
               </label>
               <input
-                className=" border rounded-lg py-1 px-2 bg-gray-200"
+                className=" border rounded-lg py-3 px-4 bg-gray-100 focus:outline-none focus:border-gray-200"
                 type="text"
                 id="firstName"
                 value={user.firstName}
@@ -110,12 +110,12 @@ function Profile() {
               />
             </div>
 
-            <div className="flex gap-4 items-center w-10/12 mx-auto">
-              <label className="w-6/12" htmlFor="lastName">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="lastName">
                 Last Name
               </label>
               <input
-                className=" border rounded-lg py-1 px-2 bg-gray-200"
+                className=" border rounded-lg py-3 px-4 bg-gray-100 focus:outline-none focus:border-gray-200"
                 type="text"
                 id="lastName"
                 value={user.lastName}
@@ -123,12 +123,12 @@ function Profile() {
               />
             </div>
 
-            <div className="flex gap-4  items-center w-10/12 mx-auto ">
-              <label className=" w-6/12" htmlFor="email">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="email">
                 Email
               </label>
               <input
-                className=" border rounded-lg py-1 px-2 bg-gray-200"
+                className=" border rounded-lg py-3 px-4 bg-gray-100 focus:outline-none focus:border-gray-200"
                 type="email"
                 id="email"
                 value={user.email}
@@ -136,26 +136,26 @@ function Profile() {
               />
             </div>
 
-            <div className="flex gap-4 items-center w-10/12 mx-auto">
-              <label className=" flex-wrap w-6/12" htmlFor="phoneNumber">
+            <div className="flex flex-col gap-2">
+              <label  htmlFor="phoneNumber">
                 Phone Number
               </label>
               <input
                 onChange={(e) => setPhoneNumber(e.target.value)}
-                className=" border rounded-lg py-1 px-2"
+                className=" border rounded-lg py-3 px-4 focus:outline-none focus:border-green-600"
                 type="text"
                 id="phoneNumber"
                 value={phoneNumber}
               />
             </div>
 
-            <div className="flex gap-4 items-center w-10/12 mx-auto">
-              <label className=" flex-wrap w-6/12" htmlFor="countryofResidence">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="countryofResidence">
                 Country
               </label>
               <input
                 onChange={(e) => setCountry(e.target.value)}
-                className=" border rounded-lg py-1 px-2"
+                className=" border rounded-lg py-3 px-4 focus:outline-none focus:border-green-600"
                 type="text"
                 id="countryofResidence"
                 value={country}

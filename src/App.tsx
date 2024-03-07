@@ -99,10 +99,7 @@ function App() {
                   path="application/funding-information"
                   element={<FundingInformation />}
                 />
-<<<<<<< HEAD
                
-=======
->>>>>>> 37e0d19525af1865c3605f28243b955273cd9457
               </Routes>
             </ProtectedRoute>
           }
