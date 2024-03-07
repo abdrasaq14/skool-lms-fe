@@ -111,7 +111,7 @@ function App() {
         />
 
         <Route
-          path="admin/dashboard/application-view"
+          path="admin/dashboard/application-view/:id"
           element={<ApplicationViewPage />}
         />
       </Routes>

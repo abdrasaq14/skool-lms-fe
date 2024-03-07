@@ -2,33 +2,102 @@ import ApplicationHeader from "../../components/applicationComponents/Applicatio
 // import avatar from "/images/avatar.png";
 import Dots from "/images/Dots.png";
 import { useState, useEffect } from "react";
-import axios from "axios";
-// import data from "../../dummy-data/data";
+import axiosInstance from "../../utils/axiosInstance";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+interface Data {
+  user: {
+    firstName: string;
+    lastName: string;
+    countryOfResidence: string;
+    phoneNumber: string;
+    email: string;
+  };
+  status: string;
+  personalStatement: string;
+  addQualification: {
+    gradeOrCGPA: string;
+    fieldOfStudy: string;
+    institutionName: string;
+    yearOfGraduation: string;
+    qualificationType: string;
+    countryOfInstitution: string;
+  };
+  employmentDetails: boolean;
+  fundingInformation: string;
+  disablity: string;
+  academicReference: boolean;
+  englishLanguageQualification: boolean;
+  passportUpload: {
+    data: number[];
+  };
+}
 
 const ApplicationViewPage = () => {
 
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [Data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
-  
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [Data, setData] = useState<Data>({} as Data);
+  const [loading, setLoading] = useState(true);
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
 
-  const handleOptionClick = (option: string) => {
-    console.log(`Selected option: ${option}`);
+  const handleOptionAccept = async () => {
+    try {
+      const response = await axiosInstance.put(
+      `/users/approve-application/${id}`
+    );
+    if (response.data.message) {
+      navigate("/admin/applications-section");
+    }
     setDropdownOpen(false);
+    } catch (error) {
+      console.error("Error approving application:", error);
+    }
+  }
+
+  const handleOptionReject = async () => {
+    try {
+      const response = await axiosInstance.put(
+      `/users/reject-application/${id}`
+    );
+    if (response.data.message) {
+      navigate("/admin/applications-section");
+    }
+    setDropdownOpen(false);
+    } catch (error) {
+      console.error("Error rejecting application:", error);
+    }
   };
+
+  const handleOptionDelete = async () => {
+    try {
+      const response = await axiosInstance.delete(
+        `/users/professional-application/${id}`
+      );
+      if (response.data.message) {
+        navigate("/admin/applications-section");
+      }
+      setDropdownOpen(false);
+    } catch (error) {
+      console.error("Error Deleting application:", error);
+    }
+  };
+
+  const { id } = useParams();
 
   useEffect(() => {
     const fetchApplicationData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/admin/professional-applications/${match.params.id}`
+        const response = await axiosInstance.get(
+          `/admin/professional-applications/${id}`
         );
         setData(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching application data:", error);
       } finally {
@@ -37,20 +106,21 @@ const ApplicationViewPage = () => {
     };
 
     fetchApplicationData();
-  }, [match.params.id]);
+  }, [id]);
 
   const renderQualifications = () => {
     if (Data && Data.addQualification) {
-      return Data.addQualification.map((qualification, index) => (
-        <div key={index}>
+      return (
+        <div>
           <h2 className="mt-2 font-semibold text-sm">
-            {qualification.fieldOfStudy}, {qualification.institutionName}
+            {Data.addQualification.fieldOfStudy},{" "}
+            {Data.addQualification.institutionName}
           </h2>
           <p className="text-gray-500 font-light text-sm">
-            {qualification.yearOfGraduation.toLocaleDateString()}
+            {Data.addQualification.yearOfGraduation}
           </p>
         </div>
-      ));
+      );
     }
     return null;
   };
@@ -59,7 +129,20 @@ const ApplicationViewPage = () => {
     return <p>Loading...</p>;
   }
 
-  const passport = Buffer.from(Data.passportUpload.data);
+  // const getBase64Image = (buffer: number[]) => {
+  //   const binary = String.fromCharCode.apply(null, buffer);
+  //   return `data:image/png;base64,${btoa(binary)}`;
+  // };
+
+  // const base64Image = Data.passportUpload.data.toString();
+  // console.log(base64Image);
+
+  const base64Image = Data.passportUpload.data.reduce(
+    (acc, current) => acc + String.fromCharCode(current),
+    ""
+  );
+  const imageDataUri = `data:image/png;base64,${btoa(base64Image)}`;
+  
 
   return (
     <div id="pdf-content">
@@ -72,9 +155,7 @@ const ApplicationViewPage = () => {
           <div className="h-[120px] top-92 left-211.5 gap-24 bg-green-500 p-4 rounded-t-2xl flex justify-between">
             <div className="w-200 h-120 top-32 left-32 rounded-full">
               <img
-                src={`data:image/png;base64,${passport.toString(
-                  "base64"
-                )}`}
+                src={imageDataUri}
                 alt="passport"
               />
             </div>
@@ -90,19 +171,19 @@ const ApplicationViewPage = () => {
                   <ul>
                     <li
                       className="py-2 px-4 cursor-pointer hover:bg-gray-100"
-                      onClick={() => handleOptionClick("Accept")}
+                      onClick={handleOptionAccept}
                     >
                       Accept Application
                     </li>
                     <li
                       className="py-2 px-4 cursor-pointer hover:bg-gray-100"
-                      onClick={() => handleOptionClick("Reject")}
+                      onClick={handleOptionReject}
                     >
                       Reject Application
                     </li>
                     <li
                       className="py-2 px-4 cursor-pointer hover:bg-gray-100"
-                      onClick={() => handleOptionClick("Delete")}
+                      onClick={handleOptionDelete}
                     >
                       Delete Application
                     </li>
@@ -122,7 +203,7 @@ const ApplicationViewPage = () => {
               {Data.user.firstName} {Data.user.lastName}
             </h2>
             <p className="text-gray-500 font-light text-sm mt-2">
-              {Data.degree}
+              {/* {Data.degree} */}
             </p>
           </div>
 
@@ -318,7 +399,7 @@ const ApplicationViewPage = () => {
 
           <div className="mt-10 flex items-center justify-between w-1/3">
             <h1 className="text-black font-light text-sm"> Documents</h1>
-            <PageDownload />
+            {/* <PageDownload /> */}
           </div>
         </div>
       </div>
