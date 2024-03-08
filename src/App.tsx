@@ -99,6 +99,7 @@ function App() {
                   path="application/funding-information"
                   element={<FundingInformation />}
                 />
+               
               </Routes>
             </ProtectedRoute>
           }
@@ -110,7 +111,7 @@ function App() {
         />
 
         <Route
-          path="admin/dashboard/application-view"
+          path="admin/dashboard/application-view/:id"
           element={<ApplicationViewPage />}
         />
       </Routes>

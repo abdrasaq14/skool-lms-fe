@@ -26,6 +26,25 @@ interface ApplicationDetails {
   degree: string;
   passport: string;
   status: string;
+  user: {
+    firstName: string;
+    lastName: string;
+    countryOfResidence: string;
+    phoneNumber: string;
+    email: string;
+  };
+  //  ProfessionalApplication {
+  //   id: 'b30bc4c9-12c9-4033-8ee3-364473c04d61',
+  //   status: 'pending',
+  //   personalStatement: 'Hello my name is Nkachukwu Nwobi.',
+  //   addQualification: {
+  //     gradeOrCGPA: '4.2',
+  //     fieldOfStudy: 'Chemical Engineering',
+  //     institutionName: 'University of Lagos',
+  //     yearOfGraduation: '2019',
+  //     qualificationType: 'Bachelor Degree',
+  //     countryOfInstitution: 'Nigeria'
+  //   },
 }
 
 function ApplicationStatesPage() {
@@ -139,16 +158,23 @@ function ApplicationStatesPage() {
                     name="application"
                   />
                 </td>
-                <td className="border-t-0  py-6">{"Dorcas Ajah"}</td>
-                <td className="border-t-0  py-6 px-16">{"Business Admin"}</td>
-                <td className="border-t-0  py-6 px-16">{"Master's Degree"}</td>
+                <td className="border-t-0  py-6">{`${application.user.firstName} ${application.user.lastName}`}</td>
+                <td className="border-t-0  py-6 px-16">
+                  {application.addQualification.fieldOfStudy}
+                </td>
+                <td className="border-t-0  py-6 px-16">
+                  {application.addQualification.qualificationType}
+                </td>
                 <td className="border-t-0  py-6 px-16">{application.status}</td>
 
                 <td className="border-t-0  py-6 px-16">
-                  <Link to="/admin/dashboard/application-view" className="hover:no-underline">
-                  <span className="text-green-1 border-2 border-green-border-1 p-2 font-semibold cursor-pointer">
-                    View&nbsp;Application
-                  </span>
+                  <Link
+                    to={`/admin/dashboard/application-view/${application.id}`}
+                    className="hover:no-underline"
+                  >
+                    <span className="text-green-1 border-2 border-green-border-1 p-2 font-semibold cursor-pointer">
+                      View&nbsp;Application
+                    </span>
                   </Link>
                 </td>
                 <td className="border-t-0  py-6 cursor-pointer">
