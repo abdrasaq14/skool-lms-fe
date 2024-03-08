@@ -145,7 +145,7 @@ function ApplicationStatesPage() {
                 <td className="border-t-0  py-6 px-16">{application.status}</td>
 
                 <td className="border-t-0  py-6 px-16">
-                  <Link to="/dashboard/application-view" className="hover:no-underline">
+                  <Link to="/admin/dashboard/application-view" className="hover:no-underline">
                   <span className="text-green-1 border-2 border-green-border-1 p-2 font-semibold cursor-pointer">
                     View&nbsp;Application
                   </span>
