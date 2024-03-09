@@ -24,10 +24,10 @@ const userDetailsSlice = createSlice({
             const user = action.payload;
             return Object.assign(state, user);
         },
-        logout: () => initialState,
+        clearUserDetails: () => initialState,
     },
 });
 
-export const { login, logout } = userDetailsSlice.actions;
+export const { login, clearUserDetails } = userDetailsSlice.actions;
 
 export default userDetailsSlice.reducer;

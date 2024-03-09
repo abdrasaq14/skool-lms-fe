@@ -32,6 +32,16 @@ const qualificationSlice = createSlice({
         ...action.payload,
       };
     },
+    deleteQualificationDetails: (state) => {
+      state.qualificationDetails = {
+        institutionName: "",
+        fieldOfStudy: "",
+        yearOfGraduation: "",
+        gradeOrCGPA: "",
+        qualificationType: "",
+        countryOfInstitution: "",
+      };
+    }
     
   },
  
@@ -39,6 +49,6 @@ const qualificationSlice = createSlice({
  
  
  
-export const { updateDetails } = qualificationSlice.actions;
+export const { updateDetails, deleteQualificationDetails } = qualificationSlice.actions;
  
 export default qualificationSlice.reducer;

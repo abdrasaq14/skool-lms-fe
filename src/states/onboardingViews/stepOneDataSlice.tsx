@@ -18,16 +18,16 @@ const initialState: ISteponeState = {
 };
 
 const steponeDataSlice = createSlice({
-  name: "formData",
+  name: "steponeData",
   initialState,
   reducers: {
-    updateFormData(state, action: PayloadAction<Partial<ISteponeState>>) {
+    updateFormOneData(state, action: PayloadAction<Partial<ISteponeState>>) {
       return {
         ...state,
         ...action.payload,
       };
     },
-    clearFormDataOne(state) {
+    clearFormOneData(state) {
       return {
         ...state,
         courseType: "",
@@ -40,5 +40,5 @@ const steponeDataSlice = createSlice({
   },
 });
 
-export const { updateFormData, clearFormDataOne } = steponeDataSlice.actions;
+export const { updateFormOneData, clearFormOneData } = steponeDataSlice.actions;
 export default steponeDataSlice.reducer;

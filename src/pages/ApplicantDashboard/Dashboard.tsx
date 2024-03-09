@@ -1,5 +1,5 @@
 import DashboardStatsGrid from "../../components/ApplicantDashboardComponents/DashboardStatsGrid";
-import RecentOrders from "../../components/ApplicantDashboardComponents/RecentApplications";
+import RecentApplications from "../../components/ApplicantDashboardComponents/RecentApplications";
 
 import PopularProducts from "../../components/ApplicantDashboardComponents/Notifications";
 import {
@@ -26,7 +26,7 @@ export default function ApplicantDashboard() {
                 <BuyerProfilePieChart />
             </div> */}
       <div className="flex flex-row gap-4 w-full">
-        <RecentOrders />
+        <RecentApplications />
         <PopularProducts />
       </div>
     </div>

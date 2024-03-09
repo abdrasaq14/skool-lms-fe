@@ -17,12 +17,16 @@ const englishQualificationSlice = createSlice({
         updateDetails: (state, action: PayloadAction<Partial<englishQualificationState['englishQualification']>>) => {
             state.englishQualification = action.payload
         },
+        deleteEnglishQualification: (state) => {
+            state.englishQualification = initialState.englishQualification;
+        }
+
     },
     
 })
 
 
-export const { updateDetails } = englishQualificationSlice.actions
+export const { updateDetails, deleteEnglishQualification } = englishQualificationSlice.actions
 
 
 export default englishQualificationSlice.reducer

@@ -2,6 +2,9 @@ import classNames from "classnames";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import decagonLogo from "/images/decagon-logo.png";
 import { HiOutlineLogout } from "react-icons/hi";
+import { clearUserDetails } from "../../../states/userDetails/userDetailsSlice";
+import { useDispatch } from "react-redux";
+
 import {
   DASHBOARD_SIDEBAR_LINKS,
   DASHBOARD_SIDEBAR_BOTTOM_LINKS,
@@ -11,10 +14,15 @@ const linkClass =
   "flex items-center gap-4 px-3 py-2 hover:bg-green-400 hover:text-white hover:no-underline active:bg-neutral-600 rounded-sm text-base";
 
 export default function Sidebar() {
+
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const logout = () => {
     localStorage.removeItem("token");
+    dispatch(clearUserDetails());
+    window.history.replaceState(null, "", "/");
+ 
     navigate("/");
   };
 
