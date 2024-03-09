@@ -24,6 +24,9 @@ import FundingInformation from "./pages/Application/FundingInformation";
 import PersonalStatement from "./pages/Application/PersonalStatement";
 import Settings from "./pages/ApplicantDashboard/Settings";
 import Profile from "./pages/ApplicantDashboard/Profile";
+import Applicationsuccess from "../modals/Applicationsuccess";
+import ApplicationRejected from "../modals/ApplicationRejected";
+import ApplicationDeleted from "../modals/ApplicationDeleted";
 
 //Admin dashboard routes
 import ApplicationStatesPage from "./pages/ApplicationStatesPage/ApplicationStatesPage";
@@ -38,6 +41,7 @@ function App() {
         {/* <Route path="/signup" element={<TestPage />} /> */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/register" element={<SignUpPage />} />
+        
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/reset-password" element={<ResetPasswordForm />} />
         <Route path="/new-password/:token" element={<NewPasswordForm />} />
@@ -103,8 +107,17 @@ function App() {
               </Routes>
             </ProtectedRoute>
           }
-        />
+        /> 
 
+          {/* Application success, Deleted and rejected modals */}
+        <Route path="/application-success" element={<Applicationsuccess />} />
+        <Route path="/application-rejected" element={<ApplicationRejected />} />
+        <Route path="/application-deleted" element={<ApplicationDeleted />} />
+
+
+
+
+        {/* Admin dashboard routes */}
         <Route
           path="admin/applications-section"
           element={<ApplicationStatesPage />}
