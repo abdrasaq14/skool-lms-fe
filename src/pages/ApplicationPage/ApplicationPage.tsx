@@ -132,7 +132,8 @@ function ApplicationPage() {
           setSubmitError(null);
         }, 5000);
       }
-    } catch (error: string | any) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error:any) {
       setSubmitError(error.message);
     } finally {
       setIsSubmitting(false);
