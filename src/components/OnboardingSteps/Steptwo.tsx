@@ -5,9 +5,9 @@
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { updateFormData } from "../../states/onboardingViews/formDataSlice";
-import { clearFormDataOne } from "../../states/onboardingViews/stepOneDataSlice";
-import { clearFormDataTwo } from "../../states/onboardingViews/formDataSlice";
+import { updateFormTwoData } from "../../states/onboardingViews/stepTwoDataSlice";
+import { clearFormOneData } from "../../states/onboardingViews/stepOneDataSlice";
+import { clearFormTwoData } from "../../states/onboardingViews/stepTwoDataSlice";
 import axiosInstance from "../../utils/axiosInstance";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -35,7 +35,7 @@ export const Steptwo: React.FC<IStepProps> = ({
 
   // Selector hook to access Redux state
   const stepOneFormData = useSelector((state: RootState) => state.stepOneData);
-  const stepTwoFormData = useSelector((state: RootState) => state.formData);
+  const stepTwoFormData = useSelector((state: RootState) => state.stepTwoData);
   const userDetails = useSelector((state: RootState) => state.userDetails);
 
 
@@ -52,12 +52,11 @@ export const Steptwo: React.FC<IStepProps> = ({
 
 
     if(res.data.successMessage){
+      dispatch(clearFormOneData());
+      dispatch(clearFormTwoData());
       navigate("/dashboard")
-      dispatch(clearFormDataOne());
-      dispatch(clearFormDataTwo());
+      
     }
-
-    
 
 
   } catch (error) {
@@ -77,18 +76,18 @@ export const Steptwo: React.FC<IStepProps> = ({
     e: React.ChangeEvent<HTMLSelectElement>
   ): void => {
     const { name, value } = e.target;
-    dispatch(updateFormData({ [name]: value }));
+    dispatch(updateFormTwoData({ [name]: value }));
   };
 
-  const formData = useSelector((state: RootState) => state.formData);
+  const formData = useSelector((state: RootState) => state.stepTwoData);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
-    dispatch(updateFormData({ [name]: value }));
+    dispatch(updateFormTwoData({ [name]: value }));
   };
 
   useEffect(() => {
-    dispatch(updateFormData({
+    dispatch(updateFormTwoData({
       firstName: userDetails.firstName,
       lastName: userDetails.lastName,
       email: userDetails.email,

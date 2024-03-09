@@ -55,6 +55,8 @@ function LandingPage() {
         setTimeout(() => {
           setError("");
         }, 3000);
+        setEmail("");
+        setPassword("");
         return;
       }
     } catch (error) {

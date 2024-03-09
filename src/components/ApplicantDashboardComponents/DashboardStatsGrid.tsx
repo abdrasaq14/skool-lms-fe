@@ -1,9 +1,40 @@
 import React from 'react'
 import { IoBagHandle, IoPieChart, IoCart } from 'react-icons/io5'
 import { HiOutlineDocumentText } from 'react-icons/hi'
+import { useState, useEffect } from 'react'
+import axiosInstance from '../../utils/axiosInstance'
 
+interface ApplicationDetails{
+    createdAt: string,
+    status: string
+}
 
 export default function DashboardStatsGrid() {
+
+    const [ applicationDetails, setApplicationDetails] = useState<ApplicationDetails | null>(null)
+
+
+    useEffect(() => {
+
+        const fetchUserDetails = async () => {
+
+        try {
+            const res = await axiosInstance.get("/users/dashboard")
+            console.log(res.data)
+
+            if(res.data.userDetails || res.data.applicationDetails || res.data.courseDetails){
+                setApplicationDetails(res.data.applicationDetails)
+            }
+            
+        } catch (error) {
+            
+        }
+    }
+
+    fetchUserDetails()
+
+
+    }, [])
 
 
     return (
@@ -15,7 +46,7 @@ export default function DashboardStatsGrid() {
                 <div className="pl-4">
                     <span className="text-sm text-gray-500 font-light">Total Applications</span>
                     <div className="flex items-center">
-                        <strong className="text-xl text-emerald-700 font-semibold">1</strong>
+                        <strong className="text-xl text-emerald-700 font-semibold">{applicationDetails ? 1 : 0}</strong>
                     </div>
                 </div>
             </BoxWrapper>
@@ -26,7 +57,7 @@ export default function DashboardStatsGrid() {
                 <div className="pl-4">
                     <span className="text-sm text-gray-500 font-light">Applications accepted</span>
                     <div className="flex items-center">
-                        <strong className="text-xl text-emerald-700 font-semibold">0</strong>
+                        <strong className="text-xl text-emerald-700 font-semibold">{applicationDetails?.status === "accepted" ? 1 : 0}</strong>
                     </div>
                 </div>
             </BoxWrapper>
@@ -38,7 +69,7 @@ export default function DashboardStatsGrid() {
                 <div className="pl-4">
                     <span className="text-sm text-gray-500 font-light"> Applications Pending </span>
                     <div className="flex items-center">
-                        <strong className="text-xl text-emerald-700 font-semibold">1</strong>
+                        <strong className="text-xl text-emerald-700 font-semibold">{applicationDetails?.status === "pending" ? 1 : 0}</strong>
                     </div>
                 </div>
             </BoxWrapper>
@@ -51,7 +82,7 @@ export default function DashboardStatsGrid() {
                 <div className="pl-4">
                     <span className="text-sm text-gray-500 font-light"> Applications Rejected </span>
                     <div className="flex items-center">
-                        <strong className="text-xl text-emerald-700 font-semibold">0</strong>
+                        <strong className="text-xl text-emerald-700 font-semibold">{applicationDetails?.status === "rejected" ? 1 : 0}</strong>
                     </div>
                 </div>
             </BoxWrapper>

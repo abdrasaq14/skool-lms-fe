@@ -18,9 +18,12 @@ const personalStatementSlice = createSlice({
     ) => {
       state.personalStatement = action.payload;
     },
+    deletePersonalStatement: (state) => {
+      state.personalStatement = initialState.personalStatement;
+    },
   },
 });
 
-export const { updatePersonalStatement } = personalStatementSlice.actions;
+export const { updatePersonalStatement, deletePersonalStatement } = personalStatementSlice.actions;
 
 export default personalStatementSlice.reducer;

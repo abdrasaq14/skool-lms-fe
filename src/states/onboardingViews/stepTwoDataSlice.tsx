@@ -23,17 +23,17 @@ const initialState: IFormDataState = {
   nationality: "",
 };
 
-const formDataSlice = createSlice({
-  name: "formData",
+const stepTwoDataSlice = createSlice({
+  name: "stepTwoData",
   initialState,
   reducers: {
-    updateFormData(state, action: PayloadAction<Partial<IFormDataState>>) {
+    updateFormTwoData(state, action: PayloadAction<Partial<IFormDataState>>) {
       return {
         ...state,
         ...action.payload,
       };
     },
-    clearFormDataTwo(state) {
+    clearFormTwoData(state) {
       return {
         ...state,
         firstName: "",
@@ -49,5 +49,5 @@ const formDataSlice = createSlice({
   },
 });
 
-export const { updateFormData, clearFormDataTwo } = formDataSlice.actions;
-export default formDataSlice.reducer;
+export const { updateFormTwoData, clearFormTwoData } = stepTwoDataSlice.actions;
+export default stepTwoDataSlice.reducer;

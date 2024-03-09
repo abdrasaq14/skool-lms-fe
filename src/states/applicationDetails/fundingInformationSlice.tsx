@@ -16,9 +16,6 @@ const fundingInformationSlice = createSlice({
         updateFundingInformation: (state, action: PayloadAction<string>) => {
             state.fundingInformation = action.payload;
         },
-        fetchFundingInformation: (state) => {
-            state.fundingInformation = localStorage.getItem('fundingInformation') ?? "";
-        },
         deleteFundingInformation: (state) => {
             state.fundingInformation = initialState.fundingInformation;
         }
@@ -26,6 +23,6 @@ const fundingInformationSlice = createSlice({
 });
   
 
-export const { updateFundingInformation, fetchFundingInformation, deleteFundingInformation } = fundingInformationSlice.actions;
+export const { updateFundingInformation, deleteFundingInformation } = fundingInformationSlice.actions;
 
 export default fundingInformationSlice.reducer;

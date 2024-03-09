@@ -24,13 +24,15 @@ import { ReactNode, useEffect } from "react";
     useEffect(() => {
 
       async function checkToken() {
+
+        try{
         const res = await axiosInstance.get("/protected-route");
-        if (
-          res.status === 200 &&
-          (res.data.noTokenError ||
-            res.data.tokenExpiredError ||
+
+        if (res.data.noTokenError ||
+            res.data.TokenExpiredError ||
             res.data.verificationError)
-        ) {
+         {
+          localStorage.removeItem("token");
           navigate("/");
         } 
         
@@ -39,6 +41,11 @@ import { ReactNode, useEffect } from "react";
           dispatch(login(res.data.user));
           
         }
+      } catch (error) {
+        console.error("Error checking token:", error);
+        navigate("/");
+
+      }
       }
 
       checkToken();

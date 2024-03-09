@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { updateFormData } from "../../states/onboardingViews/stepOneDataSlice";
+import { updateFormOneData } from "../../states/onboardingViews/stepOneDataSlice";
 
 interface IStepProps {
   changeActiveStep: (step: number) => void;
@@ -67,7 +67,7 @@ export const Stepone: React.FC<IStepProps> = ({
     e: React.ChangeEvent<HTMLSelectElement>
   ): void => {
     const { name, value } = e.target;
-    dispatch(updateFormData({ [name]: value }));
+    dispatch(updateFormOneData({ [name]: value }));
   };
 
   //   setFormData((prevData) => ({

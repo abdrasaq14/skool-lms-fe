@@ -17,12 +17,15 @@ const employmentDetailsSlice = createSlice({
         updateDetails: (state, action: PayloadAction<Partial<employmentDetailsState['employmentDetails']>>) => {
             state.employmentDetails = action.payload
         },
+        deleteEmploymentDetails: (state) => {
+            state.employmentDetails = initialState.employmentDetails;
+        }
     },
     
 })
 
 
-export const { updateDetails } = employmentDetailsSlice.actions
+export const { updateDetails, deleteEmploymentDetails } = employmentDetailsSlice.actions
 
 
 export default employmentDetailsSlice.reducer
