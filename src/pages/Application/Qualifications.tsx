@@ -101,7 +101,7 @@ const Qualification = () => {
     <>
       <ApplicationHeader
         linkTo="/dashboard/application"
-        header_text="Return to start your Application"
+        header_text="Return to continue your Application"
       />
 
       <div className=" ">
@@ -117,8 +117,8 @@ const Qualification = () => {
           later stage of the
           <br /> process, should they be relevant.
         </p>
-
-        <div className="bg-white w-3/12 mx-auto mt-4 py-4 px-6 border rounded-2xl">
+            
+        <div className="bg-white w-3/12 mx-auto mt-3 py-8 px-7 border rounded-2xl">
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="block text-md font-medium text-black text-left">
@@ -203,10 +203,16 @@ const Qualification = () => {
                   className="block w-full border-2 rounded-lg border-gray-200 py-2.5 px-3 text-sm focus:border-black"
                 >
                   <option value="">Select Qualification Type</option>
-                  <option value="Masters">Masters</option>
-                  <option value="Bachelor Degree">Bachelor Degree</option>
-                  <option value="Higher National Diploma">
-                    Higher National Diploma
+                  <option value="Bachelor">Bachelor's Degree</option>
+                  <option value="Masters">Master's Degree</option>
+                  <option value="Doctorate's/PH.D">
+                    Doctorate's/PH.D
+                  </option>
+                   <option value="Diploma">
+                   Diploma
+                  </option>
+                   <option value="Others">
+                    Others
                   </option>
                 </select>
               </label>
@@ -219,14 +225,25 @@ const Qualification = () => {
             <div className="mb-4">
               <label className="block text-md font-medium text-black text-left">
                 Country of Institution:
-                <input
-                  type="text"
+                <select
+               
                   name="countryOfInstitution"
                   value={formData.countryOfInstitution}
                   onChange={handleChange}
                   placeholder="Enter Country of Institution"
                   className="block w-full border-2 rounded-lg border-gray-200 py-2.5 px-3 text-sm focus:border-black"
-                />
+                >
+                <option value="">Select Country</option>
+                  <option value="Nigeria">Nigeria</option>
+                  <option value="Cameroun">Cameroun</option>
+                  <option value="Ghana">Ghana</option>
+                  <option value="South-Africa">
+                   South-Africa
+                  </option>
+                  <option value="Angola">
+                   Angola
+                  </option>
+                  </select>
               </label>
               {validationErrors.countryOfInstitution && (
                 <div className="text-red-500 text-sm mt-1 ml-1">
