@@ -15,6 +15,7 @@ import { deleteQualificationDetails } from "../../states/applicationDetails/qual
 import { deletePassportDetails } from "../../states/applicationDetails/uploadPassportSlice";
 import axiosInstance from "../../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
+import ApplicationSuccessful from "../../components/applicationComponents/AppliedSuccessful";
 
 interface UserCourse {
   courseSearch: string;
@@ -30,6 +31,7 @@ function ApplicationPage() {
   const [hasApplied, setHasApplied] = useState(false);
   const [userCourse, setUserCourse] = useState<UserCourse | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -125,7 +127,7 @@ function ApplicationPage() {
         dispatch(deleteQualificationDetails());
         dispatch(deletePassportDetails());
 
-        navigate("/dashboard");
+        setShowSuccessModal(true);
       } else if (res.data.error) {
         setSubmitError(res.data.error);
         setTimeout(() => {
@@ -142,11 +144,12 @@ function ApplicationPage() {
 
   return (
     <>
-      <ApplicationHeader
+     <div className={`application-content ${showSuccessModal ? 'blur-md' : ''}`}>
+    <ApplicationHeader
         linkTo="/dashboard"
         header_text="Return to Dashboard"
       />
-
+      
       {loading ? (
         <div className="flex items-center justify-center h-64">
           <div className="w-20 h-20 border-t-4 border-b-4 border-green-600 rounded-full text-center animate-spin"></div>
@@ -177,7 +180,7 @@ function ApplicationPage() {
           ) : (
             <div style={{ marginTop: "-10px" }}>
               <div className="text-center w-8/12 mx-auto">
-                <div className="mb-2 font-inter font-semibold text-2xl"> 
+                <div className="mb-2 font-inter font-semibold text-2xl">
                   {userCourse && (
                     <h3 className="text-2xl font-semibold">
                       {userCourse.courseType === "Postgraduate degree"
@@ -187,14 +190,14 @@ function ApplicationPage() {
                     </h3>
                   )}
                 </div>
-
+ 
                 <div className="font-inter font-normal text-base">
                   <p>
                     To proceed with your course application, fill out the
                     remaining sections.
                   </p>
                 </div>
-
+ 
                 <div className="font-inter font-normal text-base">
                   <p>
                     Upon their completion, you can send in your application.
@@ -202,12 +205,12 @@ function ApplicationPage() {
                     for you to
                   </p>
                 </div>
-
+ 
                 <div className="font-inter font-normal text-base">
                   <p>save time.</p>
                 </div>
               </div>
-
+ 
               <div className="flex-wrap">
                 <div className="flex flex-wrap justify-center mt-5">
                   <ApplicationContainer
@@ -216,7 +219,7 @@ function ApplicationPage() {
                     link_to="/dashboard/application/personal-statement"
                     isFilled={personalStatementFilled}
                   />
-
+ 
                   <ApplicationContainer
                     header_text="Add qualifications"
                     paragraph_text="Please list any credentials you have not yet disclosed to us."
@@ -224,7 +227,7 @@ function ApplicationPage() {
                     isFilled={qualificationsFilled}
                   />
                 </div>
-
+ 
                 <div className="flex flex-wrap justify-center mt-5">
                   <ApplicationContainer
                     header_text="Academic references"
@@ -232,7 +235,7 @@ function ApplicationPage() {
                     link_to="/dashboard/application/academic-references"
                     isFilled={academicReferencesFilled}
                   />
-
+ 
                   <ApplicationContainer
                     header_text="Employment details"
                     paragraph_text="Tell us about your past employment experience."
@@ -240,7 +243,7 @@ function ApplicationPage() {
                     isFilled={employmentDetailsFilled}
                   />
                 </div>
-
+ 
                 <div className="flex flex-wrap justify-center mt-5">
                   <ApplicationContainer
                     header_text="Funding information"
@@ -248,7 +251,7 @@ function ApplicationPage() {
                     link_to="/dashboard/application/funding-information"
                     isFilled={fundingInformationFilled}
                   />
-
+ 
                   <ApplicationContainer
                     header_text="Disability"
                     paragraph_text="Tell us about any disabilities you may have, if that makes you comfortable"
@@ -256,7 +259,7 @@ function ApplicationPage() {
                     isFilled={disabilityDetailsFilled}
                   />
                 </div>
-
+ 
                 <div className="flex flex-wrap justify-center mt-5">
                   <ApplicationContainer
                     header_text="Passport upload"
@@ -264,7 +267,7 @@ function ApplicationPage() {
                     link_to="/dashboard/application/upload-passport"
                     isFilled={uploadPassportFilled}
                   />
-
+ 
                   <ApplicationContainer
                     header_text="English language qualification"
                     paragraph_text="Tell us about any education you have received in English."
@@ -273,7 +276,7 @@ function ApplicationPage() {
                   />
                 </div>
               </div>
-
+ 
               <div
                 className="submit-application-button mt-5 mx-auto mb-14"
                 style={{ width: "25.5%" }}
@@ -295,6 +298,20 @@ function ApplicationPage() {
           
         </>
       )}
+  </div>
+  {showSuccessModal && (
+    <div className="modal-overlay">
+      <ApplicationSuccessful
+        message="Your application has been successfully submitted. Thanks!"
+        buttonText="OK"
+        icon={""}
+        onClick={() => {
+          setShowSuccessModal(false);
+          navigate("/dashboard");
+        }}
+      />
+    </div>
+  )}
     </>
   );
 }
