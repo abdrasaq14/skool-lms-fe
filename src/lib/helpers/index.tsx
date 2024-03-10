@@ -11,7 +11,7 @@ export function getApplicationStatus(status: string) {
             )
         case 'accepted':
             return (
-                <span className="capitalize py-1 px-2 rounded-md text-xs text-teal-600 bg-teal-100">
+                <span className="capitalize py-1 px-2 rounded-md text-xs text-green-600 bg-green-200">
                     {status.replace('_', ' ').toLowerCase()}
                 </span>
             )
