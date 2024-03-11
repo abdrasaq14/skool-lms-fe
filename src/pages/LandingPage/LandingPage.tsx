@@ -60,13 +60,10 @@ function LandingPage() {
         navigate(`admin/applications-section`);
       } else if (res.data.error) {
         setGenericError(res.data.error);
-        setEmail("");
-        setPassword("");
         return;
       }
     } catch (error) {
       setGenericError(`${error}`);
-      console.log(error);
     } finally {
       setValidationErrors({});
     }

@@ -66,19 +66,7 @@ function SignUpPage() {
       setValidationErrors(validationErrors as validationErrors);
       return;
     }
-    // if (
-    //   !firstName ||
-    //   !lastName ||
-    //   !email ||
-    //   !phoneNumber ||
-    //   !countryOfResidence
-    // ) {
-    //   setError("All fields are required, please fill out all fields");
-    //   setTimeout(() => {
-    //     setError("");
-    //   }, 3000);
-    //   return;
-    // }
+
     try {
       const res = await axiosInstance.post("/users/register", {
         firstName,
@@ -96,12 +84,6 @@ function SignUpPage() {
         navigate("/check-email");
       } else if (res.data.existingUserError) {
         setGenericError(res.data.existingUserError);
-        setfirstName("");
-        setlastName("");
-        setEmail("");
-        setPassword("");
-        setPhoneNumber("");
-        setCountryOfResidence("");
       }
     } catch (error) {
       setGenericError(`${error}`);
