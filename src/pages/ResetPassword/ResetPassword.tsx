@@ -48,6 +48,7 @@ const ResetPasswordForm = () => {
       setGenericError("An error occurred. Please try again");
     } finally {
       setValidationErrors({});
+      setGenericError("");
     }
   };
   return (
