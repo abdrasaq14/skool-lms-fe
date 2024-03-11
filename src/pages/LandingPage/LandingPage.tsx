@@ -6,31 +6,43 @@ import "./LandingPage.css";
 import { ChangeEvent, FormEvent, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 
-
+interface validationErrors {
+  email?: string;
+  password?: string;
+}
 
 function LandingPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
-  
+  const [genericError, setGenericError] = useState("");
+  const [validationErrors, setValidationErrors] = useState<validationErrors>(
+    {}
+  );
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
 
+    const validationErrors: validationErrors = {};
 
-    if (!email || !password) {
-      setError("All fields are required, try again");
-      setTimeout(() => {
-        setError("");
-      }, 3000);
+    if (!email.trim()) {
+      validationErrors["email"] = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      validationErrors["email"] = "Email is invalid";
+    }
+
+    if (!password.trim()) {
+      validationErrors["password"] = "Password is required";
+    } else if (password.trim().length < 6) {
+      validationErrors["password"] = "Password must be at least 6 characters";
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setValidationErrors(validationErrors as validationErrors);
       return;
     }
 
     try {
-      console.log(email, password);
-
       const res = await axiosInstance.post("/users/login", {
         email: email,
         password: password,
@@ -40,33 +52,27 @@ function LandingPage() {
       if (res.data.userNotOnboarded) {
         localStorage.setItem("token", res.data.token);
         navigate(`/dashboard/onboarding`);
-      }
-      else if(res.data.userOnboarded){
+      } else if (res.data.userOnboarded) {
         localStorage.setItem("token", res.data.token);
         navigate(`/dashboard`);
-      }
-      else if(res.data.adminSuccessMessage){
+      } else if (res.data.adminSuccessMessage) {
         localStorage.setItem("token", res.data.token);
-        navigate(`admin/applications-section`)
-      }
-      
-      else if (res.data.error) {
-        setError(res.data.error);
-        setTimeout(() => {
-          setError("");
-        }, 3000);
+        navigate(`admin/applications-section`);
+      } else if (res.data.error) {
+        setGenericError(res.data.error);
         setEmail("");
         setPassword("");
         return;
       }
     } catch (error) {
-      setError(`${error}`);
+      setGenericError(`${error}`);
       console.log(error);
+    } finally {
+      setValidationErrors({});
     }
   };
 
   return (
-    
     <section
       className="bg-[image-url] bg-cover bg-center min-h-screen "
       style={{
@@ -91,12 +97,12 @@ function LandingPage() {
             <p className="text-center text-lg font-medium">
               Login in to the Applicant Portal
             </p>
-            {error && (
+            {genericError && (
               <div
                 className="bg-red-100 border border-red-400 text-red-700 py-1 rounded my-2 relative text-center"
                 role="alert"
               >
-                <span className=" text-xs">{error}</span>
+                <span className=" text-xs">{genericError}</span>
               </div>
             )}
 
@@ -111,7 +117,7 @@ function LandingPage() {
                     setEmail(e.target.value)
                   }
                   value={email}
-                  type="email"
+                  type="text"
                   className="w-full rounded-lg border border-gray-200 p-4 pe-12 text-sm shadow-lg"
                   placeholder="Enter your email"
                 />
@@ -132,6 +138,11 @@ function LandingPage() {
                     />
                   </svg>
                 </span>
+                {validationErrors?.email && (
+                  <span className="text-red-500 text-sm ml-1">
+                    {validationErrors.email}
+                  </span>
+                )}
               </div>
             </div>
 
@@ -173,17 +184,16 @@ function LandingPage() {
                     />
                   </svg>
                 </span>
+                {validationErrors?.password && (
+                  <span className="text-red-500 text-sm  ml-1">
+                    {validationErrors.password}
+                  </span>
+                )}
               </div>
             </div>
             <p className="text-right text-sm font-medium underline text-blue-600">
               <Link to="/reset-password">Forgot password</Link>
             </p>
-            {/* <button
-        type="submit"
-        className="block w-full rounded-lg bg-green-600 hover:bg-green-400 px-5 py-3 text-sm font-medium text-white"
-      >
-        Login
-      </button> */}
 
             <MainButton button_text={"Login"} />
 
