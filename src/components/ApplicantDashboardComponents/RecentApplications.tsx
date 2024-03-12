@@ -1,6 +1,5 @@
 import { format } from 'date-fns'
 import { Link } from 'react-router-dom'
-import { getApplicationStatus } from '../../lib/helpers'
 import { useState, useEffect } from 'react'
 import axiosInstance from '../../utils/axiosInstance'
 

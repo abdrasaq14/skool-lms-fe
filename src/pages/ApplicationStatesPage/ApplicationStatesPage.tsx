@@ -53,7 +53,7 @@ function ApplicationStatesPage() {
     []
   );
   const [selectedTab, setSelectedTab] = useState<string | null>("Accepted");
-
+    
   useEffect(() => {
     // setData(dummyData);
     const fetchApplications = async () => {
@@ -65,6 +65,7 @@ function ApplicationStatesPage() {
           }
         );
         console.log(response.data);
+        
         setApplicationData(response.data);
         console.log(applicationData);
       } catch (error) {
@@ -84,7 +85,7 @@ function ApplicationStatesPage() {
           application.status.toLocaleLowerCase() === selectedTab.toLowerCase()
       )
     : applicationData;
-
+console.log(filteredData);
   return (
     <>
       <div className="w-9/12 mx-auto py-6">
@@ -151,6 +152,7 @@ function ApplicationStatesPage() {
           <tbody>
             {filteredData.map((application: ApplicationDetails) => (
               <tr key={application.id}>
+                
                 <td className="border-t-0  py-6 ">
                   <input
                     className="cursor-pointer"
@@ -178,7 +180,7 @@ function ApplicationStatesPage() {
                   </Link>
                 </td>
                 <td className="border-t-0  py-6 cursor-pointer">
-                  <PDFDownloadButton />
+                  <PDFDownloadButton applicationId={application.id} />
                 </td>
               </tr>
             ))}
