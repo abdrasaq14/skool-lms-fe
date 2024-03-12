@@ -18,11 +18,7 @@ const disabilityDetailsSlice = createSlice({
       
             state.disabilityDetails = action.payload
         },
-        fetchDetails: (state) => {
-            
-            state.disabilityDetails = localStorage.getItem('disabilityDetails') ? JSON.parse(localStorage.getItem('disabilityDetails') as string) : initialState.disabilityDetails;
-        },
-        deleteDetails: (state) => {
+        deleteDisability: (state) => {
             state.disabilityDetails = initialState.disabilityDetails;
         }
         
@@ -31,7 +27,7 @@ const disabilityDetailsSlice = createSlice({
 })
 
 
-export const { updateDetails, fetchDetails, deleteDetails } =disabilityDetailsSlice.actions
+export const { updateDetails, deleteDisability } =disabilityDetailsSlice.actions
 
 
 export default disabilityDetailsSlice.reducer

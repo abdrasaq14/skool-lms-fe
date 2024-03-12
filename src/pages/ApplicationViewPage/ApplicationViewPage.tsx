@@ -139,17 +139,14 @@ const ApplicationViewPage = () => {
   return (
     <div id="pdf-content">
       <ApplicationHeader
-        linkTo="/dashboard/application"
-        header_text="Return to Application Home"
+        linkTo="/admin/applications-section"
+        header_text="Return to Admin Dashboard"
       />
       <div className="w-9/12 h-10rem mx-auto mt-1">
         <div>
           <div className="h-[120px] top-92 left-211.5 gap-24 bg-green-500 p-4 rounded-t-2xl flex justify-between">
             <div className="w-200 h-120 top-32 left-32 rounded-full">
-              <img
-                src={imageDataUri}
-                alt="passport"
-              />
+              <img src={imageDataUri} alt="passport" />
             </div>
             <div className="mt-40">
               <img
