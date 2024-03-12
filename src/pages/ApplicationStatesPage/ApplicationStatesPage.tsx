@@ -77,7 +77,7 @@ function ApplicationStatesPage() {
           application.status.toLocaleLowerCase() === selectedTab.toLowerCase()
       )
     : applicationData;
-
+console.log(filteredData);
   return (
     <>
       <div className="w-11/12 mx-auto py-6">
@@ -169,7 +169,7 @@ function ApplicationStatesPage() {
                     </Link>
                   </td>
                   <td className="border-t-0  py-6 cursor-pointer">
-                    <PDFDownloadButton />
+                    <PDFDownloadButton applicationId={application.id} />
                   </td>
                 </tr>
               ))}

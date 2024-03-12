@@ -1,7 +1,7 @@
-import { format } from "date-fns";
+import { format } from 'date-fns'
+import { useState, useEffect } from 'react'
+import axiosInstance from '../../utils/axiosInstance'
 
-import { useState, useEffect } from "react";
-import axiosInstance from "../../utils/axiosInstance";
 import { getApplicationStatus } from "../../lib/helpers";
 
 // interface UserDetails{
