@@ -66,6 +66,7 @@ function LandingPage() {
       setGenericError(`${error}`);
     } finally {
       setValidationErrors({});
+      setGenericError("");
     }
   };
 

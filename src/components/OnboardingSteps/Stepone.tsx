@@ -1,11 +1,17 @@
-
-
 import { Link } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { updateFormOneData } from "../../states/onboardingViews/stepOneDataSlice";
+import { useState } from "react";
 
+interface validationErrors {
+  courseType?: string;
+  studyMode?: string;
+  courseSearch?: string;
+  entryYear?: string;
+  entryMonth?: string;
+}
 interface IStepProps {
   changeActiveStep: (step: number) => void;
   courseType: string[];
@@ -35,7 +41,6 @@ export const Stepone: React.FC<IStepProps> = ({
   entryYear,
   entryMonth,
 }) => {
-
   const dispatch = useDispatch();
 
   // const [formData, setFormData] = useState<IFormData>({
@@ -48,9 +53,40 @@ export const Stepone: React.FC<IStepProps> = ({
   //   entryYear: 0,
   //   entryMonth: " ",
   // });
+  
+  const [validationErrors, setValidationErrors] = useState<validationErrors>(
+    {}
+  );
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+
+    const validationErrors: validationErrors = {};
+
+    if (!formData.courseType) {
+      validationErrors["courseType"] = "Course type is required";
+    }
+
+    if (!formData.studyMode) {
+      validationErrors["studyMode"] = "Study mode is required";
+    }
+
+    if (!formData.courseSearch) {
+      validationErrors["courseSearch"] = "Course is required";
+    }
+
+    if (!formData.entryYear) {
+      validationErrors["entryYear"] = "Entry year is required";
+    }
+
+    if (!formData.entryMonth) {
+      validationErrors["entryMonth"] = "Entry month is required";
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setValidationErrors(validationErrors as validationErrors);
+      return;
+    }
     changeActiveStep(2);
   };
 
@@ -60,8 +96,6 @@ export const Stepone: React.FC<IStepProps> = ({
   // const handlePreviousStep = () => {
   //   history.push('/users/login');
   // };
-
-
 
   const handleSelectChange = (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -76,7 +110,7 @@ export const Stepone: React.FC<IStepProps> = ({
   //   }));
   // };
 
-   const formData = useSelector((state: RootState) => state.stepOneData);
+  const formData = useSelector((state: RootState) => state.stepOneData);
 
   // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
   //   const { name, value } = e.target;
@@ -110,6 +144,9 @@ export const Stepone: React.FC<IStepProps> = ({
             </p>
 
             <div className="w-[500px] h-[597px] px-6 rounded-[16px] gap-[10px] shadow-lg flex flex-col justify-center">
+
+          
+              
               <div>
                 <label htmlFor="courseType">Course type</label>
                 <select
@@ -126,6 +163,12 @@ export const Stepone: React.FC<IStepProps> = ({
                     </option>
                   ))}
                 </select>
+
+                {validationErrors.courseType && (
+                  <span className="text-red-500 text-sm  ml-1">
+                    {validationErrors.courseType}
+                  </span>
+                )}
               </div>
 
               <div>
@@ -144,6 +187,12 @@ export const Stepone: React.FC<IStepProps> = ({
                     </option>
                   ))}
                 </select>
+
+                {validationErrors.studyMode && (
+                  <span className="text-red-500 text-sm  ml-1">
+                    {validationErrors.studyMode}
+                  </span>
+                )}
               </div>
 
               <div>
@@ -162,6 +211,12 @@ export const Stepone: React.FC<IStepProps> = ({
                     </option>
                   ))}
                 </select>
+
+                {validationErrors.courseSearch && (
+                  <span className="text-red-500 text-sm  ml-1">
+                    {validationErrors.courseSearch}
+                  </span>
+                )}
               </div>
 
               <div>
@@ -180,6 +235,12 @@ export const Stepone: React.FC<IStepProps> = ({
                     </option>
                   ))}
                 </select>
+
+                {validationErrors.entryYear && (
+                  <span className="text-red-500 text-sm  ml-1">
+                    {validationErrors.entryYear}
+                  </span>
+                )}
               </div>
 
               <div>
@@ -198,6 +259,12 @@ export const Stepone: React.FC<IStepProps> = ({
                     </option>
                   ))}
                 </select>
+
+                {validationErrors.entryMonth && (
+                  <span className="text-red-500 text-sm  ml-1">
+                    {validationErrors.entryMonth}
+                  </span>
+                )}
               </div>
 
               <div className="flex justify-between items-center py-7">
