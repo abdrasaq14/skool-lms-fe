@@ -5,6 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateDetails } from "../../states/applicationDetails/disabilityDetailsSlice";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../store/store";
+import { set } from "date-fns";
+
+interface validationErrors {
+  disability?: string;
+}
 
 export default function DisabilityDetails() {
   const disabilityDetailsRedux = useSelector(
@@ -12,28 +17,39 @@ export default function DisabilityDetails() {
   );
   console.log(disabilityDetailsRedux);
   const [disabilityDetails, setDisabilityDetails] = useState<string>("");
+  const [validationErrors, setValidationErrors] = useState<validationErrors>(
+    {}
+  );
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const storedValue = useSelector((state: RootState) => state.disabilityDetails.disabilityDetails);
+  const storedValue = useSelector(
+    (state: RootState) => state.disabilityDetails.disabilityDetails
+  );
 
   useEffect(() => {
-
     if (storedValue !== "" && storedValue !== null) {
       setDisabilityDetails(storedValue);
     }
   }, [storedValue]);
 
-  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!disabilityDetails) {
+      setValidationErrors({
+        disability: "Disability Information is required",
+      });
+      return;
+    }
     if (disabilityDetails !== "" && disabilityDetails !== null) {
       dispatch(updateDetails(disabilityDetails));
       navigate("/dashboard/application");
     }
-  };
 
+    setValidationErrors({});
+  };
 
   const handleRadioChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedOption = e.target.value;
@@ -79,27 +95,49 @@ export default function DisabilityDetails() {
           >
             <div className="w-9/12 mx-auto">
               <div className=" text-left mb-3">Please select an option</div>
-
             </div>
 
             <div className=" w-11/12 mx-auto">
-            <select
-                      className="h-full rounded-md border border-gray-400 bg-transparent py-3 pl-2 pr-20 text-gray-600 sm:text-md w-full mb-4 placeholder:text-gray-950"
-                      onChange={handleRadioChange}
-                      value={disabilityDetails}
-                    >
-                      <option value="">Select an option</option>
-                      <option value="Physical Disabilities">Physical Disabilities</option>
-                      <option value="Sensory Disabilities">Sensory Disabilities</option>
-                      <option value="Cognitive/Neurological Disabilities">Cognitive/Neurological Disabilities</option>
-                      <option value="Psychiatric/Mental Health Disabilities">Psychiatric/Mental Health Disabilities</option>
-                      <option value="Chronic Health Disabilities">Chronic Health Disabilities</option>
-                      <option value="Invisible Disabilities">Invisible Disabilities</option>
-                      <option value="Temporary Disabilities">Temporary Disabilities</option>
-                      <option value="Developmental Disabilities">Developmental Disabilities</option>
-                      <option value="Others/Prefer Not to say">Others/Prefer Not to say</option>
-                      <option value="No Disability">No Disability</option>
-                    </select>
+              <select
+                className="h-full rounded-md border border-gray-400 bg-transparent py-3 pl-2 pr-20 text-gray-600 sm:text-md w-full mb-4 placeholder:text-gray-950"
+                onChange={handleRadioChange}
+                value={disabilityDetails}
+              >
+                <option value="">Select an option</option>
+                <option value="Physical Disabilities">
+                  Physical Disabilities
+                </option>
+                <option value="Sensory Disabilities">
+                  Sensory Disabilities
+                </option>
+                <option value="Cognitive/Neurological Disabilities">
+                  Cognitive/Neurological Disabilities
+                </option>
+                <option value="Psychiatric/Mental Health Disabilities">
+                  Psychiatric/Mental Health Disabilities
+                </option>
+                <option value="Chronic Health Disabilities">
+                  Chronic Health Disabilities
+                </option>
+                <option value="Invisible Disabilities">
+                  Invisible Disabilities
+                </option>
+                <option value="Temporary Disabilities">
+                  Temporary Disabilities
+                </option>
+                <option value="Developmental Disabilities">
+                  Developmental Disabilities
+                </option>
+                <option value="Others/Prefer Not to say">
+                  Others/Prefer Not to say
+                </option>
+                <option value="No Disability">No Disability</option>
+              </select>
+              {validationErrors.disability && (
+                <div className="text-red-500 text-sm mb-7 ml-1">
+                  {validationErrors.disability}
+                </div>
+              )}
               <MainButton button_text="Save and Continue" />
             </div>
           </form>

@@ -7,16 +7,25 @@ import { useNavigate } from "react-router-dom";
 import { RootState } from "../../store/store";
 import { QualificationDetailsState } from "../../states/applicationDetails/qualificationsSLice";
 
+interface validationErrors {
+  institutionName?: string;
+  fieldOfStudy?: string;
+  yearOfGraduation?: string;
+  gradeOrCGPA?: string;
+  qualificationType?: string;
+  countryOfInstitution?: string;
+}
 
 const Qualification = () => {
-
   const storedValue = useSelector(
     (state: RootState) => state.qualifications.qualificationDetails
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState<Partial<QualificationDetailsState['qualificationDetails']>>({
+  const [formData, setFormData] = useState<
+    Partial<QualificationDetailsState["qualificationDetails"]>
+  >({
     institutionName: "",
     fieldOfStudy: "",
     yearOfGraduation: "",
@@ -24,16 +33,16 @@ const Qualification = () => {
     qualificationType: "",
     countryOfInstitution: "",
   });
-  
 
+  const [validationErrors, setValidationErrors] = useState<validationErrors>(
+    {}
+  );
 
   useEffect(() => {
- 
     if (storedValue !== null && storedValue !== undefined) {
       setFormData(storedValue);
     }
   }, [storedValue]);
-
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -49,23 +58,44 @@ const Qualification = () => {
       ...prevFormData,
       [name]: value,
     }));
-  }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if(!formData.institutionName || !formData.fieldOfStudy || !formData.yearOfGraduation || !formData.gradeOrCGPA || !formData.qualificationType || !formData.countryOfInstitution) {
-      alert("Please fill in all fields");
+    const validationErrors: validationErrors = {};
+
+    if (!formData.institutionName) {
+      validationErrors["institutionName"] = "Institution Name is required";
+    }
+    if (!formData.fieldOfStudy) {
+      validationErrors["fieldOfStudy"] = "Field of Study is required";
+    }
+    if (!formData.yearOfGraduation) {
+      validationErrors["yearOfGraduation"] = "Year of Graduation is required";
+    }
+    if (!formData.gradeOrCGPA) {
+      validationErrors["gradeOrCGPA"] = "Grade or CGPA is required";
+    }
+    if (!formData.qualificationType) {
+      validationErrors["qualificationType"] = "Qualification Type is required";
+    }
+    if (!formData.countryOfInstitution) {
+      validationErrors["countryOfInstitution"] =
+        "Country of Institution is required";
+    }
+    if (Object.keys(validationErrors).length > 0) {
+      setValidationErrors(validationErrors as validationErrors);
       return;
     }
 
-    else if (formData !== null) { 
+    if (formData !== null) {
       dispatch(updateDetails(formData));
       navigate("/dashboard/application");
-     }
-    };
-  
-  
+
+      setValidationErrors({});
+    }
+  };
 
   return (
     <>
@@ -98,11 +128,16 @@ const Qualification = () => {
                   name="institutionName"
                   value={formData.institutionName}
                   onChange={handleChange}
-                  required
                   placeholder="Enter Institution Name"
                   className="block w-full border-2 rounded-lg border-gray-200 py-2.5 px-3 text-sm focus:border-black"
                 />
               </label>
+
+              {validationErrors.institutionName && (
+                <div className="text-red-500 text-sm mt-1 ml-1">
+                  {validationErrors.institutionName}
+                </div>
+              )}
             </div>
             <div className="mb-4">
               <label className="block text-md font-medium text-black text-left">
@@ -112,11 +147,15 @@ const Qualification = () => {
                   name="fieldOfStudy"
                   value={formData.fieldOfStudy}
                   onChange={handleChange}
-                  required
                   placeholder="Enter Field/Area of Study"
                   className="block w-full border-2 rounded-lg border-gray-200 py-2.5 px-3 text-sm focus:border-black"
                 />
               </label>
+              {validationErrors.fieldOfStudy && (
+                <div className="text-red-500 text-sm mt-1 ml-1">
+                  {validationErrors.fieldOfStudy}
+                </div>
+              )}
             </div>
             <div className="mb-4">
               <label className="block text-md font-medium text-black text-left">
@@ -126,11 +165,15 @@ const Qualification = () => {
                   name="yearOfGraduation"
                   value={formData.yearOfGraduation}
                   onChange={handleChange}
-                  required
                   placeholder="Enter Year of Graduation"
                   className="block w-full border-2 rounded-lg border-gray-200 py-2.5 px-3 text-sm focus:border-black"
                 />
               </label>
+              {validationErrors.yearOfGraduation && (
+                <div className="text-red-500 text-sm mt-1 ml-1 ">
+                  {validationErrors.yearOfGraduation}
+                </div>
+              )}
             </div>
             <div className="mb-4">
               <label className="block text-md font-medium text-black text-left">
@@ -140,11 +183,15 @@ const Qualification = () => {
                   name="gradeOrCGPA"
                   value={formData.gradeOrCGPA}
                   onChange={handleChange}
-                  required
                   placeholder="Enter Grade or CGPA"
                   className="block w-full border-2 rounded-lg text-black border-gray-200 py-2.5 px-3 text-sm focus:border-black"
                 />
               </label>
+              {validationErrors.gradeOrCGPA && (
+                <div className="text-red-500 text-sm mt-1 ml-1">
+                  {validationErrors.gradeOrCGPA}
+                </div>
+              )}
             </div>
             <div className="mb-4">
               <label className="block text-md font-medium text-black text-left">
@@ -153,7 +200,6 @@ const Qualification = () => {
                   name="qualificationType"
                   value={formData.qualificationType}
                   onChange={handleSelectChange}
-                  required
                   className="block w-full border-2 rounded-lg border-gray-200 py-2.5 px-3 text-sm focus:border-black"
                 >
                   <option value="">Select Qualification Type</option>
@@ -164,6 +210,11 @@ const Qualification = () => {
                   </option>
                 </select>
               </label>
+              {validationErrors.qualificationType && (
+                <div className="text-red-500 text-sm mt-1 ml-1">
+                  {validationErrors.qualificationType}
+                </div>
+              )}
             </div>
             <div className="mb-4">
               <label className="block text-md font-medium text-black text-left">
@@ -173,11 +224,15 @@ const Qualification = () => {
                   name="countryOfInstitution"
                   value={formData.countryOfInstitution}
                   onChange={handleChange}
-                  required
                   placeholder="Enter Country of Institution"
                   className="block w-full border-2 rounded-lg border-gray-200 py-2.5 px-3 text-sm focus:border-black"
                 />
               </label>
+              {validationErrors.countryOfInstitution && (
+                <div className="text-red-500 text-sm mt-1 ml-1">
+                  {validationErrors.countryOfInstitution}
+                </div>
+              )}
             </div>
             <div className="mb-">
               <div className="flex flex-col gap-3 mx-auto">
@@ -189,7 +244,5 @@ const Qualification = () => {
       </div>
     </>
   );
-}
-;
-
+};
 export default Qualification;

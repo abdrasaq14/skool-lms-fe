@@ -7,18 +7,24 @@ import { updateFundingInformation } from "../../states/applicationDetails/fundin
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../store/store";
 
-export default function FundingInformation() {
-  
+interface validationErrors {
+  fundingInformation?: string;
+}
 
+export default function FundingInformation() {
   const [fundingInformation, setFundingInformation] = useState<string>("");
+  const [validationErrors, setValidationErrors] = useState<validationErrors>(
+    {}
+  );
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const storedValue = useSelector((state: RootState) => state.fundingInformation.fundingInformation);
+  const storedValue = useSelector(
+    (state: RootState) => state.fundingInformation.fundingInformation
+  );
 
   useEffect(() => {
-
     if (storedValue !== null && storedValue !== "") {
       setFundingInformation(storedValue);
     }
@@ -27,18 +33,25 @@ export default function FundingInformation() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!fundingInformation) {
+      setValidationErrors({
+        fundingInformation: "Funding Information is required",
+      });
+      return;
+    }
+
     if (fundingInformation) {
       dispatch(updateFundingInformation(fundingInformation));
       navigate("/dashboard/application");
     }
+
+    setValidationErrors({});
   };
 
   const handleRadioChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     setFundingInformation(value);
-  
   };
-  
 
   return (
     <>
@@ -87,6 +100,11 @@ export default function FundingInformation() {
                 <option value="Grants">Grants</option>
                 <option value="Not Sure">Not Sure</option>
               </select>
+              {validationErrors.fundingInformation && (
+                <div className="text-red-500 text-sm mb-7 ml-1">
+                  {validationErrors.fundingInformation}
+                </div>
+              )}
               <MainButton button_text="Save and Continue" />
             </div>
           </form>
