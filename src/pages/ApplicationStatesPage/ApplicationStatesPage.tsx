@@ -44,8 +44,10 @@ function ApplicationStatesPage() {
   const [applicationData, setApplicationData] = useState<ApplicationDetails[]>(
     []
   );
+  const [showModal, setShowModal] = useState(false);
   const [selectedTab, setSelectedTab] = useState<string | null>("Accepted");
   const [loading, setLoading] = useState(true);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchApplications = async () => {
@@ -60,7 +62,7 @@ function ApplicationStatesPage() {
       } catch (error) {
         console.error(error);
       } finally {
-        setLoading(!loading);
+        setLoading(false);
       }
     };
 
@@ -71,15 +73,66 @@ function ApplicationStatesPage() {
     setSelectedTab(tab);
   };
 
+  const handleCheckboxChange = (id: string) => {
+    if (selectedIds.includes(id)) {
+      setSelectedIds(selectedIds.filter((selectedId) => selectedId !== id));
+    } else {
+      setSelectedIds([...selectedIds, id]);
+    }
+  };
+
+  const WarningModal = () => (
+    <div className="rounded-lg bg-white p-8 shadow-2xl">
+  <h2 className="text-lg font-bold">Are you sure you want to delete these applications?</h2>
+
+  <div className="mt-4 flex gap-2">
+    <button type="button" className="rounded bg-green-50 px-4 py-2 text-sm font-medium text-green-600"
+    onClick={handleConfirmDelete}
+    >
+      Yes, I'm sure
+    </button>
+
+    <button type="button" className="rounded bg-gray-50 px-4 py-2 text-sm font-medium text-gray-600"
+    onClick={handleCancelDelete}
+    >
+      No, go back
+    </button>
+  </div>
+</div>
+  )
+  const handleDeleteSelected = () => {
+    setShowModal(true);
+  };
+
+  const handleConfirmDelete = () => {
+    // Implement logic to delete selected applications
+    console.log("Deleting selected applications...");
+    setShowModal(false);
+  };
+
+  const handleCancelDelete = () => {
+    setShowModal(false);
+  };
+
+  const handleDownloadSelected = () => {
+    // Implement logic to download selected applications
+    console.log("Download selected applications: ", selectedIds);
+  };
+
   const filteredData = selectedTab
     ? applicationData.filter(
         (application: ApplicationDetails) =>
           application.status.toLocaleLowerCase() === selectedTab.toLowerCase()
       )
     : applicationData;
-console.log(filteredData);
+
   return (
+    
     <>
+    <div className="w-full md:w-1/3 mx-auto mt-10">
+    {showModal && < WarningModal />}
+    </div>
+    
       <div className="w-11/12 mx-auto py-6">
         <ApplicationHeader header_text="" linkTo="" />
 
@@ -145,6 +198,8 @@ console.log(filteredData);
                       className="cursor-pointer"
                       type="checkbox"
                       name="application"
+                      checked={selectedIds.includes(application.id)}
+                      onChange={() => handleCheckboxChange(application.id)}
                     />
                   </td>
                   <td className="border-t-0  py-6">{`${application.user.firstName} ${application.user.lastName}`}</td>
@@ -176,7 +231,48 @@ console.log(filteredData);
             </tbody>
           </table>
         )}
+        {selectedIds.length > 1 && (
+          <div className="flex justify-between px-20 py-4  ">
+            <div className="">
+              <button
+                className="bg-red-600 px-4 py-3 text-center rounded-lg text-white hover:bg-red-400 flex flex-row"
+                onClick={handleDeleteSelected}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-4 mr-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+                Delete{" "}
+                {selectedIds.length === filteredData.length
+                  ? "all"
+                  : selectedIds.length}{" "}
+                applications
+              </button>
+            </div>
+
+            <div className="">
+              <button className="bg-green-600 px-4 py-3 text-center rounded-lg text-white hover:bg-green-400">
+              Download {
+                  selectedIds.length === filteredData.length
+                    ? "all "  
+                    : selectedIds.length
+                }  applications
+              </button>
+            </div>
+          </div>
+        )}
       </div>
+      
     </>
   );
 }
