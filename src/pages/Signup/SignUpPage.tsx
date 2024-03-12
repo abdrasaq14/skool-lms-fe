@@ -27,6 +27,7 @@ function SignUpPage() {
   const [validationErrors, setValidationErrors] = useState<validationErrors>(
     {}
   );
+  const [showPassword, setShowPassword] = useState(false); // State to track password visibility
 
   const handleSignup = async (e: FormEvent) => {
     e.preventDefault();
@@ -94,182 +95,268 @@ function SignUpPage() {
 
   return (
     <>
-      <div
-        className="bg-[image-url] bg-cover bg-center h-full w-full min-h-screen"
-        style={{
-          backgroundImage: `linear-gradient(to bottom, rgba(16, 24, 40, 0.5), rgba(16, 24, 40, 0.5)), url(${backgroundImage})`,
-        }}
-      >
-        <h1 className=" mx-auto w-4/12 pt-6 font-normal text-4xl px-0 text-white text-center leading-tight tracking-wider inknut-antiqua-regular">
-          Register to the Applicant Portal
-        </h1>
+      <div className="bg-[image-url] bg-cover bg-center h-full w-full min-h-screen">
+        <section
+          className="bg-[image-url] bg-cover bg-center"
+          style={{
+            backgroundImage: `linear-gradient(to bottom, rgba(16, 24, 40, 0.5), rgba(16, 24, 40, 0.5)), url(${backgroundImage})`,
+          }}
+        >
+          <div className="mx-auto w-10/12 max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+            <h1 className="text-center text-2xl w-12/12 font-bold mx-auto md:w-10/12 xl:w-6/12 text-white sm:text-4xl lg:text-5xl lg:w-8/12  leading-tight tracking-wider inknut-antiqua-regular">
+              Register to the Applicant Portal
+            </h1>
 
-        <div className="bg-white w-3/12 mx-auto mt-4 py-4 px-6 border rounded-2xl">
-          <form onSubmit={handleSignup}>
-            <div className="mx-auto w-1/3">
-              <img src={decagonLogo} alt="decagon logo" />
-            </div>
+            <div className="  bg-white mx-auto max-w-lg rounded-2xl w-10/12 sm:w-6/12  lg:w-6/12 xl:w-4/12 mt-8">
+              <img
+                className="mx-auto mt-4 pt-4 max-w-md"
+                src={decagonLogo}
+                alt="decagon logo"
+              />
 
-            <div className="text-center text-lg my-1 font-bold">
-              <h5>Create a new account</h5>
-            </div>
-
-            {genericError && (
-              <div
-                className="bg-red-100 border border-red-400 text-red-700 py-1 rounded my-2 relative text-center"
-                role="alert"
+              <form
+                onSubmit={handleSignup}
+                className="mb-0  space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8"
               >
-                <span className=" text-xs">{genericError}</span>
-              </div>
-            )}
+                <p className="text-center text-lg font-medium">
+                  Create a new account
+                </p>
 
-            <div className="flex flex-col gap-2 mb-4">
-              <div className="flex flex-col gap-1">
-                <label htmlFor="firstName" className=" text-sm">
-                  First Name
-                </label>
-                <input
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setfirstName(e.target.value)
-                  }
-                  value={firstName}
-                  className="border-2 rounded-lg border-gray-300 py-1 px-3 text-sm focus:border-green-700"
-                  id="firstName"
-                  type="text"
-                  placeholder="Enter your full names"
-                />
-                {validationErrors?.firstName && (
-                  <span className="text-red-500 text-sm ml-1">
-                    {validationErrors.firstName}
-                  </span>
+                {genericError && (
+                  <div
+                    className="bg-red-100 border border-red-400 text-red-700 py-1 rounded my-2 relative text-center"
+                    role="alert"
+                  >
+                    <span className=" text-xs">{genericError}</span>
+                  </div>
                 )}
-              </div>
-              <div className="flex flex-col gap-1">
-                <label htmlFor="lastName" className=" text-sm">
-                  Last Name
-                </label>
-                <input
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setlastName(e.target.value)
-                  }
-                  value={lastName}
-                  className="border-2 rounded-lg border-gray-300 py-1 px-3 text-sm focus:border-green-700"
-                  id="lastName"
-                  type="text"
-                  placeholder="Enter your full names"
-                />
-                {validationErrors?.lastName && (
-                  <span className="text-red-500 text-sm ml-1">
-                    {validationErrors.lastName}
-                  </span>
-                )}
-              </div>
-              <div className="flex flex-col gap-1">
-                <label htmlFor="email" className=" text-sm">
-                  Email Address
-                </label>
-                <input
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setEmail(e.target.value)
-                  }
-                  value={email}
-                  className="border-2 rounded-lg border-gray-300 py-1 px-3 text-sm focus:border-green-700"
-                  id="email"
-                  type="text"
-                  placeholder="Enter your email"
-                />
-                {validationErrors?.email && (
-                  <span className="text-red-500 text-sm ml-1">
-                    {validationErrors.email}
-                  </span>
-                )}
-              </div>
-              <div className="flex flex-col gap-1">
-                <label htmlFor="email" className=" text-sm">
-                  Password
-                </label>
-                <input
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setPassword(e.target.value)
-                  }
-                  value={password}
-                  className="border-2 rounded-lg border-gray-300 py-1 px-3 text-sm focus:border-green-700"
-                  id="password"
-                  type="password"
-                  placeholder="Enter your password"
-                />
-                {validationErrors?.password && (
-                  <span className="text-red-500 text-sm  ml-1">
-                    {validationErrors.password}
-                  </span>
-                )}
-              </div>
 
-              <div className="flex flex-col gap-1">
-                <label htmlFor="phoneNumber" className=" text-sm">
-                  Phone Number
-                </label>
-                <input
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setPhoneNumber(e.target.value)
-                  }
-                  value={phoneNumber}
-                  className="border-2 rounded-lg border-gray-300 py-1 px-3 text-sm focus:border-green-700"
-                  id="phoneNumber"
-                  type="text"
-                  placeholder="Enter your phone number"
-                />
-                {validationErrors?.phoneNumber && (
-                  <span className="text-red-500 text-sm ml-1">
-                    {validationErrors.phoneNumber}
-                  </span>
-                )}
-              </div>
+                <div className="flex flex-col gap-2 mb-4">
+                  <div className="flex flex-col gap-1">
+                    {genericError && (
+                      <div
+                        className="bg-red-100 border border-red-400 text-red-700 py-1 rounded my-2 relative text-center"
+                        role="alert"
+                      >
+                        <span className=" text-xs">{genericError}</span>
+                      </div>
+                    )}
+                    <div>
+                      <label htmlFor="firstName" className="">
+                        First Name
+                      </label>
 
-              <div className="flex flex-col gap-1">
-                <label htmlFor="country" className=" text-sm">
-                  Country of permanent residence
-                </label>
-                <input
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setCountryOfResidence(e.target.value)
-                  }
-                  value={countryOfResidence}
-                  className="border-2 rounded-lg border-gray-300 py-1 px-3 text-sm focus:border-green-700"
-                  id="country"
-                  type="text"
-                  placeholder="Nigeria"
-                />
-                {validationErrors?.countryOfResidence && (
-                  <span className="text-red-500 text-sm ml-1">
-                    {validationErrors.countryOfResidence}
-                  </span>
-                )}
-              </div>
+                      <div className="relative mt-1">
+                        <input
+                          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                            setfirstName(e.target.value)
+                          }
+                          value={firstName}
+                          className="w-full rounded-lg border border-gray-200 p-4 pe-12 text-sm shadow-lg"
+                          id="firstName"
+                          type="text"
+                          placeholder="Enter your full names"
+                        />
+                        {validationErrors?.firstName && (
+                          <span className="text-red-500 text-sm ml-1">
+                            {validationErrors.firstName}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label htmlFor="lastName" className="">
+                        Last Name
+                      </label>
+
+                      <div className="relative mt-1">
+                        <input
+                          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                            setlastName(e.target.value)
+                          }
+                          value={lastName}
+                          className="w-full rounded-lg border border-gray-200 p-4 pe-12 text-sm shadow-lg"
+                          id="lastName"
+                          type="text"
+                          placeholder="Enter your full names"
+                        />
+                        {validationErrors?.lastName && (
+                          <span className="text-red-500 text-sm ml-1">
+                            {validationErrors.lastName}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div>
+                      <label htmlFor="email" className="">
+                        Email Address
+                      </label>
+
+                      <div className="relative mt-1">
+                        <input
+                          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                            setEmail(e.target.value)
+                          }
+                          value={email}
+                          className="w-full rounded-lg border border-gray-200 p-4 pe-12 text-sm shadow-lg"
+                          id="email"
+                          type="text"
+                          placeholder="Enter your email"
+                        />
+                        {validationErrors?.email && (
+                          <span className="text-red-500 text-sm  ml-1">
+                            {validationErrors.email}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label htmlFor="password" className="">
+                        Password
+                      </label>
+
+                      <div className="relative mt-1">
+                        <input
+                          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                            setPassword(e.target.value)
+                          }
+                          value={password}
+                          type={showPassword ? "text" : "password"} // Toggle input type based on showPassword state
+                          className="w-full rounded-lg border border-gray-200 p-4 pe-12 text-sm shadow-lg"
+                          placeholder="Enter your password"
+                        />
+                        <button
+                          type="button"
+                          className="absolute inset-y-0 right-0 px-4 py-3 flex items-center focus:outline-none"
+                          onClick={() => setShowPassword(!showPassword)} // Toggle showPassword state on button click
+                        >
+                          {showPassword ? (
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-6 w-6 text-gray-400"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                              />
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                              />
+                            </svg>
+                          ) : (
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-6 w-6 text-gray-400"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M4 8h16M4 16h16"
+                              />
+                            </svg>
+                          )}
+                        </button>
+                        {validationErrors?.password && (
+                          <span className="text-red-500 text-sm  ml-1">
+                            {validationErrors.password}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label htmlFor="phoneNumber" className="">
+                        Phone Number
+                      </label>
+                      <input
+                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                          setPhoneNumber(e.target.value)
+                        }
+                        value={phoneNumber}
+                        className="w-full rounded-lg border border-gray-200 p-4 pe-12 text-sm shadow-lg"
+                        id="phoneNumber"
+                        type="text"
+                        placeholder="Enter your phone number"
+                      />
+                      {validationErrors?.phoneNumber && (
+                        <span className="text-red-500 text-sm ml-1">
+                          {validationErrors.phoneNumber}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* <div>
+                      <label htmlFor="country" className="">
+                        Country of permanent residence
+                      </label>
+                      <input
+                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                          setCountryOfResidence(e.target.value)
+                        }
+                        value={countryOfResidence}
+                        className="border-2 rounded-lg border-gray-300 py-1 px-3 text-sm focus:border-green-700"
+                        id="country"
+                        type="text"
+                        placeholder="Nigeria"
+                      />
+                      {validationErrors?.countryOfResidence && (
+                        <span className="text-red-500 text-sm ml-1">
+                          {validationErrors.countryOfResidence}
+                        </span>
+                      )}
+                    </div> */}
+                  </div>
+
+                  <div className="relative mt-1">
+                    <input
+                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                        setCountryOfResidence(e.target.value)
+                      }
+                      value={countryOfResidence}
+                      className="w-full rounded-lg border border-gray-200 p-4 pe-12 text-sm shadow-lg"
+                      id="country"
+                      type="text"
+                      placeholder="Nigeria"
+                    />
+                    {validationErrors?.countryOfResidence && (
+                      <span className="text-red-500 text-sm ml-1">
+                        {validationErrors.countryOfResidence}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <MainButton button_text={"Sign Up"} />
+
+                <p className="text-center text-sm text-gray-500">
+                  Already have an account ?{" "}
+                  <Link className="text-green-400 hover:underline" to="/">
+                    Sign in here
+                  </Link>
+                </p>
+              </form>
             </div>
 
-            <div className="flex flex-col gap-3 mx-auto">
-              <MainButton button_text={"Sign Up"} />
-              <div className="text-gray-400 w-3/3 mx-auto px-0 text-sm">
-                Already have an account ?{" "}
-                <Link className="text-green-400 hover:underline" to="/">
-                  Sign in here
-                </Link>
-              </div>
-            </div>
-          </form>
-        </div>
-
-        <footer className="w-full ">
-          <div className="flex justify-between mx-auto w-10/12 pt-2 text-white text-lg font-bold mt-1 leading-8 tracking-wider">
-            <div>
+            <footer className="w-full text-white mt-12 leading-8 tracking-wider flex flex-col items-center lg:flex-row lg:items-center lg:justify-between">
               <h5>Website Terms and Conditions</h5>
-            </div>
-            <div>
               <h5>Privacy Notice</h5>
-            </div>
+            </footer>
           </div>
-        </footer>
+        </section>
       </div>
     </>
   );

@@ -20,6 +20,9 @@ const NewPasswordForm = () => {
   const [validationErrors, setValidationErrors] = useState<validationErrors>(
     {}
   );
+  
+  const [showPassword, setShowPassword] = useState(false); // State to track password visibility
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State to track confirm password visibility
 
   const handleResetPassword = async (e: FormEvent) => {
     e.preventDefault();
@@ -67,6 +70,7 @@ const NewPasswordForm = () => {
       setGenericError("");
     }
   };
+
   return (
     <>
       <div
@@ -103,25 +107,24 @@ const NewPasswordForm = () => {
                   role="alert"
                 >
                   <span className=" text-xs">
-                    Password reset successfull..redirecting to login in 5
-                    seconds
+                    Password reset successful..redirecting to login in 5 seconds
                   </span>
                 </div>
               </div>
             )}
 
             <div className="flex flex-col gap-2 mb-1">
-              <div className="flex flex-col gap-1 mb-1">
-                <label htmlFor="email" className=" text-base">
-                  Password
-                </label>
+              <label htmlFor="password" className="">
+                Password
+              </label>
+              <div className="relative mt-1">
                 <input
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setPassword(e.target.value)
                   }
                   value={password}
-                  className="border-2 rounded-lg border-gray-300 py-1 px-3 text-sm focus:border-green-700"
-                  type="password"
+                  type={showPassword ? "text" : "password"} // Toggle input type based on showPassword state
+                  className="w-full rounded-lg border border-gray-200 p-4 pe-12 text-sm shadow-lg"
                   placeholder="Enter your password"
                 />
                 {validationErrors.password && (
@@ -129,18 +132,63 @@ const NewPasswordForm = () => {
                     {validationErrors.password}
                   </span>
                 )}
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 px-4 py-3 flex items-center focus:outline-none"
+                  onClick={() => setShowPassword(!showPassword)} // Toggle showPassword state on button click
+                >
+                  {showPassword ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6 text-gray-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6 text-gray-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M4 8h16M4 16h16"
+                      />
+                    </svg>
+                  )}
+                </button>
               </div>
-              <div className="flex flex-col gap-1 mb-6">
-                <label htmlFor="password" className=" text-base">
-                  Confirm Password
-                </label>
+            </div>
+            <div className="flex flex-col gap-1 mb-6">
+              <label htmlFor="password" className="text-base">
+                Confirm Password
+              </label>
+              <div className="relative mt-1">
                 <input
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setConfirmPassword(e.target.value)
                   }
                   value={confirmPassword}
-                  className="border-2 rounded-lg border-gray-300 py-1 px-3 text-sm focus:border-green-700"
-                  type="password"
+                  className="w-full rounded-lg border border-gray-200 p-4 pe-12 text-sm shadow-lg"
+                  type={showConfirmPassword ? "text" : "password"} // Toggle input type based on showConfirmPassword state
                   placeholder="Confirm your password"
                 />
                 {validationErrors.confirmPassword && (
@@ -148,10 +196,53 @@ const NewPasswordForm = () => {
                     {validationErrors.confirmPassword}
                   </span>
                 )}
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 px-4 py-3 flex items-center focus:outline-none"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)} // Toggle showConfirmPassword state on button click
+                >
+                  {showConfirmPassword ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6 text-gray-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6 text-gray-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M4 8h16M4 16h16"
+                      />
+                    </svg>
+                  )}
+                </button>
               </div>
-              <div className="flex flex-col gap-6">
-                <MainButton button_text={"Reset Password"} />
-              </div>
+            </div>
+            <div className="flex flex-col gap-6">
+              <MainButton button_text={"Reset Password"} />
             </div>
           </form>
         </div>
