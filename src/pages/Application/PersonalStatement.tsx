@@ -11,14 +11,20 @@ import { RootState } from "../../store/store";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-function PersonalStatement() {
+interface validationErrors {
+  personalStatement?: string;
+}
 
+function PersonalStatement() {
   const [personalStatement, setPersonalStatement] = useState<string>("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const storedValue = useSelector(
     (state: RootState) => state.personalStatement.personalStatement
-  )
+  );
+  const [validationErrors, setValidationErrors] = useState<validationErrors>(
+    {}
+  );
 
   useEffect(() => {
     if (storedValue !== "" && storedValue !== null) {
@@ -29,11 +35,27 @@ function PersonalStatement() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const validationErrors: validationErrors = {};
+
+    if (!personalStatement) {
+      setValidationErrors({
+        personalStatement: "Personal Statement is required",
+      });
+      return;
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setValidationErrors(validationErrors);
+      return;
+    }
+
     if (personalStatement !== null) {
       const strippedValue = stripHtmlTags(personalStatement);
       dispatch(updatePersonalStatement(strippedValue));
       navigate("/dashboard/application");
     }
+
+    setValidationErrors({});
   };
 
   const stripHtmlTags = (html: string): string => {
@@ -102,6 +124,11 @@ function PersonalStatement() {
                 onChange={handleValueChange}
                 value={personalStatement}
               />
+              {validationErrors.personalStatement && (
+                <div className="text-red-500 text-sm mt-1 ml-1">
+                  {validationErrors.personalStatement}
+                </div>
+              )}
             </div>
 
             <div className="mt-4 w-5/12 mx-auto">

@@ -5,46 +5,69 @@ import MainButton from "../../components/MainButton";
 import { useParams, useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
 
+interface validationErrors {
+  password?: string;
+  confirmPassword?: string;
+}
+
 const NewPasswordForm = () => {
   const navigate = useNavigate();
   const { token } = useParams();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+  const [genericError, setGenericError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<validationErrors>(
+    {}
+  );
+  
   const [showPassword, setShowPassword] = useState(false); // State to track password visibility
   const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State to track confirm password visibility
 
   const handleResetPassword = async (e: FormEvent) => {
     e.preventDefault();
-    if (!password || !confirmPassword) {
-      setError("All fields are required, try again");
-      setTimeout(() => {
-        setError("");
-      }, 3000);
+
+    const validationErrors: validationErrors = {};
+    if (!password.trim()) {
+      validationErrors["password"] = "Password is required";
+    } else if (password.trim().length < 6) {
+      validationErrors["password"] = "Password must be at least 6 characters";
+    }
+
+    if (!confirmPassword.trim()) {
+      validationErrors["confirmPassword"] = "Confirm Password is required";
+    } else if (confirmPassword.trim().length < 6) {
+      validationErrors["confirmPassword"] =
+        "Password must be at least 6 characters";
+    }
+
+    if(password.length && confirmPassword.length && password !== confirmPassword) {
+      validationErrors["confirmPassword"] = "Passwords do not match";
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setValidationErrors(validationErrors as validationErrors);
       return;
     }
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      setTimeout(() => {
-        setError("");
-      }, 5000);
-      return;
-    }
-    const res = await axiosInstance.post(`/users/forgotpassword/${token}`, {
-      password,
-      token,
-    });
-    if (res.data.successMessage) {
-      setSuccess(true);
-      setTimeout(() => {
-        navigate("/");
-      }, 3000);
-    } else if (res.data.error) {
-      setError(res.data.error);
-      setTimeout(() => {
-        setError("");
-      }, 3000);
+
+    try {
+      const res = await axiosInstance.post(`/users/forgotpassword/${token}`, {
+        password,
+        token,
+      });
+      if (res.data.successMessage) {
+        setSuccess(true);
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
+      } else if (res.data.error) {
+        setGenericError(res.data.error);
+      }
+    } catch (error) {
+      setGenericError(`${error}`);
+    } finally {
+      setValidationErrors({});
+      setGenericError("");
     }
   };
 
@@ -68,12 +91,12 @@ const NewPasswordForm = () => {
               <h5>Reset your password</h5>
             </div>
 
-            {error && (
+            {genericError && (
               <div
                 className="bg-red-100 border border-red-400 text-red-700 py-1 rounded my-2 relative text-center"
                 role="alert"
               >
-                <span className=" text-xs">{error}</span>
+                <span className=" text-xs">{genericError}</span>
               </div>
             )}
 
@@ -104,6 +127,11 @@ const NewPasswordForm = () => {
                   className="w-full rounded-lg border border-gray-200 p-4 pe-12 text-sm shadow-lg"
                   placeholder="Enter your password"
                 />
+                {validationErrors.password && (
+                  <span className="text-red-500 text-sm ml-1">
+                    {validationErrors.password}
+                  </span>
+                )}
                 <button
                   type="button"
                   className="absolute inset-y-0 right-0 px-4 py-3 flex items-center focus:outline-none"
@@ -163,6 +191,11 @@ const NewPasswordForm = () => {
                   type={showConfirmPassword ? "text" : "password"} // Toggle input type based on showConfirmPassword state
                   placeholder="Confirm your password"
                 />
+                {validationErrors.confirmPassword && (
+                  <span className="text-red-500 text-sm ml-1">
+                    {validationErrors.confirmPassword}
+                  </span>
+                )}
                 <button
                   type="button"
                   className="absolute inset-y-0 right-0 px-4 py-3 flex items-center focus:outline-none"

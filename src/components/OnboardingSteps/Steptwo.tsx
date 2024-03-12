@@ -1,6 +1,3 @@
-
-
-
 // import { Link } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,8 +6,9 @@ import { updateFormTwoData } from "../../states/onboardingViews/stepTwoDataSlice
 import { clearFormOneData } from "../../states/onboardingViews/stepOneDataSlice";
 import { clearFormTwoData } from "../../states/onboardingViews/stepTwoDataSlice";
 import axiosInstance from "../../utils/axiosInstance";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { set } from "date-fns";
 
 interface IStepProps {
   changeActiveStep: (step: number) => void;
@@ -20,6 +18,16 @@ interface IStepProps {
   residenceCountry: string[];
 }
 
+interface validationErrors {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  gender?: string;
+  birthCountry?: string;
+  residenceCountry?: string;
+  nationality?: string;
+}
 
 export const Steptwo: React.FC<IStepProps> = ({
   changeActiveStep,
@@ -28,8 +36,6 @@ export const Steptwo: React.FC<IStepProps> = ({
   birthCountry,
   residenceCountry,
 }) => {
-
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -38,35 +44,78 @@ export const Steptwo: React.FC<IStepProps> = ({
   const stepTwoFormData = useSelector((state: RootState) => state.stepTwoData);
   const userDetails = useSelector((state: RootState) => state.userDetails);
 
+  const [genericError, setGenericError] = useState("");
+  const [validationErrors, setValidationErrors] = useState<validationErrors>(
+    {}
+  );
 
-
-  const handleSubmit =  async(e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
-    changeActiveStep(2);
 
-  try {
-    const res =  await axiosInstance.post("/users/onboarding", {
-      course: stepOneFormData,
-      applicationType: stepTwoFormData
-    });
+    const validationErrors: validationErrors = {};
 
-
-    if(res.data.successMessage){
-      dispatch(clearFormOneData());
-      dispatch(clearFormTwoData());
-      navigate("/dashboard")
-      
+    if (!stepTwoFormData.firstName.trim()) {
+      validationErrors["firstName"] = "First Name is required";
     }
 
+    if (!stepTwoFormData.lastName.trim()) {
+      validationErrors["lastName"] = "Last Name is required";
+    }
 
-  } catch (error) {
+    if (!stepTwoFormData.email.trim()) {
+      validationErrors["email"] = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(stepTwoFormData.email)) {
+      validationErrors["email"] = "Email is invalid";
+    }
 
-    console.log(error)
+    if (!stepTwoFormData.phone.trim()) {
+      validationErrors["phone"] = "Phone number is required";
+    }
 
-  }
+    if (!stepTwoFormData.gender.trim()) {
+      validationErrors["gender"] = "gender is required";
+    }
 
-};
+    if (!stepTwoFormData.birthCountry.trim()) {
+      validationErrors["birthCountry"] = "Country of birth is required";
+    }
 
+    if (!stepTwoFormData.residenceCountry.trim()) {
+      validationErrors["residenceCountry"] = "Country of residence is required";
+    }
+
+    if (!stepTwoFormData.nationality.trim()) {
+      validationErrors["nationality"] = "National is required";
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setValidationErrors(validationErrors as validationErrors);
+      return;
+    }
+
+    changeActiveStep(2);
+
+    try {
+      const res = await axiosInstance.post("/users/onboarding", {
+        course: stepOneFormData,
+        applicationType: stepTwoFormData,
+      });
+
+      if (res.data.successMessage) {
+        dispatch(clearFormOneData());
+        dispatch(clearFormTwoData());
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      setGenericError(`${error}`);
+      console.log(error);
+    } finally {
+      setValidationErrors({});
+      setGenericError("");
+    }
+  };
 
   const handlePreviousStep = () => {
     changeActiveStep(1);
@@ -87,14 +136,16 @@ export const Steptwo: React.FC<IStepProps> = ({
   };
 
   useEffect(() => {
-    dispatch(updateFormTwoData({
-      firstName: userDetails.firstName,
-      lastName: userDetails.lastName,
-      email: userDetails.email,
-      phone: userDetails.phone,
-      residenceCountry: userDetails.country
-    }))
-  }, [])
+    dispatch(
+      updateFormTwoData({
+        firstName: userDetails.firstName,
+        lastName: userDetails.lastName,
+        email: userDetails.email,
+        phone: userDetails.phone,
+        residenceCountry: userDetails.country,
+      })
+    );
+  }, []);
 
   return (
     <div>
@@ -122,6 +173,14 @@ export const Steptwo: React.FC<IStepProps> = ({
               document matches exactly.
             </p>
             <div className="w-[500px] h-[866px] p-8 rounded-lg gap-[10px] shadow-lg flex flex-col justify-center">
+              {genericError && (
+                <div
+                  className="bg-red-100 border border-red-400 text-red-700 py-1 rounded my-2 relative text-center"
+                  role="alert"
+                >
+                  <span className=" text-xs">{genericError}</span>
+                </div>
+              )}
               <div>
                 <label htmlFor="firstName">First Name</label>
                 <input
@@ -132,6 +191,12 @@ export const Steptwo: React.FC<IStepProps> = ({
                   onChange={handleInputChange}
                   className="w-full rounded-lg border border-gray-600 p-4 pe-12 text-sm shadow-sm"
                 />
+
+                {validationErrors.firstName && (
+                  <span className="text-red-500 text-sm ml-1">
+                    {validationErrors.firstName}
+                  </span>
+                )}
               </div>
 
               <div>
@@ -144,6 +209,12 @@ export const Steptwo: React.FC<IStepProps> = ({
                   onChange={handleInputChange}
                   className="w-full rounded-lg border border-gray-600 p-4 pe-12 text-sm shadow-sm"
                 />
+
+                {validationErrors.lastName && (
+                  <span className="text-red-500 text-sm ml-1">
+                    {validationErrors.lastName}
+                  </span>
+                )}
               </div>
 
               <div>
@@ -156,6 +227,12 @@ export const Steptwo: React.FC<IStepProps> = ({
                   onChange={handleInputChange}
                   className="w-full rounded-lg border border-gray-600 p-4 pe-12 text-sm shadow-sm"
                 />
+
+                {validationErrors.email && (
+                  <span className="text-red-500 text-sm ml-1">
+                    {validationErrors.email}
+                  </span>
+                )}
               </div>
 
               <div>
@@ -168,6 +245,12 @@ export const Steptwo: React.FC<IStepProps> = ({
                   onChange={handleInputChange}
                   className="w-full rounded-lg border border-gray-600 p-4 pe-12 text-sm shadow-sm"
                 />
+
+                {validationErrors.phone && (
+                  <span className="text-red-500 text-sm ml-1">
+                    {validationErrors.phone}
+                  </span>
+                )}
               </div>
 
               <div>
@@ -186,6 +269,11 @@ export const Steptwo: React.FC<IStepProps> = ({
                     </option>
                   ))}
                 </select>
+                {validationErrors.gender && (
+                  <span className="text-red-500 text-sm ml-1">
+                    {validationErrors.gender}
+                  </span>
+                )}
               </div>
 
               <div>
@@ -204,6 +292,12 @@ export const Steptwo: React.FC<IStepProps> = ({
                     </option>
                   ))}
                 </select>
+
+                {validationErrors.birthCountry && (
+                  <span className="text-red-500 text-sm ml-1">
+                    {validationErrors.birthCountry}
+                  </span>
+                )}
               </div>
 
               <div>
@@ -224,6 +318,12 @@ export const Steptwo: React.FC<IStepProps> = ({
                     </option>
                   ))}
                 </select>
+
+                {validationErrors.residenceCountry && (
+                  <span className="text-red-500 text-sm ml-1">
+                    {validationErrors.residenceCountry}
+                  </span>
+                )}
               </div>
 
               {/* Other input fields */}
@@ -243,10 +343,15 @@ export const Steptwo: React.FC<IStepProps> = ({
                     </option>
                   ))}
                 </select>
+
+                {validationErrors.nationality && (
+                  <span className="text-red-500 text-sm ml-1">
+                    {validationErrors.nationality}
+                  </span>
+                )}
               </div>
               <div className="flex justify-between items-center py-7">
                 <button
-                  
                   type="submit"
                   className="w-full bg-green-700 rounded-lg border p-3 text-white font-semibold text-center transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-indigo-500"
                 >
@@ -260,7 +365,3 @@ export const Steptwo: React.FC<IStepProps> = ({
     </div>
   );
 };
-
-
-
-

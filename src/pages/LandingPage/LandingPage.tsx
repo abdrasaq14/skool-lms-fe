@@ -6,27 +6,44 @@ import "./LandingPage.css";
 import { ChangeEvent, FormEvent, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 
+interface validationErrors {
+  email?: string;
+  password?: string;
+}
+
 function LandingPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [genericError, setGenericError] = useState("");
+  const [validationErrors, setValidationErrors] = useState<validationErrors>(
+    {}
+  );
   const [showPassword, setShowPassword] = useState(false); // State to track password visibility
-
+  
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
 
-    if (!email || !password) {
-      setError("All fields are required, try again");
-      setTimeout(() => {
-        setError("");
-      }, 3000);
+    const validationErrors: validationErrors = {};
+
+    if (!email.trim()) {
+      validationErrors["email"] = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      validationErrors["email"] = "Email is invalid";
+    }
+
+    if (!password.trim()) {
+      validationErrors["password"] = "Password is required";
+    } else if (password.trim().length < 6) {
+      validationErrors["password"] = "Password must be at least 6 characters";
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setValidationErrors(validationErrors as validationErrors);
       return;
     }
 
     try {
-      console.log(email, password);
-
       const res = await axiosInstance.post("/users/login", {
         email: email,
         password: password,
@@ -43,17 +60,13 @@ function LandingPage() {
         localStorage.setItem("token", res.data.token);
         navigate(`admin/applications-section`);
       } else if (res.data.error) {
-        setError(res.data.error);
-        setTimeout(() => {
-          setError("");
-        }, 3000);
-        setEmail("");
-        setPassword("");
+        setGenericError(res.data.error);
         return;
       }
     } catch (error) {
-      setError(`${error}`);
-      console.log(error);
+      setGenericError(`${error}`);
+    } finally {
+      setValidationErrors({});
     }
   };
 
@@ -82,12 +95,12 @@ function LandingPage() {
             <p className="text-center text-lg font-medium">
               Login in to the Applicant Portal
             </p>
-            {error && (
+            {genericError && (
               <div
                 className="bg-red-100 border border-red-400 text-red-700 py-1 rounded my-2 relative text-center"
                 role="alert"
               >
-                <span className=" text-xs">{error}</span>
+                <span className=" text-xs">{genericError}</span>
               </div>
             )}
 
@@ -102,7 +115,7 @@ function LandingPage() {
                     setEmail(e.target.value)
                   }
                   value={email}
-                  type="email"
+                  type="text"
                   className="w-full rounded-lg border border-gray-200 p-4 pe-12 text-sm shadow-lg"
                   placeholder="Enter your email"
                 />
@@ -123,6 +136,11 @@ function LandingPage() {
                     />
                   </svg>
                 </span>
+                {validationErrors?.email && (
+                  <span className="text-red-500 text-sm ml-1">
+                    {validationErrors.email}
+                  </span>
+                )}
               </div>
             </div>
 
@@ -141,6 +159,34 @@ function LandingPage() {
                   className="w-full rounded-lg border border-gray-200 p-4 pe-12 text-sm shadow-lg"
                   placeholder="Enter your password"
                 />
+
+                <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="size-4 text-gray-400"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                    />
+                  </svg>
+                </span>
+                {validationErrors?.password && (
+                  <span className="text-red-500 text-sm  ml-1">
+                    {validationErrors.password}
+                  </span>
+                )}
                 <button
                   type="button"
                   className="absolute inset-y-0 right-0 px-4 py-3 flex items-center focus:outline-none"
@@ -189,12 +235,6 @@ function LandingPage() {
             <p className="text-right text-sm font-medium underline text-blue-600">
               <Link to="/reset-password">Forgot password</Link>
             </p>
-            {/* <button
-        type="submit"
-        className="block w-full rounded-lg bg-green-600 hover:bg-green-400 px-5 py-3 text-sm font-medium text-white"
-      >
-        Login
-      </button> */}
 
             <MainButton button_text={"Login"} />
 
