@@ -3,6 +3,7 @@ import ApplicationHeader from "../../components/applicationComponents/Applicatio
 import axiosInstance from "../../utils/axiosInstance";
 import { Link } from "react-router-dom";
 import PDFDownloadButton from "../../components/DownloadFunction/SingleDownload";
+import MultiplePDFDownloadButton from "../../components/DownloadFunction/MultipleDownload"; // Importing MultiplePDFDownloadButton
 
 interface addQualification {
   gradeOrCGPA: string;
@@ -41,23 +42,20 @@ interface ApplicationDetails {
 }
 
 function ApplicationStatesPage() {
-  const [applicationData, setApplicationData] = useState<ApplicationDetails[]>(
-    []
-  );
+  const [applicationData, setApplicationData] = useState<ApplicationDetails[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedTab, setSelectedTab] = useState<string | null>("Accepted");
   const [loading, setLoading] = useState(true);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [applicationsPerPage] = useState(10); // Number of applications to display per page
 
   useEffect(() => {
     const fetchApplications = async () => {
       try {
-        const response = await axiosInstance.get(
-          "/admin/professional-applications",
-          {
-            withCredentials: true,
-          }
-        );
+        const response = await axiosInstance.get("/admin/professional-applications", {
+          withCredentials: true,
+        });
         setApplicationData(response.data);
       } catch (error) {
         console.error(error);
@@ -81,32 +79,19 @@ function ApplicationStatesPage() {
     }
   };
 
-  const WarningModal = () => (
-    <div className="rounded-lg bg-white p-8 shadow-2xl">
-  <h2 className="text-lg font-bold">Are you sure you want to delete these applications?</h2>
-
-  <div className="mt-4 flex gap-2">
-    <button type="button" className="rounded bg-green-50 px-4 py-2 text-sm font-medium text-green-600"
-    onClick={handleConfirmDelete}
-    >
-      Yes, I'm sure
-    </button>
-
-    <button type="button" className="rounded bg-gray-50 px-4 py-2 text-sm font-medium text-gray-600"
-    onClick={handleCancelDelete}
-    >
-      No, go back
-    </button>
-  </div>
-</div>
-  )
   const handleDeleteSelected = () => {
     setShowModal(true);
   };
 
-  const handleConfirmDelete = () => {
-    // Implement logic to delete selected applications
-    console.log("Deleting selected applications...");
+  const handleConfirmDelete = async () => {
+    try {
+      await axiosInstance.delete(`/admin/professional-applications`, {
+        data: { applicationIds: selectedIds },
+      });
+      setApplicationData(applicationData.filter(application => !selectedIds.includes(application.id)));
+    } catch (error) {
+      console.error("Error deleting applications:", error);
+    }
     setShowModal(false);
   };
 
@@ -114,10 +99,17 @@ function ApplicationStatesPage() {
     setShowModal(false);
   };
 
-  // const handleDownloadSelected = () => {
-  //   // Implement logic to download selected applications
-  //   console.log("Download selected applications: ", selectedIds);
-  // };
+  const handleDownloadSelected = async () => {
+    try {
+      const response = await axiosInstance.post(`/admin/professional-applications/download`, {
+        applicationIds: selectedIds,
+      });
+      const downloadUrl = response.data.downloadUrl;
+      window.open(downloadUrl, '_blank');
+    } catch (error) {
+      console.error("Error downloading applications:", error);
+    }
+  };
 
   const filteredData = selectedTab
     ? applicationData.filter(
@@ -126,13 +118,41 @@ function ApplicationStatesPage() {
       )
     : applicationData;
 
+  // Logic for pagination
+  const indexOfLastApplication = currentPage * applicationsPerPage;
+  const indexOfFirstApplication = indexOfLastApplication - applicationsPerPage;
+  const currentApplications = filteredData.slice(indexOfFirstApplication, indexOfLastApplication);
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
   return (
-    
     <>
-    <div className="w-full md:w-1/3 mx-auto mt-10">
-    {showModal && < WarningModal />}
-    </div>
-    
+      <div className="w-full md:w-1/3 mx-auto mt-10">
+        {showModal && (
+          <div className="rounded-lg bg-white p-8 shadow-2xl">
+            <h2 className="text-lg font-bold">Are you sure you want to delete these applications?</h2>
+
+            <div className="mt-4 flex gap-2">
+              <button
+                type="button"
+                className="rounded bg-green-50 px-4 py-2 text-sm font-medium text-green-600"
+                onClick={handleConfirmDelete}
+              >
+                Yes, I'm sure
+              </button>
+
+              <button
+                type="button"
+                className="rounded bg-gray-50 px-4 py-2 text-sm font-medium text-gray-600"
+                onClick={handleCancelDelete}
+              >
+                No, go back
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
       <div className="w-11/12 mx-auto py-6">
         <ApplicationHeader header_text="" linkTo="" />
 
@@ -172,7 +192,7 @@ function ApplicationStatesPage() {
           <div className="flex items-center justify-center h-64">
             <div className="w-20 h-20 border-t-4 border-b-4 border-green-600 rounded-full text-center animate-spin"></div>
           </div>
-        ) : filteredData.length === 0 ? (
+        ) : currentApplications.length === 0 ? (
           <div className="flex justify-center items-center h-96">
             <p className="text-2xl font-semibold">No application found</p>
           </div>
@@ -191,7 +211,7 @@ function ApplicationStatesPage() {
               </tr>
             </thead>
             <tbody>
-              {filteredData.map((application: ApplicationDetails) => (
+              {currentApplications.map((application: ApplicationDetails) => (
                 <tr key={application.id}>
                   <td className="border-t-0  py-6 ">
                     <input
@@ -226,12 +246,15 @@ function ApplicationStatesPage() {
                   <td className="border-t-0  py-6 cursor-pointer">
                     <PDFDownloadButton applicationId={application.id} />
                   </td>
+                  <td className="border-t-0  py-6 cursor-pointer">
+                    <MultiplePDFDownloadButton applicationIds={selectedIds} />
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         )}
-        {selectedIds.length > 1 && (
+        {selectedIds.length > 0 && (
           <div className="flex justify-between px-20 py-4  ">
             <div className="">
               <button
@@ -244,35 +267,45 @@ function ApplicationStatesPage() {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
-                  stroke-width="2"
+                  strokeWidth="2"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                   />
                 </svg>
-                Delete{" "}
-                {selectedIds.length === filteredData.length
-                  ? "all"
-                  : selectedIds.length}{" "}
-                applications
+                Delete {selectedIds.length} applications
               </button>
             </div>
 
             <div className="">
-              <button className="bg-green-600 px-4 py-3 text-center rounded-lg text-white hover:bg-green-400">
-              Download {
-                  selectedIds.length === filteredData.length
-                    ? "all "  
-                    : selectedIds.length
-                }  applications
+              <button
+                className="bg-green-600 px-4 py-3 text-center rounded-lg text-white hover:bg-green-400"
+                onClick={handleDownloadSelected}
+              >
+                Download {selectedIds.length} applications
               </button>
             </div>
           </div>
         )}
+        <div className="w-full flex justify-center my-4">
+          <ul className="flex">
+            {Array.from({ length: Math.ceil(filteredData.length / applicationsPerPage) }, (_, i) => i + 1).map((number) => (
+              <li key={number}>
+                <button
+                  className={`mx-1 px-3 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                    currentPage === number ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600"
+                  }`}
+                  onClick={() => paginate(number)}
+                >
+                  {number}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-      
     </>
   );
 }
