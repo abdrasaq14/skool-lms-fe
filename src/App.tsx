@@ -26,14 +26,13 @@ import FundingInformation from "./pages/Application/FundingInformation";
 import PersonalStatement from "./pages/Application/PersonalStatement";
 import Settings from "./pages/ApplicantDashboard/Settings";
 import Profile from "./pages/ApplicantDashboard/Profile";
+import NotificationPage from "./pages/ApplicantDashboard/Notifications";
 
 //Admin dashboard routes
 import ApplicationStatesPage from "./pages/ApplicationStatesPage/ApplicationStatesPage";
 import ApplicationViewPage from "./pages/ApplicationViewPage/ApplicationViewPage";
 
 import { ProtectedRoute } from "./components/protectedRoutes/ProtectedRoute";
-
-
 
 function App() {
   useEffect(() => {
@@ -82,6 +81,7 @@ function App() {
                   <Route path="products" element={<Products />} />
                   <Route path="settings" element={<Settings />} />
                   <Route path="profile" element={<Profile />} />
+                  <Route path="notifications" element={<NotificationPage />} />
                 </Route>
 
                 {/*  */}
