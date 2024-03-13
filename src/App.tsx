@@ -33,6 +33,8 @@ import ApplicationViewPage from "./pages/ApplicationViewPage/ApplicationViewPage
 
 import { ProtectedRoute } from "./components/protectedRoutes/ProtectedRoute";
 
+
+
 function App() {
   useEffect(() => {
     // Test WebSocket connection
@@ -41,8 +43,14 @@ function App() {
       socket.emit("testEvent", "Hello from client!");
     });
 
+    console.log("WebSocket connected successfully!");
+
     socket.on("testEventResponse", (data) => {
       console.log("Received test event response from server:", data);
+    });
+
+    socket.on("error", (error) => {
+      console.error("WebSocket connection error:", error);
     });
 
     return () => {
