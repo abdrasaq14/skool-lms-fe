@@ -114,10 +114,10 @@ function ApplicationStatesPage() {
     setShowModal(false);
   };
 
-  const handleDownloadSelected = () => {
-    // Implement logic to download selected applications
-    console.log("Download selected applications: ", selectedIds);
-  };
+  // const handleDownloadSelected = () => {
+  //   // Implement logic to download selected applications
+  //   console.log("Download selected applications: ", selectedIds);
+  // };
 
   const filteredData = selectedTab
     ? applicationData.filter(

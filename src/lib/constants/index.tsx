@@ -23,7 +23,7 @@ export const DASHBOARD_SIDEBAR_LINKS = [
     {
         key: 'Notifications',
         label: 'Notifications',
-        path: '#',
+        path: '/dashboard/notifications',
         icon: <HiOutlineBell />
     },
     {
