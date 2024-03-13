@@ -18,7 +18,6 @@ import UploadPassport from "./pages/Application/UploadPassport";
 //Applicant dashboard routes
 import ApplicantDashboard from "./pages/ApplicantDashboard/Dashboard";
 import Layout from "./components/ApplicantDashboardComponents/shared/Layout";
-import Products from "./pages/ApplicantDashboard/Products";
 import ApplicationView from "./pages/ApplictionView";
 import EnglishQualification from "./pages/Application/EnglishQualification";
 import Qualification from "./pages/Application/Qualifications";
@@ -78,7 +77,6 @@ function App() {
                 {/* Dashboard route, include sidebar links inside dashboard path */}
                 <Route element={<Layout />}>
                   <Route index element={<ApplicantDashboard />} />
-                  <Route path="products" element={<Products />} />
                   <Route path="settings" element={<Settings />} />
                   <Route path="profile" element={<Profile />} />
                   <Route path="notifications" element={<NotificationPage />} />

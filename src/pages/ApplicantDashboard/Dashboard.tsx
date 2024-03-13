@@ -1,7 +1,7 @@
 import DashboardStatsGrid from "../../components/ApplicantDashboardComponents/DashboardStatsGrid";
 import RecentApplications from "../../components/ApplicantDashboardComponents/RecentApplications";
 
-import PopularProducts from "../../components/ApplicantDashboardComponents/Notifications";
+import PopularProducts from "../../components/ApplicantDashboardComponents/NotificationsPreview";
 import {
     HiOutlineSearch,
   } from "react-icons/hi";
