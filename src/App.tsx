@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+import socket from "../socket";
 import "./index.css";
 
 // import TestPage from "./pages/TestPage";
@@ -32,6 +34,21 @@ import ApplicationViewPage from "./pages/ApplicationViewPage/ApplicationViewPage
 import { ProtectedRoute } from "./components/protectedRoutes/ProtectedRoute";
 
 function App() {
+  useEffect(() => {
+    // Test WebSocket connection
+    socket.on("connect", () => {
+      console.log("WebSocket connected successfully!");
+      socket.emit("testEvent", "Hello from client!");
+    });
+
+    socket.on("testEventResponse", (data) => {
+      console.log("Received test event response from server:", data);
+    });
+
+    return () => {
+      socket.disconnect(); // Clean up WebSocket connection
+    };
+  }, []);
   return (
     <>
       <Routes>
@@ -42,9 +59,9 @@ function App() {
         <Route path="/reset-password" element={<ResetPasswordForm />} />
         <Route path="/new-password/:token" element={<NewPasswordForm />} />
         <Route
-                  path="/admin/applications-section"
-                  element={<ApplicationStatesPage />}
-                />
+          path="/admin/applications-section"
+          element={<ApplicationStatesPage />}
+        />
         {/* Protected Routes after logging - Dashboard related routes. */}
         <Route
           path="/dashboard/*"
@@ -99,7 +116,6 @@ function App() {
                   path="application/funding-information"
                   element={<FundingInformation />}
                 />
-               
               </Routes>
             </ProtectedRoute>
           }
