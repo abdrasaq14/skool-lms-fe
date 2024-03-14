@@ -1,7 +1,7 @@
 import { Fragment, useEffect } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
 import { HiOutlineBell, HiOutlineChatAlt } from "react-icons/hi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -10,21 +10,37 @@ import NotificationBadge, { Effect } from "react-notification-badge";
 import axiosInstance from "../../../utils/axiosInstance";
 // import container from "postcss/lib/container";
 
+
+interface Notification {
+  id: number;
+  title: string;
+  message: string;
+  status: boolean;
+  createdAt: string;
+}
+
 export default function Header() {
+
   const [count, setCount] = useState(0);
+  const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
     const fetchCount = async() => {
       try {
         const { data: { notifications } } = await axiosInstance.get("/users/notification");
-        setCount(notifications.length);
+
+        const unreadNotifications: [] = notifications.filter((notification: Notification) => !notification.status);
+
+        setCount(unreadNotifications.length);
+
+        setNotifications(unreadNotifications);
       } catch (error) {
         console.error("Failed to fetch notification:", error);
       }
     };
   
     fetchCount();
-  }, []);
+  }, [notifications]);
 
   const navigate = useNavigate();
 
@@ -38,6 +54,7 @@ export default function Header() {
   return (
     <div className="bg-white h-16 px-10 flex items-center border-b border-gray-200 justify-end">
       <div className="flex items-center gap-2 mr-2">
+
         <Popover className="relative">
           {({ open }) => (
             <>
@@ -83,8 +100,8 @@ export default function Header() {
                 )}
               >
                 <div className="inline-block relative">
-                  <HiOutlineBell fontSize={24} />
-                  <div className="absolute top-0 left-8">
+                  <HiOutlineBell fontSize={26} />
+                  <div className="absolute top-0 left-7 h-1 w-1 bg-orange-500">
                     <NotificationBadge count={count} effect={Effect.SCALE} />
                   </div>
                 </div>
@@ -98,14 +115,37 @@ export default function Header() {
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-0 translate-y-1"
               >
-                <Popover.Panel className="absolute right-0 z-10 mt-2.5 transform w-80">
-                  <div className="bg-white rounded-sm shadow-md ring-1 ring-black ring-opacity-5 px-2 py-2.5">
-                    <strong className="text-gray-700 font-medium">
+                <Popover.Panel className="absolute right-0 z-10 mt-3 transform w-80">
+                  <div className="bg-gray-100/90 rounded-xl shadow-md px-4 py-4 border-1 border-green-100">
+                    <div className="text-black font-semibold mb-4 ">
                       Notifications
-                    </strong>
-                    <div className="mt-2 py-1 text-sm">
-                      This is notification panel.
                     </div>
+                    {notifications.length !== 0 ? (
+                      <>
+                      <ul className="flex flex-col gap-4 mb-6 ">
+                        {notifications.slice(0,3).map((notification: Notification) => (
+                          <li className="px-2 py-1 border border-gray-600 rounded-lg text-sm hover:border-2 hover:border-green-600 bg-white text-gray-600"
+                            key={notification.id}>
+                              <h5 className=" font-medium text-gray-900">{notification.title}</h5>
+                              <p className=" text-gray-500">{notification.message}</p>
+                              
+                          </li>
+                        ))}
+                      </ul>
+                      <div className=" w-full text-center bg-green-600 rounded-lg mx-auto py-2">
+                      <Link to='/dashboard/notifications' className=" text-white no-underline">
+                          See all notifications
+                      </Link>
+
+                      </div>
+                      
+                      </>
+                      )  : (  
+                    <div className="mt-2 py-1 text-sm">
+                      No new notifications
+                    </div>
+                        )}
+
                   </div>
                 </Popover.Panel>
               </Transition>

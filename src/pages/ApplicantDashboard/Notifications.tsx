@@ -39,7 +39,7 @@ const NotificationPage = () => {
 
       const updatedNotifications = notifications.map((notification) =>
       notification.id === id
-        ? { ...notification, status: true }
+        ? { ...notification, status: notification.status ? false : true }
         : notification
     );
 
@@ -99,14 +99,15 @@ const NotificationPage = () => {
 
       <>
       {notifications.length !== 0 ? (
+
         <ul className="space-y-4">
           {notifications.map((notification) => (
             <li
               key={notification.id}
-              className={`px-4 py-4 border border-gray-600 rounded-lg ${
+              className={`px-4 py-2 border border-gray-600 rounded-lg text-sm hover:border-2 hover:border-green-600  ${
                 notification.status
-                  ? " bg-white text-gray-600  "
-                  : "bg-gray-200 text-black "
+                  ? " bg-white text-gray-600"
+                  : "bg-gray-200/50 text-black"
               }`}
             >
               <div className="flex justify-between items-center ">
@@ -115,15 +116,15 @@ const NotificationPage = () => {
                   <div>
                     {!notification.status ? (
                       <button
-                        className="text-gray-500 hover:text-blue-600 flex flex-col justify-center items-center w-[3rem]"
+                        className="text-gray-500 hover:text-blue-600 flex flex-col justify-center items-center w-[3rem] "
                         onClick={() => markAsRead(notification.id)}
                       >
                         <IoCheckmarkDoneSharp className="w-5 h-5 " />
-                        <p className=" text-xs"> Read </p>
+                        <p className=" text-xs "> Read </p>
                       </button>
                     ) : (
                       <button
-                        className="text-blue-600 hover:text-gray-500 flex flex-col justify-center items-center w-[3rem]"
+                        className="text-gray-500 hover:text-gray-500 flex flex-col justify-center items-center w-[3rem]"
                         onClick={() => markAsRead(notification.id)}
                       >
                         <IoCheckmarkDoneSharp className="w-5 h-5" />
@@ -140,7 +141,7 @@ const NotificationPage = () => {
                       <span>{notification.message}</span>
                     </div>
 
-                    <div className="text-gray-500 text-sm  px-2">
+                    <div className="text-gray-500 text-sm px-2">
                       {formatDistanceToNow(new Date(notification.createdAt), {
                         addSuffix: true,
                       })}
