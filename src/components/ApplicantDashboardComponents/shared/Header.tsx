@@ -64,7 +64,7 @@ export default function Header() {
                   "group inline-flex items-center rounded-sm p-1.5 text-gray-700 hover:text-opacity-100 focus:outline-none active:bg-gray-100"
                 )}
               >
-                <HiOutlineChatAlt fontSize={24} />
+                <HiOutlineChatAlt fontSize={25} />
               </Popover.Button>
               <Transition
                 as={Fragment}
@@ -100,9 +100,9 @@ export default function Header() {
                 )}
               >
                 <div className="inline-block relative">
-                  <HiOutlineBell fontSize={26} />
-                  <div className="absolute top-0 left-7 h-1 w-1 bg-orange-500">
-                    <NotificationBadge count={count} effect={Effect.SCALE} />
+                  <HiOutlineBell fontSize={25} />
+                  <div className="absolute top-0 left-7 h-1 w-1 ">
+                    <NotificationBadge  count={count} effect={Effect.SCALE} />
                   </div>
                 </div>
               </Popover.Button>
