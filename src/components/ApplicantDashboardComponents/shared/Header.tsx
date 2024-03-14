@@ -82,13 +82,6 @@ export default function Header() {
                   "group inline-flex items-center rounded-sm p-1.5 text-gray-700 hover:text-opacity-100 focus:outline-none active:bg-gray-100"
                 )}
               >
-                {/* <HiOutlineBell fontSize={24} />
-                 <div>
-                  <NotificationBadge
-                    count={count}
-                    effect={Effect.SCALE}
-                  />
-                </div> */}
                 <div className="inline-block relative">
                   <HiOutlineBell fontSize={24} />
                   <div className="absolute top-0 left-8">
