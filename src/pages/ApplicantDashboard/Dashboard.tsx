@@ -1,7 +1,6 @@
 import DashboardStatsGrid from "../../components/ApplicantDashboardComponents/DashboardStatsGrid";
 import RecentApplications from "../../components/ApplicantDashboardComponents/RecentApplications";
 
-import PopularProducts from "../../components/ApplicantDashboardComponents/NotificationsPreview";
 import {
     HiOutlineSearch,
   } from "react-icons/hi";
@@ -27,7 +26,7 @@ export default function ApplicantDashboard() {
             </div> */}
       <div className="flex flex-row gap-4 w-full">
         <RecentApplications />
-        <PopularProducts />
+        {/* <PopularProducts /> */}
       </div>
     </div>
   );
