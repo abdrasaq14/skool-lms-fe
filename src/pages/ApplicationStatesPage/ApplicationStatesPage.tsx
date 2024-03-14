@@ -110,6 +110,7 @@ function ApplicationStatesPage() {
     : applicationData;
 
   // Logic for pagination
+  
   const indexOfLastApplication = currentPage * applicationsPerPage;
   const indexOfFirstApplication = indexOfLastApplication - applicationsPerPage;
   const currentApplications = filteredData.slice(indexOfFirstApplication, indexOfLastApplication);

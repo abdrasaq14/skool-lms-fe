@@ -8,10 +8,6 @@ import { clearFormTwoData } from "../../states/onboardingViews/stepTwoDataSlice"
 import axiosInstance from "../../utils/axiosInstance";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
-=======
-// import { set } from "date-fns";
->>>>>>> c52bd94 (new)
 
 interface IStepProps {
   changeActiveStep: (step: number) => void;
