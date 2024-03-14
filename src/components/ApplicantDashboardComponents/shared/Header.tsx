@@ -40,7 +40,7 @@ export default function Header() {
     };
   
     fetchCount();
-  }, [notifications]);
+  }, []);
 
   const navigate = useNavigate();
 
