@@ -3,7 +3,7 @@ import Cancel from "/images/Cancelbad.png";
 import MainButton from '../src/components/MainButton';
 
 
-const ApplicationSuccessful: React.FC = () => {
+const ApplicationDeleted: React.FC = () => {
 
   
 
@@ -14,7 +14,7 @@ const ApplicationSuccessful: React.FC = () => {
           <img src={Cancel} alt="Success" className="justify-center" />
         </div>
         <div className="success-message text-center mt-4">
-          <h2 className="text-xl font-semibold">Application Rejected Successfully!</h2>
+          <h2 className="text-xl font-semibold">Application Deleted Successfully!</h2>
           <div className="mt-5">
             <div className="flex flex-col gap-3 mx-auto bg-gray-200">
               {/* Pass the handleApproveApplication function with the application ID */}
@@ -27,4 +27,5 @@ const ApplicationSuccessful: React.FC = () => {
   );
 };
 
-export default ApplicationSuccessful;
+export default ApplicationDeleted;
+ 
