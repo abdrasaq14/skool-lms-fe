@@ -1,19 +1,37 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
 import { HiOutlineBell, HiOutlineChatAlt } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import classNames from "classnames";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
+import NotificationBadge, { Effect } from "react-notification-badge";
+import axiosInstance from "../../../utils/axiosInstance";
+// import container from "postcss/lib/container";
 
 export default function Header() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const fetchCount = async() => {
+      try {
+        const { data: { notifications } } = await axiosInstance.get("/users/notification");
+        setCount(notifications.length);
+      } catch (error) {
+        console.error("Failed to fetch notification:", error);
+      }
+    };
+  
+    fetchCount();
+  }, []);
+
   const navigate = useNavigate();
 
   const logout = () => {
-    localStorage.removeItem('token');
-    navigate("/")
-
-}
+    localStorage.removeItem("token");
+    navigate("/");
+  };
 
   const user = useSelector((state: RootState) => state.userDetails);
 
@@ -64,7 +82,19 @@ export default function Header() {
                   "group inline-flex items-center rounded-sm p-1.5 text-gray-700 hover:text-opacity-100 focus:outline-none active:bg-gray-100"
                 )}
               >
-                <HiOutlineBell fontSize={24} />
+                {/* <HiOutlineBell fontSize={24} />
+                 <div>
+                  <NotificationBadge
+                    count={count}
+                    effect={Effect.SCALE}
+                  />
+                </div> */}
+                <div className="inline-block relative">
+                  <HiOutlineBell fontSize={24} />
+                  <div className="absolute top-0 left-8">
+                    <NotificationBadge count={count} effect={Effect.SCALE} />
+                  </div>
+                </div>
               </Popover.Button>
               <Transition
                 as={Fragment}
@@ -112,7 +142,6 @@ export default function Header() {
             leaveTo="transform opacity-0 scale-95"
           >
             <Menu.Items className="origin-top-right z-10 absolute right-0 mt-2 w-48 rounded-sm shadow-md p-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-
               <Menu.Item>
                 {({ active }) => (
                   <div
@@ -157,7 +186,7 @@ export default function Header() {
               <Menu.Item>
                 {({ active }) => (
                   <div
-                  onClick={logout}
+                    onClick={logout}
                     className={classNames(
                       active && "bg-gray-100",
                       "active:bg-gray-200 rounded-sm px-4 py-2 text-gray-700 cursor-pointer focus:bg-gray-200"
@@ -167,7 +196,6 @@ export default function Header() {
                   </div>
                 )}
               </Menu.Item>
-
             </Menu.Items>
           </Transition>
         </Menu>
