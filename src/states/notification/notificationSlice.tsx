@@ -9,11 +9,11 @@ const initialState: notificationState = {
   };
 
 
-  const notificationStatusSlice = createSlice({
-    name: "notificationStatus",
+  const notificationCountSlice = createSlice({
+    name: "notification",
     initialState,
     reducers: {
-      updateStatus: (
+      updateNotificationCount: (
         state,
         action: PayloadAction<
           Partial<notificationState["notificationCount"]>
@@ -26,7 +26,7 @@ const initialState: notificationState = {
   });
 
 
-  export const { updateStatus } =
-  notificationStatusSlice.actions;
+  export const { updateNotificationCount } =
+  notificationCountSlice.actions;
 
-  export default notificationStatusSlice.reducer;
+  export default notificationCountSlice.reducer;

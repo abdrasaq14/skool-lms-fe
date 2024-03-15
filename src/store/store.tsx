@@ -12,7 +12,7 @@ import englishQualificationReducer from "../states/applicationDetails/englishQua
 import qualificationsReducer from "../states/applicationDetails/qualificationsSLice";
 import stepOneDataReducer from "../states/onboardingViews/stepOneDataSlice";
 import stepTwoDataReducer from "../states/onboardingViews/stepTwoDataSlice";
-import notificationStatusReducer from "../states/notification/notificationSlice";
+import notificationCountReducer from "../states/notification/notificationSlice";
 
 
 const persistConfig = {
@@ -34,7 +34,7 @@ const persistedReducer = persistReducer(
     qualifications: qualificationsReducer,
     stepOneData: stepOneDataReducer,
     stepTwoData: stepTwoDataReducer,
-    notificationStatus: notificationStatusReducer,
+    notificationStatus: notificationCountReducer,
     
   })
 );

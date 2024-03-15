@@ -3,9 +3,11 @@ import { formatDistanceToNow } from "date-fns";
 import axiosInstance from "../../utils/axiosInstance";
 import { IoCheckmarkDoneSharp } from "react-icons/io5";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { useDispatch } from 'react-redux';
+import { updateNotificationCount } from "../../states/notification/notificationSlice";
 
 interface Notification {
-  id: number;
+  id: string;
   title: string;
   message: string;
   status: boolean;
@@ -13,28 +15,57 @@ interface Notification {
 }
 
 const NotificationPage = () => {
+
+  const dispatch = useDispatch();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const deleteNotification = async (id: number) => {
-    try {
-      const response = await axiosInstance.delete(`/notifications/${id}`, {
-        withCredentials: true,
-      });
+  const [showDeleteModal, setShowDeleteModal] = useState(false); // State for modal visibility
+  const [notificationToDelete, setNotificationToDelete] = useState<string | null>(""); // State to store id of notification to delete
 
-      if (response.data.successMessage) {
-        const updatedNotifications = notifications.filter(
-          (notification) => notification.id !== id
-        );
+  const openDeleteModal = (id: string) => {
+    setNotificationToDelete(id);
+    setShowDeleteModal(true);
+  };
 
-        setNotifications(updatedNotifications);
+  const closeDeleteModal = () => {
+    setShowDeleteModal(false);
+    setNotificationToDelete(null);
+  };
+
+  const deleteNotification = async () => {
+
+    console.log(notificationToDelete)
+
+    if (notificationToDelete !== null) {
+      try {
+        const response = await axiosInstance.delete(`users/notification/${notificationToDelete}`, {
+          withCredentials: true,
+        });
+
+        if (response.data.successMessage) {
+
+          const updatedNotifications = notifications.filter(
+            (notification) => notification.id !== notificationToDelete
+          );
+
+          setNotifications(updatedNotifications);
+
+          console.log(updatedNotifications.length)
+
+          closeDeleteModal();
+          console.log(notificationToDelete)
+          
+        }
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
     }
   };
 
-  const markAsRead = async (id: number) => {
+  
+
+  const markAsRead = async (id: string) => {
     try {
 
       const updatedNotifications = notifications.map((notification) =>
@@ -43,7 +74,13 @@ const NotificationPage = () => {
         : notification
     );
 
-      setNotifications(updatedNotifications);
+    setNotifications(updatedNotifications);
+
+    const unreadCount = updatedNotifications.filter(
+      (notification) => !notification.status
+    ).length;
+
+    dispatch(updateNotificationCount(unreadCount));
 
       const updatedNotification = updatedNotifications.find(notification => notification.id === id);
 
@@ -98,7 +135,6 @@ const NotificationPage = () => {
           <div className=" mt-40 w-20 h-20 border-t-4 border-b-4 border-green-600 rounded-full text-center animate-spin"></div>
         </div>
       ) : (
-
       <>
       {notifications.length !== 0 ? (
 
@@ -106,31 +142,35 @@ const NotificationPage = () => {
           {notifications.map((notification) => (
             <li
               key={notification.id}
-              className={`px-4 py-2 border border-gray-600 rounded-lg text-sm hover:border-2 hover:border-green-600  ${
+              className={`px-4 py-4 rounded-lg text-[0.75rem] border border-green-600 hover:border-2 hover:border-green-600  ${
                 notification.status
-                  ? " bg-white text-gray-600"
-                  : "bg-gray-200/50 text-black"
+                  ? " bg-gray-100"
+                  : " bg-green-100"
               }`}
             >
               <div className="flex justify-between items-center ">
 
                 <div className=" flex gap-4 items-center  w-[95%]">
-                  <div>
+                  <div className="relative">
                     {!notification.status ? (
                       <button
-                        className="text-gray-500 hover:text-blue-600 flex flex-col justify-center items-center w-[3rem] "
+                        className="text-gray-500 hover:text-blue-600 flex flex-col justify-center items-center w-[3rem] group "
                         onClick={() => markAsRead(notification.id)}
                       >
                         <IoCheckmarkDoneSharp className="w-5 h-5 " />
-                        <p className=" text-xs "> Read </p>
+                        <span className="absolute -top-4 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-none w-[5rem] text-[0.7rem] transition-opacity duration-300">
+      Mark as read
+    </span>
                       </button>
                     ) : (
                       <button
-                        className="text-gray-500 hover:text-gray-500 flex flex-col justify-center items-center w-[3rem]"
+                        className="text-gray-500 hover:text-blue-600 flex flex-col justify-center items-center w-[3rem] group"
                         onClick={() => markAsRead(notification.id)}
                       >
                         <IoCheckmarkDoneSharp className="w-5 h-5" />
-                        <p className=" text-xs">Unread</p>
+                        <span className="absolute -top-3 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-none w-[7rem] text-[0.6rem] transition-opacity duration-300">
+      Mark as unread
+    </span>
                       </button>
                     )}
                   </div>
@@ -143,7 +183,7 @@ const NotificationPage = () => {
                       <span>{notification.message}</span>
                     </div>
 
-                    <div className="text-gray-500 text-sm px-2 w-[20%] text-right">
+                    <div className="text-gray-500 px-2 w-[20%] text-right">
                       {formatDistanceToNow(new Date(notification.createdAt), {
                         addSuffix: true,
                       })}
@@ -153,11 +193,10 @@ const NotificationPage = () => {
 
                 <div className="flex items-center justify-center  ">
                   <button
-                    className="text-red-600 hover:text-red-800 flex flex-col justify-center items-center gap-1 "
-                    onClick={() => deleteNotification(notification.id)}
+                    className="text-red-400 hover:text-red-600 flex flex-col justify-center items-center gap-1 "
+                    onClick={() => openDeleteModal(notification.id)}
                   >
                     <FaRegTrashAlt className="w-4 h-4" />
-                    <p className=" text-xs">Delete</p>
                   </button>
                 </div>
 
@@ -171,9 +210,21 @@ const NotificationPage = () => {
           <p className="text-2xl font-semibold">No notifications available</p>
         </div>
       )}
-
       </>
 
+      )}
+
+{showDeleteModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center z-50">
+          <div className="bg-white p-8 rounded-lg mt-[7rem] h-[10rem]">
+            <h2 className="text-lg font-semibold mb-4">Confirm Deletion</h2>
+            <p className="mb-4">Are you sure you want to delete this notification?</p>
+            <div className="flex justify-end gap-6">
+              <button className="mr-2 text-gray-500 hover:text-gray-700" onClick={closeDeleteModal}>Cancel</button>
+              <button className="text-red-500 hover:text-red-700" onClick={deleteNotification}>Delete</button>
+            </div>
+          </div>
+        </div>
       )}
 
 
