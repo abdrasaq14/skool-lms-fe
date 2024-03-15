@@ -28,6 +28,7 @@ export default function Header() {
     const fetchCount = async() => {
       try {
         const { data: { notifications } } = await axiosInstance.get("/users/notification");
+        console.log({ data: { notifications } })
 
         const unreadNotifications: [] = notifications.filter((notification: Notification) => !notification.status);
 
@@ -41,7 +42,10 @@ export default function Header() {
   
     fetchCount();
   }, []);
-
+   
+  const handleClick = () => {
+    setCount(0)
+  }
   const navigate = useNavigate();
 
   const logout = () => {
@@ -99,7 +103,7 @@ export default function Header() {
                   "group inline-flex items-center rounded-sm p-1.5 text-gray-700 hover:text-opacity-100 focus:outline-none active:bg-gray-100"
                 )}
               >
-                <div className="inline-block relative">
+                <div className="inline-block relative" onClick={handleClick}>
                   <HiOutlineBell fontSize={25} />
                   <div className="absolute top-0 left-7 h-1 w-1 ">
                     <NotificationBadge  count={count} effect={Effect.SCALE} />

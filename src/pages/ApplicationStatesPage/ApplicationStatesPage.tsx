@@ -3,8 +3,7 @@ import ApplicationHeader from "../../components/applicationComponents/Applicatio
 import axiosInstance from "../../utils/axiosInstance";
 import { Link } from "react-router-dom";
 import PDFDownloadButton from "../../components/DownloadFunction/SingleDownload";
-import MultiplePDFDownloadButton from "../../components/DownloadFunction/MultipleDownload"; // Importing MultiplePDFDownloadButton
-
+// import MultiplePDFDownloadButton from "../../components/DownloadFunction/MultipleDownload"; 
 interface addQualification {
   gradeOrCGPA: string;
   fieldOfStudy: string;
@@ -100,15 +99,7 @@ function ApplicationStatesPage() {
   };
 
   const handleDownloadSelected = async () => {
-    try {
-      const response = await axiosInstance.post(`/admin/professional-applications/download`, {
-        applicationIds: selectedIds,
-      });
-      const downloadUrl = response.data.downloadUrl;
-      window.open(downloadUrl, '_blank');
-    } catch (error) {
-      console.error("Error downloading applications:", error);
-    }
+  
   };
 
   const filteredData = selectedTab
@@ -247,14 +238,13 @@ function ApplicationStatesPage() {
                     <PDFDownloadButton applicationId={application.id} />
                   </td>
                   <td className="border-t-0  py-6 cursor-pointer">
-                    <MultiplePDFDownloadButton applicationIds={selectedIds} />
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         )}
-        {selectedIds.length > 0 && (
+        {selectedIds.length > 1 && (
           <div className="flex justify-between px-20 py-4  ">
             <div className="">
               <button
