@@ -1,11 +1,13 @@
 import DashboardStatsGrid from "../../components/ApplicantDashboardComponents/DashboardStatsGrid";
 import RecentApplications from "../../components/ApplicantDashboardComponents/RecentApplications";
 
+
 import {
     HiOutlineSearch,
   } from "react-icons/hi";
 
 export default function ApplicantDashboard() {
+
   return (
     <div className="flex flex-col gap-4">
       <div className="relative">
