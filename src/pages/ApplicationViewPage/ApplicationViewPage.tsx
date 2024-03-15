@@ -53,7 +53,7 @@ const ApplicationViewPage = () => {
       `/users/approve-application/${id}`
       
     );
-    const notifyUsers = await axiosInstance.post(`/users/notification/${userId}`, {
+    const notifyUsers = await axiosInstance.post(`/admin/notification/${userId}`, {
       title: "Application Accepted", 
       message: `Your application to Decagon University has been accepted. Check your email to view your admission info.`,
       
@@ -73,7 +73,7 @@ const ApplicationViewPage = () => {
       const response = await axiosInstance.put(
       `/users/reject-application/${id}`
     );
-    const notifyUsers = await axiosInstance.post(`/users/notification/${userId}`, {
+    const notifyUsers = await axiosInstance.post(`/admin/notification/${userId}`, {
       title: "Application Rejected", 
       message: `Dear Candidate,
       We appreciate your time and effort in joining Decagon University. Unfortunately, we regret to inform you that your application to Decagon University has been declined. While we will not continue with your application at the moment, you may stay tuned to updates on our application portal.
