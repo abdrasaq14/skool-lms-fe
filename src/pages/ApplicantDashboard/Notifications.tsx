@@ -45,22 +45,24 @@ const NotificationPage = () => {
 
       setNotifications(updatedNotifications);
 
+      const updatedNotification = updatedNotifications.find(notification => notification.id === id);
 
-      await axiosInstance.put(
-        `/notifications/${id}`,
-        {
-          status: true,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-     
-      
-    } catch (error) {
-      console.error(error);
-    }
+    await axiosInstance.put(
+      `users/notification/${id}`,
+      {
+        status: updatedNotification!.status
+      },
+      {
+        withCredentials: true,
+      }
+    );
+
+  } catch (error) {
+    console.error(error);
+  }
   };
+
+  
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -133,15 +135,15 @@ const NotificationPage = () => {
                     )}
                   </div>
 
-                  <div className=" flex gap  w-full justify-between items-center">
+                  <div className=" flex gap w-full justify-between items-center ">
 
-                    <div className="  pr-4">
+                    <div className=" w-[80%] pr-4">
                       <div>{notification.title}:</div>
 
                       <span>{notification.message}</span>
                     </div>
 
-                    <div className="text-gray-500 text-sm px-2">
+                    <div className="text-gray-500 text-sm px-2 w-[20%] text-right">
                       {formatDistanceToNow(new Date(notification.createdAt), {
                         addSuffix: true,
                       })}
@@ -149,7 +151,7 @@ const NotificationPage = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-center ">
+                <div className="flex items-center justify-center  ">
                   <button
                     className="text-red-600 hover:text-red-800 flex flex-col justify-center items-center gap-1 "
                     onClick={() => deleteNotification(notification.id)}

@@ -55,11 +55,7 @@ const ApplicationViewPage = () => {
     );
     const notifyUsers = await axiosInstance.post(`/users/notification/${userId}`, {
       title: "Application Accepted", 
-      message: `Dear Candidate,
-      We are delighted to inform you that your application to Decagon University has been accepted. Kindly login to the school portal to view other necessary details.
-      Best regards,
-      Decagon University.
-      `,
+      message: `Your application to Decagon University has been accepted. Check your email to view your admission info.`,
       
     })
     console.log("notice", notifyUsers)
