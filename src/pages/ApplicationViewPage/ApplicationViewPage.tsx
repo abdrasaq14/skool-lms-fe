@@ -41,6 +41,7 @@ const ApplicationViewPage = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [Data, setData] = useState<Data>({} as Data);
   const [loading, setLoading] = useState(true);
+  const [ userId, setUserId ] = useState("")
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -50,7 +51,18 @@ const ApplicationViewPage = () => {
     try {
       const response = await axiosInstance.put(
       `/users/approve-application/${id}`
+      
     );
+    const notifyUsers = await axiosInstance.post(`/users/notification/${userId}`, {
+      title: "Application Accepted", 
+      message: `Dear Candidate,
+      We are delighted to inform you that your application to Decagon University has been accepted. Kindly login to the school portal to view other necessary details.
+      Best regards,
+      Decagon University.
+      `,
+      
+    })
+    console.log("notice", notifyUsers)
     if (response.data.message) {
       navigate("/admin/applications-section");
     }
@@ -65,6 +77,15 @@ const ApplicationViewPage = () => {
       const response = await axiosInstance.put(
       `/users/reject-application/${id}`
     );
+    const notifyUsers = await axiosInstance.post(`/users/notification/${userId}`, {
+      title: "Application Rejected", 
+      message: `Dear Candidate,
+      We appreciate your time and effort in joining Decagon University. Unfortunately, we regret to inform you that your application to Decagon University has been declined. While we will not continue with your application at the moment, you may stay tuned to updates on our application portal.
+      Best regards,
+      Decagon University.
+      `
+    })
+    console.log("notice", notifyUsers)
     if (response.data.message) {
       navigate("/admin/applications-section");
     }
@@ -96,6 +117,9 @@ const ApplicationViewPage = () => {
         const response = await axiosInstance.get(
           `/admin/professional-applications/${id}`
         );
+        console.log("Data: ", response.data.user.id);
+        setUserId(response.data.user.id)
+        
         setData(response.data);
         console.log(response.data);
       } catch (error) {
