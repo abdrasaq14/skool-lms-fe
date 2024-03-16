@@ -103,8 +103,7 @@ const Qualification = () => {
         linkTo="/dashboard/application"
         header_text="Return to Application Home"
       />
-
-      <div className="mb-10 ">
+      <div className=" mb-20">
         <h2 className="text-center text-lg font-bold text-black-1000">
           Add Qualifications
         </h2>
