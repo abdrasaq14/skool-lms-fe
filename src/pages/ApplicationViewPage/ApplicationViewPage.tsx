@@ -5,6 +5,8 @@ import axiosInstance from "../../utils/axiosInstance";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import PageDownload from "../../components/DownloadFunction/PageDownload";
+import ApplicationSuccessful from "../../components/applicationComponents/AppliedSuccessful";
+import AppliedRejected from "../../components/applicationComponents/AppliedRejected";
 
 interface Data {
   user: {
@@ -42,6 +44,8 @@ const ApplicationViewPage = () => {
   const [Data, setData] = useState<Data>({} as Data);
   const [loading, setLoading] = useState(true);
   const [ userId, setUserId ] = useState("")
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showRejectModal, setShowRejectModal] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -60,13 +64,34 @@ const ApplicationViewPage = () => {
     })
     console.log("notice", notifyUsers)
     if (response.data.message) {
-      navigate("/admin/applications-section");
+      setShowSuccessModal(true);
     }
     setDropdownOpen(false);
     } catch (error) {
       console.error("Error approving application:", error);
     }
   }
+  const closeModal = () => {
+    setShowSuccessModal(false);
+    navigate("/admin/applications-section");
+  };
+
+  // Render the success modal
+  const renderSuccessModal = () => {
+    if (showSuccessModal) {
+      return (
+        <div className="modal-overlay">
+          <ApplicationSuccessful
+            message="Application Accepted"
+            buttonText="OK"
+            icon={""}
+            onClick={closeModal}
+          />
+        </div>
+      );
+    }
+    return null;
+  };
 
   const handleOptionReject = async () => {
     try {
@@ -83,12 +108,33 @@ const ApplicationViewPage = () => {
     })
     console.log("notice", notifyUsers)
     if (response.data.message) {
-      navigate("/admin/applications-section");
+      setShowRejectModal(true);
     }
     setDropdownOpen(false);
     } catch (error) {
       console.error("Error rejecting application:", error);
     }
+  };
+  const closeRejectModal = () => {
+    setShowRejectModal(false);
+    navigate("/admin/applications-section");
+  };
+
+  // Render the reject modal
+  const renderRejectModal = () => {
+    if (showRejectModal) {
+      return (
+        <div className="modal-overlay">
+          <AppliedRejected
+            message="Application Rejected"
+            buttonText="OK"
+            icon={""}
+            onClick={closeRejectModal}
+          />
+        </div>
+      );
+    }
+    return null;
   };
 
   const handleOptionDelete = async () => {
@@ -162,6 +208,8 @@ const ApplicationViewPage = () => {
         linkTo="/admin/applications-section"
         header_text="Return to Admin Dashboard"
       />
+      {renderSuccessModal()}
+      {renderRejectModal()}
       <div className="w-9/12 h-10rem mx-auto mt-1">
         <div>
           <div className="h-[120px] top-92 left-211.5 gap-24 bg-green-500 p-4 rounded-t-2xl flex justify-between">
