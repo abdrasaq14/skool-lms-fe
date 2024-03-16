@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { RootState } from "../../store/store";
 import { QualificationDetailsState } from "../../states/applicationDetails/qualificationsSLice";
 
-interface validationErrors {
+interface ValidationErrors {
   institutionName?: string;
   fieldOfStudy?: string;
   yearOfGraduation?: string;
@@ -34,7 +34,7 @@ const Qualification = () => {
     countryOfInstitution: "",
   });
 
-  const [validationErrors, setValidationErrors] = useState<validationErrors>(
+  const [validationErrors, setValidationErrors] = useState<ValidationErrors>(
     {}
   );
 
@@ -63,7 +63,7 @@ const Qualification = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const validationErrors: validationErrors = {};
+    const validationErrors: ValidationErrors = {};
 
     if (!formData.institutionName) {
       validationErrors["institutionName"] = "Institution Name is required";
@@ -85,7 +85,7 @@ const Qualification = () => {
         "Country of Institution is required";
     }
     if (Object.keys(validationErrors).length > 0) {
-      setValidationErrors(validationErrors as validationErrors);
+      setValidationErrors(validationErrors as ValidationErrors);
       return;
     }
 
@@ -101,24 +101,18 @@ const Qualification = () => {
     <>
       <ApplicationHeader
         linkTo="/dashboard/application"
-        header_text="Return to continue your Application"
+        header_text="Return to Application Home"
       />
-
-      <div className=" ">
+      <div className=" mb-20">
         <h2 className="text-center text-lg font-bold text-black-1000">
-          Upload your highest Qualifications
+          Add Qualifications
         </h2>
 
-        <p className="text-center text-sm  font-bold text-gray-500">
-          For each course you are applying to, we only require your greatest
-          degree.
-          <br />
-          You will have the option to upload additional qualifications at a
-          later stage of the
-          <br /> process, should they be relevant.
+        <p className="text-center text-sm  text-black-500">
+          Upload any additional credentials that are relevant to this course
         </p>
             
-        <div className="bg-white w-3/12 mx-auto mt-3 py-8 px-7 border rounded-2xl">
+        <div className="bg-white w-4/12 mx-auto mt-3 py-8 px-7 border rounded-2xl">
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="block text-md font-medium text-black text-left">
@@ -229,8 +223,8 @@ const Qualification = () => {
                
                   name="countryOfInstitution"
                   value={formData.countryOfInstitution}
-                  onChange={handleChange}
-                  placeholder="Enter Country of Institution"
+                  onChange={handleSelectChange}
+                  // placeholder="Enter Country of Institution"
                   className="block w-full border-2 rounded-lg border-gray-200 py-2.5 px-3 text-sm focus:border-black"
                 >
                 <option value="">Select Country</option>
@@ -251,7 +245,7 @@ const Qualification = () => {
                 </div>
               )}
             </div>
-            <div className="mb-">
+            <div className="">
               <div className="flex flex-col gap-3 mx-auto">
                 <MainButton button_text={"Save and Continue"} />
               </div>
