@@ -3,13 +3,13 @@
 export function getApplicationStatus(status: string) {
     switch (status) {
     
-        case 'rejected':
+        case 'Rejected':
             return (
                 <span className="capitalize py-1 px-2 rounded-md text-xs text-orange-600 bg-orange-100">
                     {status.replace('_', ' ').toLowerCase()}
                 </span>
             )
-        case 'accepted':
+        case 'Accepted':
             return (
                 <span className="capitalize py-1 px-2 rounded-md text-xs text-green-600 bg-green-200">
                     {status.replace('_', ' ').toLowerCase()}
