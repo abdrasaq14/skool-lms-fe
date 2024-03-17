@@ -57,7 +57,7 @@ export default function DashboardStatsGrid() {
                 <div className="pl-4">
                     <span className="text-sm text-gray-500 font-light">Applications accepted</span>
                     <div className="flex items-center">
-                        <strong className="text-xl text-emerald-700 font-semibold">{applicationDetails?.status === "accepted" ? 1 : 0}</strong>
+                        <strong className="text-xl text-emerald-700 font-semibold">{applicationDetails?.status === "Accepted" ? 1 : 0}</strong>
                     </div>
                 </div>
             </BoxWrapper>
@@ -82,7 +82,7 @@ export default function DashboardStatsGrid() {
                 <div className="pl-4">
                     <span className="text-sm text-gray-500 font-light"> Applications Rejected </span>
                     <div className="flex items-center">
-                        <strong className="text-xl text-emerald-700 font-semibold">{applicationDetails?.status === "rejected" ? 1 : 0}</strong>
+                        <strong className="text-xl text-emerald-700 font-semibold">{applicationDetails?.status === "Rejected" ? 1 : 0}</strong>
                     </div>
                 </div>
             </BoxWrapper>

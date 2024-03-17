@@ -142,7 +142,7 @@ const NotificationPage = () => {
           {notifications.map((notification) => (
             <li
               key={notification.id}
-              className={`px-4 py-4 rounded-lg text-[0.75rem] border border-green-600 hover:border-2 hover:border-green-600  ${
+              className={`pr-4 pl-2 py-4 rounded-lg text-[0.75rem] border border-green-600 hover:border-2 hover:border-green-600  ${
                 notification.status
                   ? " bg-gray-100"
                   : " bg-green-100"
@@ -150,11 +150,11 @@ const NotificationPage = () => {
             >
               <div className="flex justify-between items-center ">
 
-                <div className=" flex gap-4 items-center  w-[95%]">
-                  <div className="relative">
+                <div className=" flex gap-2 items-center  w-[95%]">
+                  <div className="relative w-[10%]">
                     {!notification.status ? (
                       <button
-                        className="text-gray-500 hover:text-blue-600 flex flex-col justify-center items-center w-[3rem] group "
+                        className="text-gray-500 hover:text-blue-500 flex flex-col justify-center items-center group mx-auto "
                         onClick={() => markAsRead(notification.id)}
                       >
                         <IoCheckmarkDoneSharp className="w-5 h-5 " />
@@ -164,11 +164,11 @@ const NotificationPage = () => {
                       </button>
                     ) : (
                       <button
-                        className="text-gray-500 hover:text-blue-600 flex flex-col justify-center items-center w-[3rem] group"
+                        className="text-gray-500 hover:text-blue-500 flex flex-col justify-center items-center w-[3rem] group mx-auto"
                         onClick={() => markAsRead(notification.id)}
                       >
                         <IoCheckmarkDoneSharp className="w-5 h-5" />
-                        <span className="absolute -top-3 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-none w-[7rem] text-[0.6rem] transition-opacity duration-300">
+                        <span className="absolute -top-4 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 bg-none w-[7rem] text-[0.7rem] transition-opacity duration-300">
       Mark as unread
     </span>
                       </button>

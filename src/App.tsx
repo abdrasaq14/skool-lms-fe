@@ -64,10 +64,7 @@ function App() {
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/reset-password" element={<ResetPasswordForm />} />
         <Route path="/new-password/:token" element={<NewPasswordForm />} />
-        <Route
-          path="/admin/applications-section"
-          element={<ApplicationStatesPage />}
-        />
+        
         {/* Protected Routes after logging - Dashboard related routes. */}
         <Route
           path="/dashboard/*"
@@ -128,13 +125,22 @@ function App() {
         />
 
         <Route
-          path="admin/applications-section"
-          element={<ApplicationStatesPage />}
-        />
+          path="/admin/*"
+          element={
+            <ProtectedRoute>
+              <Routes>
+                <Route
+                  path="applications-section"
+                  element={<ApplicationStatesPage />}
+                />
 
-        <Route
-          path="admin/dashboard/application-view/:id"
-          element={<ApplicationViewPage />}
+                <Route
+                  path="dashboard/application-view/:id"
+                  element={<ApplicationViewPage />}
+                />
+              </Routes>
+            </ProtectedRoute>
+          }
         />
       </Routes>
     </>

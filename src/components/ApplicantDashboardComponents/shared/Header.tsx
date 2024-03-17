@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store/store";
 import NotificationBadge, { Effect } from "react-notification-badge";
 import axiosInstance from "../../../utils/axiosInstance";
-import { RiNotificationBadgeLine } from "react-icons/ri";
+import { FaCircle } from "react-icons/fa";
 import { BiNotificationOff } from "react-icons/bi";
 import { updateNotificationCount } from "../../../states/notification/notificationSlice";
 
@@ -160,7 +160,7 @@ export default function Header() {
                                     key={notification.id}
                                   >
                                     <div>
-                                      <RiNotificationBadgeLine className="text-green-600 h-4 w-4" />
+                                      <FaCircle className="text-green-600 h-3 w-3" />
                                     </div>
                                     <Link
                                       to="/dashboard/notifications"
