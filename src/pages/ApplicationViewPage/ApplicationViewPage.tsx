@@ -28,7 +28,7 @@ interface Data {
   };
   employmentDetails: boolean;
   fundingInformation: string;
-  disablity: string;
+  disability: string;
   academicReference: boolean;
   englishLanguageQualification: boolean;
   passportUpload: {
@@ -192,7 +192,9 @@ const ApplicationViewPage = () => {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (<div className="flex items-center justify-center">
+      <div className=" mt-40 w-20 h-20 border-t-4 border-b-4 border-green-600 rounded-full text-center animate-spin"></div>
+    </div>)
   }
 
   const base64Image = Data.passportUpload.data.reduce(
@@ -200,6 +202,8 @@ const ApplicationViewPage = () => {
     ""
   );
   const imageDataUri = `data:image/png;base64,${btoa(base64Image)}`;
+
+  console.log("Data: ", Data);
   
 
   return (
@@ -208,6 +212,12 @@ const ApplicationViewPage = () => {
         linkTo="/admin/applications-section"
         header_text="Return to Admin Dashboard"
       />
+      {loading ? (
+        <div className="flex items-center justify-center">
+          <div className=" mt-40 w-20 h-20 border-t-4 border-b-4 border-green-600 rounded-full text-center animate-spin"></div>
+        </div> 
+      ):(
+        <>      
       {renderSuccessModal()}
       {renderRejectModal()}
       <div className="w-9/12 h-10rem mx-auto mt-1">
@@ -366,7 +376,7 @@ const ApplicationViewPage = () => {
           <div className="mt-5">
             <h1 className="text-black font-bold text-base">Disabilty</h1>
             <p className="text-black font-light text-sm ml-5">
-              {Data.disablity}
+              {Data.disability}
             </p>
           </div>
 
@@ -460,6 +470,8 @@ const ApplicationViewPage = () => {
           </div>
         </div>
       </div>
+      </>
+      )}
     </div>
   );
 };
