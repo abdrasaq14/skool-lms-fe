@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import ApplicationHeader from "../../components/applicationComponents/ApplicationHeader";
+import AdminHeader from "../../components/admin/AdminHeader";
 import axiosInstance from "../../utils/axiosInstance";
 import { Link } from "react-router-dom";
 import PDFDownloadButton from "../../components/DownloadFunction/SingleDownload";
@@ -110,6 +110,7 @@ function ApplicationStatesPage() {
     : applicationData;
 
   // Logic for pagination
+  
   const indexOfLastApplication = currentPage * applicationsPerPage;
   const indexOfFirstApplication = indexOfLastApplication - applicationsPerPage;
   const currentApplications = filteredData.slice(indexOfFirstApplication, indexOfLastApplication);
@@ -145,9 +146,9 @@ function ApplicationStatesPage() {
       </div>
 
       <div className="w-11/12 mx-auto py-6">
-        <ApplicationHeader header_text="" linkTo="" />
+        <AdminHeader header_text="" linkTo="" />
 
-        <div className="w-10/12 mx-auto flex items-center justify-center h-12  bg-gray-1 rounded-t-2xl">
+        <div className="w-10/12 mx-auto flex items-center justify-center h-12  bg-gray-1 rounded-t-2xl mt-8">
           <div
             className={`mr-16 cursor-pointer font-medium hover:bg-white rounded-t-xl w-259px h-fit py-4 px-4 ${
               selectedTab === "Accepted"
@@ -179,6 +180,8 @@ function ApplicationStatesPage() {
             Pending Applications
           </div>
         </div>
+
+        
         {loading ? (
           <div className="flex items-center justify-center h-64">
             <div className="w-20 h-20 border-t-4 border-b-4 border-green-600 rounded-full text-center animate-spin"></div>

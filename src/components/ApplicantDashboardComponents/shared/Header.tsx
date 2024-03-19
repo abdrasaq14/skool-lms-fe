@@ -1,12 +1,17 @@
+// import { useRef } from 'react';
 import { Fragment, useEffect } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
 import { HiOutlineBell, HiOutlineChatAlt } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store/store";
 import axiosInstance from "../../../utils/axiosInstance";
+import { FaCircle } from "react-icons/fa";
+import { BiNotificationOff } from "react-icons/bi";
+import { updateNotificationCount } from "../../../states/notification/notificationSlice";
+
 // import container from "postcss/lib/container";
 
 interface Notification {
@@ -18,37 +23,49 @@ interface Notification {
 }
 
 export default function Header() {
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
+  // const badgeRef = useRef(null);
   const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const count = useSelector(
+    (state: RootState) => state.notificationStatus.notificationCount
+  );
+  const dispatch = useDispatch();
+
+  const fetchCount = async () => {
+    try {
+      const {
+        data: { notifications },
+      } = await axiosInstance.get("/users/notification");
+      console.log({ data: { notifications } });
+
+      const unreadNotifications: [] = notifications.filter(
+        (notification: Notification) => !notification.status
+      );
+      setNotifications(unreadNotifications);
+
+      dispatch(updateNotificationCount(unreadNotifications.length));
+    } catch (error) {
+      console.error("Failed to fetch notification:", error);
+    }finally {
+      setLoading(false);
+    }
+  };
+
+  const handleClick = async () => {
+    try {
+      await fetchCount();
+    } catch (error) {
+      console.error("Failed to fetch notification:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchCount = async () => {
-      try {
-        const {
-          data: { notifications },
-        } = await axiosInstance.get("/users/notification");
-        console.log({ data: { notifications } });
-
-        const unreadNotifications: [] = notifications.filter(
-          (notification: Notification) => !notification.status
-        );
-          console.log(notifications);
-          
-        setCount(notifications.length);
-        // setCount(unreadNotifications.length);
-
-        setNotifications(unreadNotifications);
-      } catch (error) {
-        console.error("Failed to fetch notification:", error);
-      }
-    };
-
     fetchCount();
   }, []);
 
-  const handleClick = () => {
-    setCount(0);
-  };
   const navigate = useNavigate();
 
   const logout = () => {
@@ -128,38 +145,65 @@ export default function Header() {
                     <div className="text-black font-semibold mb-4 ">
                       Notifications
                     </div>
-                    {notifications.length !== 0 ? (
-                      <>
-                        <ul className="flex flex-col gap-4 mb-6 ">
-                          {notifications
-                            .slice(0, 3)
-                            .map((notification: Notification) => (
-                              <li
-                                className="px-2 py-1 border border-gray-600 rounded-lg text-sm hover:border-2 hover:border-green-600 bg-white text-gray-600"
-                                key={notification.id}
-                              >
-                                <h5 className=" font-medium text-gray-900">
-                                  {notification.title}
-                                </h5>
-                                <p className=" text-gray-500">
-                                  {notification.message}
-                                </p>
-                              </li>
-                            ))}
-                        </ul>
-                        <div className=" w-full text-center bg-green-600 rounded-lg mx-auto py-2">
-                          <Link
-                            to="/dashboard/notifications"
-                            className=" text-white no-underline"
-                          >
-                            See all notifications
-                          </Link>
-                        </div>
-                      </>
-                    ) : (
-                      <div className="mt-2 py-1 text-sm">
-                        No new notifications
+                    {loading ? (
+                      <div className="flex items-center justify-center">
+                        <div className=" mt-4 w-6 h-6 border-t-4 border-b-4 border-green-600 rounded-full text-center animate-spin"></div>
                       </div>
+                    ) : (
+                      <>
+                        {notifications.length !== 0 ? (
+                          <>
+                            <ul className="flex flex-col gap-4 mb-6 ">
+                              {notifications.map(
+                                (notification: Notification) => (
+                                  <li
+                                    className="px-2 py-1 border border-gray-600 rounded-lg text-sm hover:border-2 hover:border-green-600 bg-white text-gray-600 flex gap-4 items-center transition-all duration-300 ease-in-out hover:shadow-md hover:scale-105 hover:transform hover:translate-y-1"
+                                    key={notification.id}
+                                  >
+                                    <div>
+                                      <FaCircle className="text-green-600 h-3 w-3" />
+                                    </div>
+                                    <Link
+                                      to="/dashboard/notifications"
+                                      className=" no-underline hover:no-underline"
+                                    >
+                                      <h5 className=" font-medium text-gray-900">
+                                        {notification.title}
+                                      </h5>
+                                      <p className=" text-gray-500">
+                                        {notification.message.slice(0, 30)}.....
+                                      </p>
+                                    </Link>
+                                  </li>
+                                )
+                              )}
+                            </ul>
+                            <div className=" w-full text-center bg-green-600 rounded-lg mx-auto py-2">
+                              <Link
+                                to="/dashboard/notifications"
+                                className=" text-white no-underline"
+                              >
+                                See all notifications
+                              </Link>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="mt-4 py-1 text-sm text-center">
+                              <BiNotificationOff className="text-gray-500 h-10 w-10 mx-auto" />
+                              No new notifications
+                            </div>
+                            <div className=" mt-10 w-full text-center bg-green-600 rounded-lg mx-auto py-2">
+                              <Link
+                                to="/dashboard/notifications"
+                                className=" text-white no-underline"
+                              >
+                                See all notifications
+                              </Link>
+                            </div>
+                          </>
+                        )}
+                      </>
                     )}
                   </div>
                 </Popover.Panel>
