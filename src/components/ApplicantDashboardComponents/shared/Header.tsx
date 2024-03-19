@@ -6,10 +6,8 @@ import classNames from "classnames";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import NotificationBadge, { Effect } from "react-notification-badge";
 import axiosInstance from "../../../utils/axiosInstance";
 // import container from "postcss/lib/container";
-
 
 interface Notification {
   id: number;
@@ -20,32 +18,37 @@ interface Notification {
 }
 
 export default function Header() {
-
   const [count, setCount] = useState(0);
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    const fetchCount = async() => {
+    const fetchCount = async () => {
       try {
-        const { data: { notifications } } = await axiosInstance.get("/users/notification");
-        console.log({ data: { notifications } })
+        const {
+          data: { notifications },
+        } = await axiosInstance.get("/users/notification");
+        console.log({ data: { notifications } });
 
-        const unreadNotifications: [] = notifications.filter((notification: Notification) => !notification.status);
-
-        setCount(unreadNotifications.length);
+        const unreadNotifications: [] = notifications.filter(
+          (notification: Notification) => !notification.status
+        );
+          console.log(notifications);
+          
+        setCount(notifications.length);
+        // setCount(unreadNotifications.length);
 
         setNotifications(unreadNotifications);
       } catch (error) {
         console.error("Failed to fetch notification:", error);
       }
     };
-  
+
     fetchCount();
   }, []);
-   
+
   const handleClick = () => {
-    setCount(0)
-  }
+    setCount(0);
+  };
   const navigate = useNavigate();
 
   const logout = () => {
@@ -58,7 +61,6 @@ export default function Header() {
   return (
     <div className="bg-white h-16 px-10 flex items-center border-b border-gray-200 justify-end">
       <div className="flex items-center gap-2 mr-2">
-
         <Popover className="relative">
           {({ open }) => (
             <>
@@ -105,9 +107,11 @@ export default function Header() {
               >
                 <div className="inline-block relative" onClick={handleClick}>
                   <HiOutlineBell fontSize={25} />
-                  <div className="absolute top-0 left-7 h-1 w-1 ">
-                    <NotificationBadge  count={count} effect={Effect.SCALE} />
-                  </div>
+                  {count > 0 && (
+                    <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-full bg-red-500 px-2 py-0.5 text-white">
+                      {count}
+                    </span>
+                  )}
                 </div>
               </Popover.Button>
               <Transition
@@ -126,30 +130,37 @@ export default function Header() {
                     </div>
                     {notifications.length !== 0 ? (
                       <>
-                      <ul className="flex flex-col gap-4 mb-6 ">
-                        {notifications.slice(0,3).map((notification: Notification) => (
-                          <li className="px-2 py-1 border border-gray-600 rounded-lg text-sm hover:border-2 hover:border-green-600 bg-white text-gray-600"
-                            key={notification.id}>
-                              <h5 className=" font-medium text-gray-900">{notification.title}</h5>
-                              <p className=" text-gray-500">{notification.message}</p>
-                              
-                          </li>
-                        ))}
-                      </ul>
-                      <div className=" w-full text-center bg-green-600 rounded-lg mx-auto py-2">
-                      <Link to='/dashboard/notifications' className=" text-white no-underline">
-                          See all notifications
-                      </Link>
-
-                      </div>
-                      
+                        <ul className="flex flex-col gap-4 mb-6 ">
+                          {notifications
+                            .slice(0, 3)
+                            .map((notification: Notification) => (
+                              <li
+                                className="px-2 py-1 border border-gray-600 rounded-lg text-sm hover:border-2 hover:border-green-600 bg-white text-gray-600"
+                                key={notification.id}
+                              >
+                                <h5 className=" font-medium text-gray-900">
+                                  {notification.title}
+                                </h5>
+                                <p className=" text-gray-500">
+                                  {notification.message}
+                                </p>
+                              </li>
+                            ))}
+                        </ul>
+                        <div className=" w-full text-center bg-green-600 rounded-lg mx-auto py-2">
+                          <Link
+                            to="/dashboard/notifications"
+                            className=" text-white no-underline"
+                          >
+                            See all notifications
+                          </Link>
+                        </div>
                       </>
-                      )  : (  
-                    <div className="mt-2 py-1 text-sm">
-                      No new notifications
-                    </div>
-                        )}
-
+                    ) : (
+                      <div className="mt-2 py-1 text-sm">
+                        No new notifications
+                      </div>
+                    )}
                   </div>
                 </Popover.Panel>
               </Transition>
