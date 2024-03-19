@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { Fragment, useEffect } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
 import { HiOutlineBell, HiOutlineChatAlt } from "react-icons/hi";
@@ -7,7 +6,6 @@ import classNames from "classnames";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store/store";
-import NotificationBadge, { Effect } from "react-notification-badge";
 import axiosInstance from "../../../utils/axiosInstance";
 import { FaCircle } from "react-icons/fa";
 import { BiNotificationOff } from "react-icons/bi";
@@ -24,8 +22,6 @@ interface Notification {
 }
 
 export default function Header() {
-  // const [count, setCount] = useState(0);
-  const badgeRef = useRef(null);
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const count = useSelector(
@@ -43,7 +39,10 @@ export default function Header() {
       const unreadNotifications: [] = notifications.filter(
         (notification: Notification) => !notification.status
       );
+      console.log(unreadNotifications);
+      
       setNotifications(unreadNotifications);
+    
 
       dispatch(updateNotificationCount(unreadNotifications.length));
     } catch (error) {
@@ -125,9 +124,11 @@ export default function Header() {
               >
                 <div className="inline-block relative" onClick={handleClick}>
                   <HiOutlineBell fontSize={25} />
-                  <div ref={badgeRef} className="absolute top-0 left-7 h-1 w-1 ">
-                    <NotificationBadge count={count} effect={Effect} />
-                  </div>
+                  {count > 0 && (
+                    <span className=" absolute top-0.5 right-1 transform translate-x-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-full bg-red-500 px-1.5 py-0.5 text-white text-xs">
+                      {count}
+                    </span>
+                  )}
                 </div>
               </Popover.Button>
               <Transition
