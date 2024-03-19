@@ -3,7 +3,7 @@ import AdminHeader from "../../components/admin/AdminHeader";
 import axiosInstance from "../../utils/axiosInstance";
 import { Link } from "react-router-dom";
 import PDFDownloadButton from "../../components/DownloadFunction/SingleDownload";
-// import MultiplePDFDownloadButton from "../../components/DownloadFunction/MultipleDownload"; 
+// import MultiplePDFDownloadButton from "../../components/DownloadFunction/MultipleDownload";
 interface addQualification {
   gradeOrCGPA: string;
   fieldOfStudy: string;
@@ -41,7 +41,9 @@ interface ApplicationDetails {
 }
 
 function ApplicationStatesPage() {
-  const [applicationData, setApplicationData] = useState<ApplicationDetails[]>([]);
+  const [applicationData, setApplicationData] = useState<ApplicationDetails[]>(
+    []
+  );
   const [showModal, setShowModal] = useState(false);
   const [selectedTab, setSelectedTab] = useState<string | null>("Accepted");
   const [loading, setLoading] = useState(true);
@@ -52,9 +54,12 @@ function ApplicationStatesPage() {
   useEffect(() => {
     const fetchApplications = async () => {
       try {
-        const response = await axiosInstance.get("/admin/professional-applications", {
-          withCredentials: true,
-        });
+        const response = await axiosInstance.get(
+          "/admin/professional-applications",
+          {
+            withCredentials: true,
+          }
+        );
         setApplicationData(response.data);
       } catch (error) {
         console.error(error);
@@ -87,7 +92,11 @@ function ApplicationStatesPage() {
       await axiosInstance.delete(`/admin/professional-applications`, {
         data: { applicationIds: selectedIds },
       });
-      setApplicationData(applicationData.filter(application => !selectedIds.includes(application.id)));
+      setApplicationData(
+        applicationData.filter(
+          (application) => !selectedIds.includes(application.id)
+        )
+      );
     } catch (error) {
       console.error("Error deleting applications:", error);
     }
@@ -98,9 +107,7 @@ function ApplicationStatesPage() {
     setShowModal(false);
   };
 
-  const handleDownloadSelected = async () => {
-  
-  };
+  const handleDownloadSelected = async () => {};
 
   const filteredData = selectedTab
     ? applicationData.filter(
@@ -110,10 +117,13 @@ function ApplicationStatesPage() {
     : applicationData;
 
   // Logic for pagination
-  
+
   const indexOfLastApplication = currentPage * applicationsPerPage;
   const indexOfFirstApplication = indexOfLastApplication - applicationsPerPage;
-  const currentApplications = filteredData.slice(indexOfFirstApplication, indexOfLastApplication);
+  const currentApplications = filteredData.slice(
+    indexOfFirstApplication,
+    indexOfLastApplication
+  );
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -122,7 +132,9 @@ function ApplicationStatesPage() {
       <div className="w-full md:w-1/3 mx-auto mt-10">
         {showModal && (
           <div className="rounded-lg bg-white p-8 shadow-2xl">
-            <h2 className="text-lg font-bold">Are you sure you want to delete these applications?</h2>
+            <h2 className="text-lg font-bold">
+              Are you sure you want to delete these applications?
+            </h2>
 
             <div className="mt-4 flex gap-2">
               <button
@@ -145,10 +157,10 @@ function ApplicationStatesPage() {
         )}
       </div>
 
-      <div className="w-11/12 mx-auto py-6">
-        <AdminHeader header_text="" linkTo="" />
+      <AdminHeader header_text="" linkTo="" />
 
-        <div className="w-10/12 mx-auto flex items-center justify-center h-12  bg-gray-1 rounded-t-2xl mt-8">
+      <div className="w-8/12 mx-auto">
+        <div className="flex items-center justify-center h-12  bg-gray-1 rounded-t-2xl mt-8">
           <div
             className={`mr-16 cursor-pointer font-medium hover:bg-white rounded-t-xl w-259px h-fit py-4 px-4 ${
               selectedTab === "Accepted"
@@ -181,7 +193,6 @@ function ApplicationStatesPage() {
           </div>
         </div>
 
-        
         {loading ? (
           <div className="flex items-center justify-center h-64">
             <div className="w-20 h-20 border-t-4 border-b-4 border-green-600 rounded-full text-center animate-spin"></div>
@@ -191,113 +202,118 @@ function ApplicationStatesPage() {
             <p className="text-2xl font-semibold">No application found</p>
           </div>
         ) : (
-          <table className="mx-auto mt-2 w-80%">
-            <thead className="bg-white border-none ">
-              <tr>
-                <th className="border-none  py-6 "></th>
-                <th className="border-none  py-6 ">Name</th>
-                <th className="border-none  py-6 px-16">Program Applied</th>
-                <th className="border-none  py-6 px-16">Degree</th>
-                <th className="border-none  py-6 px-16">Status</th>
+          <div >
+            <table className=" mx-auto mt-2">
+              <thead className="bg-white border-none ">
+                <tr>
+                  <th className="border-none  py-6 "></th>
+                  <th className="border-none  py-6 ">Name</th>
+                  <th className="border-none  py-6 ">Program Applied</th>
+                  <th className="border-none  py-6 ">Degree</th>
+                  <th className="border-none  py-6 ">Status</th>
 
-                <th className="border-none  py-6 px-16"></th>
-                <th className="border-none  py-6"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentApplications.map((application: ApplicationDetails) => (
-                <tr key={application.id}>
-                  <td className="border-t-0  py-6 ">
-                    <input
-                      className="cursor-pointer"
-                      type="checkbox"
-                      name="application"
-                      checked={selectedIds.includes(application.id)}
-                      onChange={() => handleCheckboxChange(application.id)}
-                    />
-                  </td>
-                  <td className="border-t-0  py-6">{`${application.user.firstName} ${application.user.lastName}`}</td>
-                  <td className="border-t-0  py-6 px-16">
-                    {application.course[0].courseType}
-                  </td>
-                  <td className="border-t-0  py-6 px-16">
-                    {application.course[0].courseSearch}
-                  </td>
-                  <td className="border-t-0  py-6 px-16">
-                    {application.status}
-                  </td>
-
-                  <td className="border-t-0  py-6 px-16">
-                    <Link
-                      to={`/admin/dashboard/application-view/${application.id}`}
-                      className="hover:no-underline"
-                    >
-                      <span className="text-green-1 border-2 border-green-border-1 p-2 font-semibold cursor-pointer">
-                        View&nbsp;Application
-                      </span>
-                    </Link>
-                  </td>
-                  <td className="border-t-0  py-6 cursor-pointer">
-                    <PDFDownloadButton applicationId={application.id} />
-                  </td>
-                  <td className="border-t-0  py-6 cursor-pointer">
-                  </td>
+                  <th className="border-none  p-6 "></th>
+                  <th className="border-none  "></th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-        {selectedIds.length > 1 && (
-          <div className="flex justify-between px-20 py-4  ">
-            <div className="">
-              <button
-                className="bg-red-600 px-4 py-3 text-center rounded-lg text-white hover:bg-red-400 flex flex-row"
-                onClick={handleDeleteSelected}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-4 mr-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                  />
-                </svg>
-                Delete {selectedIds.length} applications
-              </button>
-            </div>
+              </thead>
+              <tbody>
+                {currentApplications.map((application: ApplicationDetails) => (
+                  <tr key={application.id}>
+                    <td className="border-t-0  py-6 ">
+                      <input
+                        className="cursor-pointer"
+                        type="checkbox"
+                        name="application"
+                        checked={selectedIds.includes(application.id)}
+                        onChange={() => handleCheckboxChange(application.id)}
+                      />
+                    </td>
+                    <td className="border-t-0 py-6 ">{`${application.user.firstName} ${application.user.lastName}`}</td>
+                    <td className="border-t-0 py-6 ">
+                      {application.course[0].courseType}
+                    </td>
+                    <td className="border-t-0 py-6">
+                      {application.course[0].courseSearch}
+                    </td>
+                    <td className="border-t-0 py-6 ">{application.status}</td>
 
-            <div className="">
-              <button
-                className="bg-green-600 px-4 py-3 text-center rounded-lg text-white hover:bg-green-400"
-                onClick={handleDownloadSelected}
-              >
-                Download {selectedIds.length} applications
-              </button>
-            </div>
+                    <td className="border-t-0">
+                      <Link
+                        to={`/admin/dashboard/application-view/${application.id}`}
+                        className="hover:no-underline"
+                      >
+                        <span className="text-green-1 border-2 border-green-border-1 p-2 font-semibold cursor-pointer">
+                          View&nbsp;Application
+                        </span>
+                      </Link>
+                    </td>
+                    <td className="border-t-0  p-6 cursor-pointer">
+                      <PDFDownloadButton applicationId={application.id} />
+                    </td>
+                    <td className="border-t-0   cursor-pointer"></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
-        <div className="w-full flex justify-center my-4">
-          <ul className="flex">
-            {Array.from({ length: Math.ceil(filteredData.length / applicationsPerPage) }, (_, i) => i + 1).map((number) => (
-              <li key={number}>
-                <button
-                  className={`mx-1 px-3 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-                    currentPage === number ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600"
-                  }`}
-                  onClick={() => paginate(number)}
-                >
-                  {number}
-                </button>
-              </li>
-            ))}
-          </ul>
+      </div>
+
+      {selectedIds.length > 1 && (
+        <div className="flex justify-between px-20 py-4  ">
+          <div className="">
+            <button
+              className="bg-red-600 px-4 py-3 text-center rounded-lg text-white hover:bg-red-400 flex flex-row"
+              onClick={handleDeleteSelected}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-4 mr-1"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                />
+              </svg>
+              Delete {selectedIds.length} applications
+            </button>
+          </div>
+
+          <div className="">
+            <button
+              className="bg-green-600 px-4 py-3 text-center rounded-lg text-white hover:bg-green-400"
+              onClick={handleDownloadSelected}
+            >
+              Download {selectedIds.length} applications
+            </button>
+          </div>
         </div>
+      )}
+      <div className="w-full flex justify-center my-4">
+        <ul className="flex">
+          {Array.from(
+            { length: Math.ceil(filteredData.length / applicationsPerPage) },
+            (_, i) => i + 1
+          ).map((number) => (
+            <li key={number}>
+              <button
+                className={`mx-1 px-3 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 ${
+                  currentPage === number
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-200 text-gray-600"
+                }`}
+                onClick={() => paginate(number)}
+              >
+                {number}
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
     </>
   );
