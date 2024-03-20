@@ -33,6 +33,7 @@ import ApplicationViewPage from "./pages/ApplicationViewPage/ApplicationViewPage
 
 import { ProtectedRoute } from "./components/protectedRoutes/ProtectedRoute";
 import AdminMessageView from "./pages/Messages/AdminMessageView";
+import UserMessageView from "./pages/Messages/UserMessageView";
 
 function App() {
   useEffect(() => {
@@ -65,6 +66,7 @@ function App() {
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/reset-password" element={<ResetPasswordForm />} />
         <Route path="/new-password/:token" element={<NewPasswordForm />} />
+        <Route path="/dashboard/messages" element={<UserMessageView />} />
         
         {/* Protected Routes after logging - Dashboard related routes. */}
         <Route
@@ -141,7 +143,7 @@ function App() {
                 />
 
                 <Route
-                  path="dashboard/messages"
+                  path="applications-section/messages"
                   element={<AdminMessageView />}
                 />
               </Routes>
