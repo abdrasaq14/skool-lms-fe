@@ -32,6 +32,7 @@ import ApplicationStatesPage from "./pages/ApplicationStatesPage/ApplicationStat
 import ApplicationViewPage from "./pages/ApplicationViewPage/ApplicationViewPage";
 
 import { ProtectedRoute } from "./components/protectedRoutes/ProtectedRoute";
+import AdminMessageView from "./pages/Messages/AdminMessageView";
 
 function App() {
   useEffect(() => {
@@ -137,6 +138,11 @@ function App() {
                 <Route
                   path="dashboard/application-view/:id"
                   element={<ApplicationViewPage />}
+                />
+
+                <Route
+                  path="dashboard/messages"
+                  element={<AdminMessageView />}
                 />
               </Routes>
             </ProtectedRoute>
