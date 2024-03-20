@@ -9,7 +9,8 @@ const Message = (props: MessageProps) => {
     <article className=" border-b-2 border-gray-300  p-2 mb-3 ">
       <div className="flex items-center gap-4">
        <div className="flex items-center">
-        <span>sam</span>
+        <div className="bg-blue-600 border w-4 h-4 rounded-full mr-1"></div>
+
        <img
           alt=""
           src={props.imageUrl}
