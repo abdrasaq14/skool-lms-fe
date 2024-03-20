@@ -3,6 +3,7 @@ import AdminHeader from "../../components/admin/AdminHeader";
 import axiosInstance from "../../utils/axiosInstance";
 import { Link } from "react-router-dom";
 import PDFDownloadButton from "../../components/DownloadFunction/SingleDownload";
+import Dots from "/images/Dots.png";
 // import MultiplePDFDownloadButton from "../../components/DownloadFunction/MultipleDownload";
 interface addQualification {
   gradeOrCGPA: string;
@@ -44,6 +45,7 @@ function ApplicationStatesPage() {
   const [applicationData, setApplicationData] = useState<ApplicationDetails[]>(
     []
   );
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selectedTab, setSelectedTab] = useState<string | null>("Accepted");
   const [loading, setLoading] = useState(true);
@@ -83,9 +85,9 @@ function ApplicationStatesPage() {
     }
   };
 
-  const handleDeleteSelected = () => {
-    setShowModal(true);
-  };
+  // const handleDeleteSelected = () => {
+  //   setShowModal(true);
+  // };
 
   const handleConfirmDelete = async () => {
     try {
@@ -107,7 +109,11 @@ function ApplicationStatesPage() {
     setShowModal(false);
   };
 
-  const handleDownloadSelected = async () => {};
+  const toggleDropdown = () => {
+    setDropdownOpen(!isDropdownOpen);
+  };
+
+  // const handleDownloadSelected = async () => {};
 
   const filteredData = selectedTab
     ? applicationData.filter(
@@ -203,7 +209,7 @@ function ApplicationStatesPage() {
             <p className="text-2xl font-semibold">No application found</p>
           </div>
         ) : (
-          <div >
+          <div>
             <table className=" mt-2 w-full ">
               <thead className=" border-none bg-white">
                 <tr>
@@ -212,6 +218,74 @@ function ApplicationStatesPage() {
                   <th className="border-none  py-6 ">Program Applied</th>
                   <th className="border-none  py-6 ">Degree</th>
                   <th className="border-none  py-6 ">Status</th>
+                  {selectedIds.length > 1 && (
+                    <th className="border-none py-6 flex justify-end  ">
+                      <img
+                        src={Dots}
+                        alt="Dots"
+                        className="cursor-pointer"
+                        onClick={toggleDropdown}
+                      />
+                      {isDropdownOpen && (
+                        <div className="absolute z-10 mt-8 right-20 mr-10 bg-white border rounded-md shadow-md">
+                          <ul>
+                            <li className="py-2 px-4 cursor-pointer hover:bg-gray-100">
+                              <a className="group relative inline-flex items-center overflow-hidden rounded  px-4 py-3 hover:no-underline text-black ">
+                                <span className="absolute -start-full transition-all group-hover:start-4">
+                                  <svg
+                                    className="size-5 rtl:rotate-180 "
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth="2"
+                                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                    />
+                                  </svg>
+                                </span>
+
+                                <span className="text-sm font-medium transition-all group-hover:ms-4 pl-2">
+                                  {" "}
+                                  Download {
+                                  selectedIds.length === filteredData.length ? "all" : selectedIds.length} applications
+                                </span>
+                              </a>
+                            </li>
+                            <li className="py-4 px-5 cursor-pointer hover:bg-gray-100">
+                              <a className="group relative inline-flex items-center overflow-hidden rounded  px-5 py-3  hover:no-underline text-black">
+                                <span className="absolute -start-full transition-all group-hover:start-4">
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-5 w-4 "
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                    />
+                                  </svg>
+                                </span>
+
+                                <span className="text-sm font-medium transition-all group-hover:ms-4 ">
+                                  {" "}
+                                  Delete {selectedIds.length === filteredData.length ? "all" : selectedIds.length} applications
+                                </span>
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      )}
+                    </th>
+                  )}
+
                   <th className="border-none"></th>
                   <th className="border-none"></th>
                 </tr>
@@ -250,7 +324,6 @@ function ApplicationStatesPage() {
                     <td className="border-t-0 cursor-pointer text-center">
                       <PDFDownloadButton applicationId={application.id} />
                     </td>
-                    
                   </tr>
                 ))}
               </tbody>
@@ -258,42 +331,6 @@ function ApplicationStatesPage() {
           </div>
         )}
       </div>
-
-      {selectedIds.length > 1 && (
-        <div className="flex justify-between px-20 py-4  ">
-          <div className="">
-            <button
-              className="bg-red-600 px-4 py-3 text-center rounded-lg text-white hover:bg-red-400 flex flex-row"
-              onClick={handleDeleteSelected}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-4 mr-1"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                />
-              </svg>
-              Delete {selectedIds.length} applications
-            </button>
-          </div>
-
-          <div className="">
-            <button
-              className="bg-green-600 px-4 py-3 text-center rounded-lg text-white hover:bg-green-400"
-              onClick={handleDownloadSelected}
-            >
-              Download {selectedIds.length} applications
-            </button>
-          </div>
-        </div>
-      )}
       <div className="w-full flex justify-center my-4">
         <ul className="flex">
           {Array.from(
