@@ -21,9 +21,9 @@ const Message = (props: MessageProps) => {
         <div className="w-full p-0">
           <div className="flex flex-row justify-between  w-full">
             <h3 className="text-2xl font-bold  ">{props.name}</h3>
-            <p>{props.time}</p>
+            <p className="font-light text-slate-500">{props.time}</p>
           </div>
-          <p className="text-lg font-medium ">{props.message}</p>
+          <p className="font-light text-slate-500">{props.message}</p>
         </div>
       </div>
     </article>
