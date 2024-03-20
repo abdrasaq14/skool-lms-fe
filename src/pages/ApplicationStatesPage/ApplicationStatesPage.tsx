@@ -321,7 +321,7 @@ function ApplicationStatesPage() {
                         </span>
                       </Link>
                     </td>
-                    <td className="border-t-0 py-4 cursor-pointer text-center ">
+                    <td className="border-t-0 cursor-pointer text-center">
                       <PDFDownloadButton applicationId={application.id} />
                     </td>
                   </tr>

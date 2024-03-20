@@ -275,9 +275,10 @@ const ApplicationViewPage = () => {
           </div>
 
           <div className="flex items-center justify-between mt-5">
+
             <div className="flex items-center justify-between">
               <svg
-                className="w-6 h-6 text-gray-500 dark:text-white"
+                className="w-6 h-6 text-gray-500"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -305,7 +306,7 @@ const ApplicationViewPage = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center justify-between">
                 <svg
-                  className="w-6 h-6 text-gray-500 dark:text-white"
+                  className="w-6 h-6 text-gray-500 "
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -326,7 +327,7 @@ const ApplicationViewPage = () => {
             </div>
             <div className="flex items-center justify-between">
               <svg
-                className="w-6 h-6 text-gray-500 dark:text-white"
+                className="w-6 h-6 text-gray-500"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -384,7 +385,7 @@ const ApplicationViewPage = () => {
             {Data.academicReference ? (
               <h1 className="w-1/4 text-black font-light text-sm ml-5 flex items-center justify-between">
                 <svg
-                  className="w-6 h-6 text-green-400 dark:text-white"
+                  className="w-6 h-6 text-green-400"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -403,7 +404,7 @@ const ApplicationViewPage = () => {
             ) : (
               <h1 className="w-1/4 text-black font-light text-sm ml-5 flex items-center justify-between">
                 <svg
-                  className="w-6 h-6 text-red-400 dark:text-white"
+                  className="w-6 h-6 text-red-400 "
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -426,7 +427,7 @@ const ApplicationViewPage = () => {
             {Data.englishLanguageQualification ? (
               <h1 className="w-1/3 text-black font-light text-sm ml-5 flex items-center justify-between">
                 <svg
-                  className="w-6 h-6 text-green-400 dark:text-white"
+                  className="w-6 h-6 text-green-400"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -445,7 +446,7 @@ const ApplicationViewPage = () => {
             ) : (
               <h1 className="w-1/3 text-black font-light text-sm ml-5 flex items-center justify-between">
                 <svg
-                  className="w-6 h-6 text-red-400 dark:text-white"
+                  className="w-6 h-6 text-red-400 "
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -464,7 +465,7 @@ const ApplicationViewPage = () => {
             )}
           </div>
 
-          <div className="mt-10 flex items-center justify-between w-1/3">
+          <div className="mt-10 flex items-center justify-between w-1/3 mb-20">
             <h1 className="text-black font-light text-sm"> Documents</h1>
             <PageDownload />
           </div>
