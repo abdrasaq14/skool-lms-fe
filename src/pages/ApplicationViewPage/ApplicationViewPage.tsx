@@ -464,7 +464,7 @@ const ApplicationViewPage = () => {
             )}
           </div>
 
-          <div className="mt-10 flex items-center justify-between w-1/3">
+          <div className="mt-10 flex items-center justify-between w-1/3 mb-10">
             <h1 className="text-black font-light text-sm"> Documents</h1>
             <PageDownload />
           </div>
