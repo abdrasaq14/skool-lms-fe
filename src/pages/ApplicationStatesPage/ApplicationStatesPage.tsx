@@ -171,6 +171,7 @@ function ApplicationStatesPage() {
           >
             Accepted Applications
           </div>
+
           <div
             className={`mr-16 cursor-pointer font-medium hover:bg-white rounded-t-xl w-259px h-fit py-4 px-4 ${
               selectedTab === "Rejected"
@@ -182,7 +183,7 @@ function ApplicationStatesPage() {
             Rejected Applications
           </div>
           <div
-            className={`mr-16 cursor-pointer font-medium hover:bg-white rounded-t-xl w-259px h-fit py-4 px-4 ${
+            className={` cursor-pointer font-medium hover:bg-white rounded-t-xl w-259px h-fit py-4 px-4 ${
               selectedTab === "Pending"
                 ? "bg-white rounded-t-xl w-259px h-fit py-4 px-4"
                 : ""
@@ -203,17 +204,16 @@ function ApplicationStatesPage() {
           </div>
         ) : (
           <div >
-            <table className=" mx-auto mt-2">
-              <thead className="bg-white border-none ">
+            <table className=" mt-2 w-full ">
+              <thead className=" border-none bg-white">
                 <tr>
                   <th className="border-none  py-6 "></th>
                   <th className="border-none  py-6 ">Name</th>
                   <th className="border-none  py-6 ">Program Applied</th>
                   <th className="border-none  py-6 ">Degree</th>
                   <th className="border-none  py-6 ">Status</th>
-
-                  <th className="border-none  p-6 "></th>
-                  <th className="border-none  "></th>
+                  <th className="border-none"></th>
+                  <th className="border-none"></th>
                 </tr>
               </thead>
               <tbody>
@@ -247,10 +247,10 @@ function ApplicationStatesPage() {
                         </span>
                       </Link>
                     </td>
-                    <td className="border-t-0  p-6 cursor-pointer">
+                    <td className="border-t-0 py-4 cursor-pointer text-center bg-red-500">
                       <PDFDownloadButton applicationId={application.id} />
                     </td>
-                    <td className="border-t-0   cursor-pointer"></td>
+                    
                   </tr>
                 ))}
               </tbody>
