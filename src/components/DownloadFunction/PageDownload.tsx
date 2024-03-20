@@ -22,7 +22,7 @@ export default function PageDownload() {
   
     return (
       <svg
-              className="w-6 h-6 text-gray-500 dark:text-white"
+              className="w-6 h-6 text-gray-500"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               onClick={handleDownload}
