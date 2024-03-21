@@ -15,8 +15,8 @@ const ApplicationFailed: React.FC<ApplicationFailedProps> = ({
   onClick
 }) => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <div className="success-container bg-white rounded-lg shadow-lg p-6 max-w-md">
+    <div className="flex flex-col items-center justify-center h-screen w-3/12">
+      <div className="success-container bg-white rounded-lg shadow-lg p-6 w-full">
         <div className="success-icon flex flex-col items-center justify-center">
           <img src={failed} alt="Failed" className="justify-center" />
         </div>
