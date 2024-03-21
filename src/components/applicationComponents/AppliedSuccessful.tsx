@@ -15,8 +15,8 @@ const ApplicationSuccessful: React.FC<ApplicationSuccessfulProps> = ({
   onClick
 }) => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <div className="success-container bg-white rounded-lg shadow-lg p-6 max-w-md">
+    <div className="flex flex-col items-center justify-center h-screen w-3/12">
+      <div className="success-container bg-white rounded-lg shadow-lg p-6 w-full">
         <div className="success-icon flex flex-col items-center justify-center">
           <img src={success} alt="Success" className="justify-center" />
         </div>
@@ -24,7 +24,7 @@ const ApplicationSuccessful: React.FC<ApplicationSuccessfulProps> = ({
           <h2 className="text-xl font-semibold">{message}</h2>
           <div className="mt-5">
             <div className="flex flex-col gap-3 mx-auto bg-gray-200">
-              <MainButton button_text={buttonText} onClick={onClick}/>
+              <MainButton button_text={buttonText} onClick={onClick} />
             </div>
           </div>
         </div>

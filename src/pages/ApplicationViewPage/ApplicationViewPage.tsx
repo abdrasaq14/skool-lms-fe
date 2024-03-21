@@ -37,13 +37,12 @@ interface Data {
 }
 
 const ApplicationViewPage = () => {
-
   const navigate = useNavigate();
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [Data, setData] = useState<Data>({} as Data);
   const [loading, setLoading] = useState(true);
-  const [ userId, setUserId ] = useState("")
+  const [userId, setUserId] = useState("");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showRejectModal, setShowRejectModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -55,23 +54,24 @@ const ApplicationViewPage = () => {
   const handleOptionAccept = async () => {
     try {
       const response = await axiosInstance.put(
-      `/users/approve-application/${id}`
-      
-    );
-    const notifyUsers = await axiosInstance.post(`/admin/notification/${userId}`, {
-      title: "Application Accepted", 
-      message: `Your application to Decagon University has been accepted. Check your email to view your admission info.`,
-      
-    })
-    console.log("notice", notifyUsers)
-    if (response.data.message) {
-      setShowSuccessModal(true);
-    }
-    setDropdownOpen(false);
+        `/users/approve-application/${id}`
+      );
+      const notifyUsers = await axiosInstance.post(
+        `/admin/notification/${userId}`,
+        {
+          title: "Application Accepted",
+          message: `Your application to Decagon University has been accepted. Check your email to view your admission info.`,
+        }
+      );
+      console.log("notice", notifyUsers);
+      if (response.data.message) {
+        setShowSuccessModal(true);
+      }
+      setDropdownOpen(false);
     } catch (error) {
       console.error("Error approving application:", error);
     }
-  }
+  };
   const closeModal = () => {
     setShowSuccessModal(false);
     navigate("/admin/applications-section");
@@ -97,21 +97,24 @@ const ApplicationViewPage = () => {
   const handleOptionReject = async () => {
     try {
       const response = await axiosInstance.put(
-      `/users/reject-application/${id}`
-    );
-    const notifyUsers = await axiosInstance.post(`/admin/notification/${userId}`, {
-      title: "Application Rejected", 
-      message: `Dear Candidate,
+        `/users/reject-application/${id}`
+      );
+      const notifyUsers = await axiosInstance.post(
+        `/admin/notification/${userId}`,
+        {
+          title: "Application Rejected",
+          message: `Dear Candidate,
       We appreciate your time and effort in joining Decagon University. Unfortunately, we regret to inform you that your application to Decagon University has been declined. While we will not continue with your application at the moment, you may stay tuned to updates on our application portal.
       Best regards,
       Decagon University.
-      `
-    })
-    console.log("notice", notifyUsers)
-    if (response.data.message) {
-      setShowRejectModal(true);
-    }
-    setDropdownOpen(false);
+      `,
+        }
+      );
+      console.log("notice", notifyUsers);
+      if (response.data.message) {
+        setShowRejectModal(true);
+      }
+      setDropdownOpen(false);
     } catch (error) {
       console.error("Error rejecting application:", error);
     }
@@ -161,8 +164,8 @@ const ApplicationViewPage = () => {
           `/admin/professional-applications/${id}`
         );
         console.log("Data: ", response.data.user.id);
-        setUserId(response.data.user.id)
-        
+        setUserId(response.data.user.id);
+
         setData(response.data);
         console.log(response.data);
       } catch (error) {
@@ -193,9 +196,11 @@ const ApplicationViewPage = () => {
   };
 
   if (loading) {
-    return (<div className="flex items-center justify-center">
-      <div className=" mt-40 w-20 h-20 border-t-4 border-b-4 border-green-600 rounded-full text-center animate-spin"></div>
-    </div>)
+    return (
+      <div className="flex items-center justify-center">
+        <div className=" mt-40 w-20 h-20 border-t-4 border-b-4 border-green-600 rounded-full text-center animate-spin"></div>
+      </div>
+    );
   }
 
   const base64Image = Data.passportUpload.data.reduce(
@@ -205,7 +210,6 @@ const ApplicationViewPage = () => {
   const imageDataUri = `data:image/png;base64,${btoa(base64Image)}`;
 
   console.log("Data: ", Data);
-  
 
   return (
     <div id="pdf-content">
@@ -476,7 +480,6 @@ const ApplicationViewPage = () => {
         </>
       )}
 
-
       {showDeleteModal && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center z-50">
           <div className="bg-white p-8 rounded-lg mt-[7rem] h-[10rem]">
@@ -487,20 +490,20 @@ const ApplicationViewPage = () => {
             <div className="flex justify-end gap-6">
               <button
                 className="mr-2 text-gray-500 hover:text-gray-700"
-                onClick={() => setShowDeleteModal(false)}>
+                onClick={() => setShowDeleteModal(false)}
+              >
                 Cancel
               </button>
               <button
                 className="text-red-500 hover:text-red-700"
-                onClick={handleOptionDelete}>
+                onClick={handleOptionDelete}
+              >
                 Delete
               </button>
             </div>
           </div>
         </div>
       )}
-
-
     </div>
   );
 };
