@@ -4,6 +4,7 @@ import socket from "../socket";
 import "./index.css";
 
 // import TestPage from "./pages/TestPage";
+import HeroPage from "./pages/HeroPage/HeroPage";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import SignUpPage from "./pages/Signup/SignUpPage";
 import ResetPasswordForm from "./pages/ResetPassword/ResetPassword";
@@ -62,6 +63,7 @@ function App() {
       <Routes>
         {/* <Route path="/signup" element={<TestPage />} /> */}
         <Route path="/" element={<LandingPage />} />
+        <Route path="/home" element={<HeroPage />} />
         <Route path="/register" element={<SignUpPage />} />
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/reset-password" element={<ResetPasswordForm />} />
