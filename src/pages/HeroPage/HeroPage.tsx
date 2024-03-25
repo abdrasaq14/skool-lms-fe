@@ -16,7 +16,11 @@ const HeroPage = () => {
       <div className="mx-auto w-10/12 max-w-screen-xl px-4 sm:px-6 lg:px-8 flex flex-col">
         <div className="flex justify-between mt-3">
           <div>
-            <img className="" src={decagonLogoWht} alt="decagon logo" />
+            <img
+              className="cursor-pointer"
+              src={decagonLogoWht}
+              alt="decagon logo"
+            />
           </div>
           <div className="text-white mb-4 flex justify-between gap-4">
             <div className="cursor-pointer">Study</div>
@@ -58,8 +62,8 @@ const HeroPage = () => {
         </div>
 
         <footer className="w-full text-white mt-12 leading-8 tracking-wider flex flex-col items-center lg:flex-row lg:items-center lg:justify-between">
-          <h5>Website Terms and Conditions</h5>
-          <h5>Privacy Notice </h5>
+          <h5 className="cursor-pointer">Website Terms and Conditions</h5>
+          <h5 className="cursor-pointer">Privacy Notice </h5>
         </footer>
       </div>
     </section>
