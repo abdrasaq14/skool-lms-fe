@@ -42,9 +42,7 @@ function UploadPassport() {
   };
 
  const handleFile = (selectedFile: File | undefined) => {
-   if (selectedFile) {
-    console.log("Selected file:", selectedFile);
-    
+   if (selectedFile) {    
      const reader = new FileReader();
      reader.onload = () => {
        const base64String = reader.result as string;
@@ -71,8 +69,6 @@ function UploadPassport() {
   useEffect(() => {
 
     if (storedValue) {
-
-      console.log("Stored value:", storedValue);
       setUploadedImageLocally(storedValue);
     }
   }, [storedValue]);

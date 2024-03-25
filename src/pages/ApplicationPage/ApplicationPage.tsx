@@ -41,8 +41,6 @@ function ApplicationPage() {
       try {
         const res = await axiosInstance.get("/users/professional-application");
 
-        console.log("res.data", res.data);
-
         if (res.data.hasApplied === true) {
           setHasApplied(true);
           setUserCourse(res.data.userCourse);
@@ -84,12 +82,8 @@ function ApplicationPage() {
   );
   const uploadPassportFilled = useSelector(
     (state: RootState) => state.uploadPassport.uploadedImage    
-  );
-
-  console.log("uploadPassportFilled", uploadPassportFilled);
+  );  
   
-  
-
   const isAllCardsFilled =
     academicReferencesFilled != null &&
     qualificationsFilled &&

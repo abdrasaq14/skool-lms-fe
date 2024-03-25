@@ -201,9 +201,6 @@ const ApplicationViewPage = () => {
     );
   }
 
-
-  console.log("Data: ", Data);
-
   return (
     <div id="pdf-content">
       <ApplicationHeader
@@ -222,7 +219,15 @@ const ApplicationViewPage = () => {
             <div>
               <div className="h-[120px] top-92 left-211.5 gap-24 bg-green-500 p-4 rounded-t-2xl flex justify-between">
                 <div className="w-200 h-120 top-32 left-32 rounded-full">
-                  <img src={Data.passportUpload} alt="passport" />
+                  <img className="width="
+                      style={{
+                        width: "200px",
+                        height: "200px",
+                        borderRadius: "50%",
+                        border: "10px solid #fff",
+                        marginLeft: "10px",
+                      }}
+                      src={Data.passportUpload} alt="passport" />
                 </div>
                 <div className="mt-40">
                   <img
