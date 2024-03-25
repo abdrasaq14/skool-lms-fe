@@ -31,9 +31,7 @@ interface Data {
   disability: string;
   academicReference: boolean;
   englishLanguageQualification: boolean;
-  passportUpload: {
-    data: number[];
-  };
+  passportUpload: string;
 }
 
 const ApplicationViewPage = () => {
@@ -203,11 +201,6 @@ const ApplicationViewPage = () => {
     );
   }
 
-  const base64Image = Data.passportUpload.data.reduce(
-    (acc, current) => acc + String.fromCharCode(current),
-    ""
-  );
-  const imageDataUri = `data:image/png;base64,${btoa(base64Image)}`;
 
   console.log("Data: ", Data);
 
@@ -229,7 +222,7 @@ const ApplicationViewPage = () => {
             <div>
               <div className="h-[120px] top-92 left-211.5 gap-24 bg-green-500 p-4 rounded-t-2xl flex justify-between">
                 <div className="w-200 h-120 top-32 left-32 rounded-full">
-                  <img src={imageDataUri} alt="passport" />
+                  <img src={Data.passportUpload} alt="passport" />
                 </div>
                 <div className="mt-40">
                   <img

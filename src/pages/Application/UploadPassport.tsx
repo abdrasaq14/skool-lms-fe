@@ -41,14 +41,22 @@ function UploadPassport() {
     handleFile(droppedFile);
   };
 
-  const handleFile = (selectedFile: File | undefined) => {
-    if (selectedFile) {
-      const imageUrl = URL.createObjectURL(selectedFile);
-      setUploadedImageLocally(imageUrl);
-    } else {
-      setUploadedImageLocally(null);
-    }
-  };
+ const handleFile = (selectedFile: File | undefined) => {
+   if (selectedFile) {
+    console.log("Selected file:", selectedFile);
+    
+     const reader = new FileReader();
+     reader.onload = () => {
+       const base64String = reader.result as string;
+       setUploadedImageLocally(base64String);       
+     };
+     reader.readAsDataURL(selectedFile);
+     
+   } else {
+     setUploadedImageLocally(null);
+   }
+ };
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
