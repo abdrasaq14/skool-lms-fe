@@ -54,7 +54,7 @@ const ApplicationViewPage = () => {
       const response = await axiosInstance.put(
         `/users/approve-application/${id}`
       );
-      const notifyUsers = await axiosInstance.post(
+       await axiosInstance.post(
         `/admin/notification/${userId}`,
         {
           title: "Application Accepted",
@@ -97,7 +97,7 @@ const ApplicationViewPage = () => {
       const response = await axiosInstance.put(
         `/users/reject-application/${id}`
       );
-      const notifyUsers = await axiosInstance.post(
+       await axiosInstance.post(
         `/admin/notification/${userId}`,
         {
           title: "Application Rejected",
