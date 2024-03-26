@@ -32,6 +32,7 @@ function ApplicationPage() {
   const [userCourse, setUserCourse] = useState<UserCourse | null>(null);
   const [loading, setLoading] = useState(true);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const userId = useSelector((state: RootState) => state.userDetails.userId);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -114,6 +115,13 @@ function ApplicationPage() {
         englishLanguageQualification: englishQualificationFilled,
       });
 
+        await axiosInstance.post(`/admin/notification/${userId}`, {
+          title: "Application Submitted",
+          message: `Your application for the ${userCourse?.courseType} program in ${userCourse?.courseSearch} has been successfully submitted and is under review.
+      `,
+        })
+      
+
       if (res.data.successMessage) {
         dispatch(deleteAcademicReferences());
         dispatch(deleteDisability());
@@ -147,7 +155,7 @@ function ApplicationPage() {
         header_text="Return to Dashboard"
       />
       
-      {loading ? (
+      {loading || isSubmitting ? (
         <div className="flex items-center justify-center h-64">
           <div className="w-20 h-20 border-t-4 border-b-4 border-green-600 rounded-full text-center animate-spin"></div>
         </div>

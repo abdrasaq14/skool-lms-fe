@@ -20,7 +20,6 @@ export default function DashboardStatsGrid() {
 
         try {
             const res = await axiosInstance.get("/users/dashboard")
-            console.log(res.data)
 
             if(res.data.userDetails || res.data.applicationDetails || res.data.courseDetails){
                 setApplicationDetails(res.data.applicationDetails)

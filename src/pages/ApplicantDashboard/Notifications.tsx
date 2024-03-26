@@ -35,8 +35,6 @@ const NotificationPage = () => {
 
   const deleteNotification = async () => {
 
-    console.log(notificationToDelete)
-
     if (notificationToDelete !== null) {
       try {
         const response = await axiosInstance.delete(`users/notification/${notificationToDelete}`, {
@@ -51,10 +49,7 @@ const NotificationPage = () => {
 
           setNotifications(updatedNotifications);
 
-          console.log(updatedNotifications.length)
-
           closeDeleteModal();
-          console.log(notificationToDelete)
           
         }
       } catch (error) {
@@ -107,8 +102,6 @@ const NotificationPage = () => {
         const response = await axiosInstance.get("/users/notifications", {
           withCredentials: true,
         });
-
-        console.log(response.data);
 
         if (response.data.notifications) {
           setNotifications(response.data.notifications);
