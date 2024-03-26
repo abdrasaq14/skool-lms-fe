@@ -45,12 +45,16 @@ const ApplicationViewPage = () => {
   const [showRejectModal, setShowRejectModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+  const [acceptLoading, setAcceptLoading] = useState(false);
+  const [rejectLoading, setRejectLoading] = useState(false);
+
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
 
   const handleOptionAccept = async () => {
     try {
+      setAcceptLoading(true);
       const response = await axiosInstance.put(
         `/users/approve-application/${id}`
       );
@@ -68,6 +72,8 @@ const ApplicationViewPage = () => {
       setDropdownOpen(false);
     } catch (error) {
       console.error("Error approving application:", error);
+    } finally {
+      setAcceptLoading(false);
     }
   };
   const closeModal = () => {
@@ -94,6 +100,7 @@ const ApplicationViewPage = () => {
 
   const handleOptionReject = async () => {
     try {
+      setRejectLoading(true);
       const response = await axiosInstance.put(
         `/users/reject-application/${id}`
       );
@@ -111,8 +118,10 @@ const ApplicationViewPage = () => {
       setDropdownOpen(false);
     } catch (error) {
       console.error("Error rejecting application:", error);
+    } finally {
+      setRejectLoading(false);
     }
-  };
+  }; 
   const closeRejectModal = () => {
     setShowRejectModal(false);
     navigate("/admin/applications-section");
@@ -159,7 +168,6 @@ const ApplicationViewPage = () => {
         );
 
         setUserId(response.data.user.id);
-
         setData(response.data);
       } catch (error) {
         console.error("Error fetching application data:", error);
@@ -167,7 +175,6 @@ const ApplicationViewPage = () => {
         setLoading(false);
       }
     };
-
     fetchApplicationData();
   }, [id]);
 
@@ -495,6 +502,18 @@ const ApplicationViewPage = () => {
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {acceptLoading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-400 bg-opacity-75 z-50">
+          <div className="loader ease-linear rounded-full border-t-4 border-b-4 border-green-600 h-24 w-24 animate-spin"></div>
+        </div>
+      )}
+
+      {rejectLoading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-400 bg-opacity-75 z-50">
+          <div className="loader ease-linear rounded-full border-t-4 border-b-4 border-red-600 h-24 w-24 animate-spin"></div>
         </div>
       )}
     </div>

@@ -46,8 +46,11 @@ function UploadPassport() {
      const reader = new FileReader();
      reader.onload = () => {
        const base64String = reader.result as string;
-       setUploadedImageLocally(base64String);       
+       setUploadedImageLocally(base64String);  
+       console.log("base64String", base64String);     
      };
+     
+     
      reader.readAsDataURL(selectedFile);
      
    } else {
