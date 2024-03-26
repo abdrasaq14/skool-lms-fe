@@ -42,7 +42,6 @@ export default function RecentApplications() {
     const fetchUserDetails = async () => {
       try {
         const res = await axiosInstance.get("/users/dashboard");
-        console.log(res.data);
 
         if (res.data.applicationDetails) {
           setApplicationDetails(res.data.applicationDetails);
