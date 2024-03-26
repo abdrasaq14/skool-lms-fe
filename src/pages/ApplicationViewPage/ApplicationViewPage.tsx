@@ -166,7 +166,6 @@ const ApplicationViewPage = () => {
         const response = await axiosInstance.get(
           `/admin/professional-applications/${id}`
         );
-
         setUserId(response.data.user.id);
         setData(response.data);
       } catch (error) {
