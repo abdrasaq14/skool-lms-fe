@@ -36,6 +36,9 @@ import { ProtectedRoute } from "./components/protectedRoutes/ProtectedRoute";
 import AdminMessageView from "./pages/Messages/AdminMessageView";
 import UserMessageView from "./pages/Messages/UserMessageView";
 
+import Chat from "./pages/logo";
+import ChatInput from "./pages/Messages/ChatInput";
+
 function App() {
   useEffect(() => {
     // Test WebSocket connection
@@ -69,7 +72,9 @@ function App() {
         <Route path="/reset-password" element={<ResetPasswordForm />} />
         <Route path="/new-password/:token" element={<NewPasswordForm />} />
         <Route path="/dashboard/messages" element={<UserMessageView />} />
-        
+        <Route path="/chat/logo" element={<Chat />} />
+        <Route path="/chatInput" element={<ChatInput />} />
+
         {/* Protected Routes after logging - Dashboard related routes. */}
         <Route
           path="/dashboard/*"
