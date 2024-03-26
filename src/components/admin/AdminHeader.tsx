@@ -1,11 +1,14 @@
 import decagonLogo from "/images/decagon-logo.png";
 import leftArrow from "/images/left-arrow.png";
+import { HiOutlineChatAlt } from "react-icons/hi";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store"
 import { Fragment } from "react";
-import { Menu, Transition } from "@headlessui/react";
+import { Menu, Popover, Transition } from "@headlessui/react";
 import classNames from "classnames";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { clearUserDetails } from "../../states/userDetails/userDetailsSlice";
 
 
 interface Header{
@@ -17,9 +20,13 @@ function AdminHeader( {header_text, linkTo}: Header) {
 
   const user = useSelector((state: RootState) => state.userDetails);
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const logout = () => {
     localStorage.removeItem("token");
+    dispatch(clearUserDetails());
+    window.history.replaceState(null, "", "/");
+ 
     navigate("/");
   };
 
@@ -29,8 +36,48 @@ function AdminHeader( {header_text, linkTo}: Header) {
       <div className="flex justify-between">
         <img src={decagonLogo} alt="Decagon logo" />
 
-        <div className=" flex justify-between gap-6 align-middle items-center">
+        <div className=" flex justify-between gap-4 align-middle items-center">
           <div className=" font-semibold text-base">Contact Us</div>
+
+          <Popover className="relative">
+          {({ open }) => (
+            <>
+              <Popover.Button
+                className={classNames(
+                  open && "bg-gray-100",
+                  "group inline-flex items-center rounded-sm p-1.5 text-gray-700 hover:text-opacity-100 focus:outline-none active:bg-gray-100"
+                )}
+              >
+                <HiOutlineChatAlt fontSize={25} />
+              </Popover.Button>
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-200"
+                enterFrom="opacity-0 translate-y-1"
+                enterTo="opacity-100 translate-y-0"     
+                leave="transition ease-in duration-150"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 translate-y-1"
+              >
+                <Popover.Panel className="absolute left-0 z-10 mt-2.5 transform w-72">
+                  <div className="bg-gray-100/70 rounded-lg shadow-md ring-1 ring-black ring-opacity-5 px-6 py-4">
+                    <strong className="text-gray-700 font-medium">
+                      Messages
+                    </strong>
+                    <div className="mt-2 py-1 text-sm">
+                      This is the messages panel.
+                    </div>
+
+                    <button className=" mt-8 bg-blue-400 w-full text-center py-2 px-4 rounded-2xl text-white hover:bg-blue-500">
+                      <Link to={'/admin/messages'} className=" text-white no-underline">  View all messages</Link>
+                     </button>
+
+                  </div>
+                </Popover.Panel>
+              </Transition>
+            </>
+          )}
+        </Popover>
 
           <div className="flex justify-center items-center gap-2">
 
@@ -55,7 +102,7 @@ function AdminHeader( {header_text, linkTo}: Header) {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="origin-top-right z-10 absolute right-0 mt-2 w-48 rounded-sm p-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none shadow-lg">
+            <Menu.Items className="origin-top-right z-10 absolute left-0 mt-2 w-48 rounded-sm p-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none shadow-lg">
               <Menu.Item>
                 {({ active }) => (
                   <div

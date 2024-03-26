@@ -54,14 +54,14 @@ const ApplicationViewPage = () => {
       const response = await axiosInstance.put(
         `/users/approve-application/${id}`
       );
-      const notifyUsers = await axiosInstance.post(
+       await axiosInstance.post(
         `/admin/notification/${userId}`,
         {
           title: "Application Accepted",
           message: `Your application to Decagon University has been accepted. Check your email to view your admission info.`,
         }
       );
-      console.log("notice", notifyUsers);
+
       if (response.data.message) {
         setShowSuccessModal(true);
       }
@@ -97,18 +97,14 @@ const ApplicationViewPage = () => {
       const response = await axiosInstance.put(
         `/users/reject-application/${id}`
       );
-      const notifyUsers = await axiosInstance.post(
+       await axiosInstance.post(
         `/admin/notification/${userId}`,
         {
           title: "Application Rejected",
-          message: `Dear Candidate,
-      We appreciate your time and effort in joining Decagon University. Unfortunately, we regret to inform you that your application to Decagon University has been declined. While we will not continue with your application at the moment, you may stay tuned to updates on our application portal.
-      Best regards,
-      Decagon University.
-      `,
+          message: `Your application to Decagon University has been rejected. Check your email for more information.`,
         }
       );
-      console.log("notice", notifyUsers);
+
       if (response.data.message) {
         setShowRejectModal(true);
       }
@@ -161,11 +157,10 @@ const ApplicationViewPage = () => {
         const response = await axiosInstance.get(
           `/admin/professional-applications/${id}`
         );
-        console.log("Data: ", response.data.user.id);
+
         setUserId(response.data.user.id);
 
         setData(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching application data:", error);
       } finally {
@@ -221,10 +216,10 @@ const ApplicationViewPage = () => {
                 <div className="w-200 h-120 top-32 left-32 rounded-full">
                   <img className="width="
                       style={{
-                        width: "200px",
+                        width: "180px",
                         height: "200px",
                         borderRadius: "50%",
-                        border: "10px solid #fff",
+                        border: "8px solid #fff",
                         marginLeft: "10px",
                       }}
                       src={Data.passportUpload} alt="passport" />
@@ -280,7 +275,7 @@ const ApplicationViewPage = () => {
               <div className="flex items-center justify-between mt-5">
                 <div className="flex items-center justify-between">
                   <svg
-                    className="w-6 h-6 text-gray-500 dark:text-white"
+                    className="w-6 h-6 text-gray-500 "
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -308,7 +303,7 @@ const ApplicationViewPage = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center justify-between">
                     <svg
-                      className="w-6 h-6 text-gray-500 dark:text-white"
+                      className="w-6 h-6 text-gray-500"
                       aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -329,7 +324,7 @@ const ApplicationViewPage = () => {
                 </div>
                 <div className="flex items-center justify-between">
                   <svg
-                    className="w-6 h-6 text-gray-500 dark:text-white"
+                    className="w-6 h-6 text-gray-500"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -389,7 +384,7 @@ const ApplicationViewPage = () => {
                 {Data.academicReference ? (
                   <h1 className="w-1/4 text-black font-light text-sm ml-5 flex items-center justify-between">
                     <svg
-                      className="w-6 h-6 text-green-400 dark:text-white"
+                      className="w-6 h-6 text-green-400"
                       aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -408,7 +403,7 @@ const ApplicationViewPage = () => {
                 ) : (
                   <h1 className="w-1/4 text-black font-light text-sm ml-5 flex items-center justify-between">
                     <svg
-                      className="w-6 h-6 text-red-400 dark:text-white"
+                      className="w-6 h-6 text-red-400"
                       aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -431,7 +426,7 @@ const ApplicationViewPage = () => {
                 {Data.englishLanguageQualification ? (
                   <h1 className="w-1/3 text-black font-light text-sm ml-5 flex items-center justify-between">
                     <svg
-                      className="w-6 h-6 text-green-400 dark:text-white"
+                      className="w-6 h-6 text-green-400 "
                       aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -450,7 +445,7 @@ const ApplicationViewPage = () => {
                 ) : (
                   <h1 className="w-1/3 text-black font-light text-sm ml-5 flex items-center justify-between">
                     <svg
-                      className="w-6 h-6 text-red-400 dark:text-white"
+                      className="w-6 h-6 text-red-400"
                       aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"

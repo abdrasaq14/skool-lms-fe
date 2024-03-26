@@ -12,10 +12,7 @@ interface validationErrors {
 }
 
 export default function DisabilityDetails() {
-  const disabilityDetailsRedux = useSelector(
-    (state: RootState) => state.disabilityDetails.disabilityDetails
-  );
-  console.log(disabilityDetailsRedux);
+ 
   const [disabilityDetails, setDisabilityDetails] = useState<string>("");
   const [validationErrors, setValidationErrors] = useState<validationErrors>(
     {}
