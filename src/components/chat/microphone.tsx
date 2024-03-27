@@ -39,37 +39,37 @@ function MicrophoneButton() {
     }
   };
 
-  const sendAudioToServer = async () => {
-    if (audioURL) {
-      try {
-        // Convert blob URL to blob
-        const response = await fetch(audioURL);
-        const blob = await response.blob();
+  // const sendAudioToServer = async () => {
+  //   if (audioURL) {
+  //     try {
+  //       // Convert blob URL to blob
+  //       const response = await fetch(audioURL);
+  //       const blob = await response.blob();
 
-        // Create form data
-        const formData = new FormData();
-        formData.append("audio", blob, "recorded_audio.webm");
+  //       // Create form data
+  //       const formData = new FormData();
+  //       formData.append("audio", blob, "recorded_audio.webm");
 
-        // Replace with your server endpoint
-        const serverEndpoint = "http://localhost:3000/upload-audio";
+  //       // Replace with your server endpoint
+  //       const serverEndpoint = "http://localhost:3000/upload-audio";
 
-        // Send the audio blob to the server
-        const result = await fetch(serverEndpoint, {
-          method: "POST",
-          body: formData,
-        });
+  //       // Send the audio blob to the server
+  //       const result = await fetch(serverEndpoint, {
+  //         method: "POST",
+  //         body: formData,
+  //       });
 
-        if (result.ok) {
-          console.log("Audio uploaded successfully");
-        } else {
-          console.error("Failed to upload audio");
-        }
-      } catch (error) {
-        console.error("Error sending audio to server:", error);
-        // Add error handling here
-      }
-    }
-  };
+  //       if (result.ok) {
+  //         console.log("Audio uploaded successfully");
+  //       } else {
+  //         console.error("Failed to upload audio");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error sending audio to server:", error);
+  //       // Add error handling here
+  //     }
+  //   }
+  // };
 
   return (
     <div>

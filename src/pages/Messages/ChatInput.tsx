@@ -24,17 +24,17 @@ const ChatInput: React.FC = () => {
     setChats(updatedChats);
   };
 
-  const addChat = () => {
-    setChats([
-      ...chats,
-      {
-        senderMessage: "",
-        receiverMessage: "",
-        senderTime: "",
-        receiverTime: "",
-      },
-    ]);
-  };
+  // const addChat = () => {
+  //   setChats([
+  //     ...chats,
+  //     {
+  //       senderMessage: "",
+  //       receiverMessage: "",
+  //       senderTime: "",
+  //       receiverTime: "",
+  //     },
+  //   ]);
+  // };
 
   return (
     <div>
@@ -51,7 +51,7 @@ const ChatInput: React.FC = () => {
           }
         />
       ))}
-      <button onClick={addChat}>Add New Chat</button>
+      {/* <button onClick={addChat}>Add New Chat</button> */}
     </div>
   );
 };

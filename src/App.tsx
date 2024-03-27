@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import socket from "../socket";
+// import socket from "../socket";
 import "./index.css";
+import io from 'socket.io-client';
 
 // import TestPage from "./pages/TestPage";
 import HeroPage from "./pages/HeroPage/HeroPage";
@@ -42,21 +43,13 @@ import ChatInput from "./pages/Messages/ChatInput";
 function App() {
   useEffect(() => {
     // Test WebSocket connection
+    const socket = io(import.meta.env.VITE_SOCKET_SERVER_URL);
+
     socket.on("connect", () => {
-      console.log("WebSocket connected successfully!");
-      socket.emit("testEvent", "Hello from client!");
-    });
-
-    console.log("WebSocket connected successfully!");
-
-    socket.on("testEventResponse", (data) => {
-      console.log("Received test event response from server:", data);
-    });
-
-    socket.on("error", (error) => {
-      console.error("WebSocket connection error:", error);
-    });
-
+      console.log("Connected to WebSocket server");
+      console.log(socket)
+    })
+  
     return () => {
       socket.disconnect(); // Clean up WebSocket connection
     };
@@ -71,9 +64,8 @@ function App() {
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/reset-password" element={<ResetPasswordForm />} />
         <Route path="/new-password/:token" element={<NewPasswordForm />} />
-        <Route path="/dashboard/messages" element={<UserMessageView />} />
-        <Route path="/chat/logo" element={<Chat />} />
-        <Route path="/chatInput" element={<ChatInput />} />
+        
+        
 
         {/* Protected Routes after logging - Dashboard related routes. */}
         <Route
@@ -93,6 +85,10 @@ function App() {
 
                 <Route path="onboarding" element={<ApplicationView />} />
                 <Route path="application" element={<ApplicationPage />} />
+                <Route path="/chat/logo" element={<Chat />} />
+                <Route path="messages" element={<UserMessageView />} />
+                <Route path="messages/chats" element={<ChatInput />} />
+                
 
                 <Route
                   path="application/personal-statement"
@@ -129,6 +125,8 @@ function App() {
                   path="application/funding-information"
                   element={<FundingInformation />}
                 />
+
+
               </Routes>
             </ProtectedRoute>
           }
@@ -150,7 +148,7 @@ function App() {
                 />
 
                 <Route
-                  path="applications-section/messages"
+                  path="/messages"
                   element={<AdminMessageView />}
                 />
               </Routes>
