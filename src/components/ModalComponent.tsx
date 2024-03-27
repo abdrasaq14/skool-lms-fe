@@ -1,6 +1,5 @@
 import React from "react";
 import MainButton from "../components/MainButton";
-// import success from "/images/Successgood.png";
 
 interface ModalProps {
   message: string;
