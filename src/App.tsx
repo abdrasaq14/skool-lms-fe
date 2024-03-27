@@ -4,6 +4,7 @@ import socket from "../socket";
 import "./index.css";
 
 // import TestPage from "./pages/TestPage";
+import HeroPage from "./pages/HeroPage/HeroPage";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import SignUpPage from "./pages/Signup/SignUpPage";
 import ResetPasswordForm from "./pages/ResetPassword/ResetPassword";
@@ -35,6 +36,9 @@ import { ProtectedRoute } from "./components/protectedRoutes/ProtectedRoute";
 import AdminMessageView from "./pages/Messages/AdminMessageView";
 import UserMessageView from "./pages/Messages/UserMessageView";
 
+import Chat from "./pages/logo";
+import ChatInput from "./pages/Messages/ChatInput";
+
 function App() {
   useEffect(() => {
     // Test WebSocket connection
@@ -62,16 +66,15 @@ function App() {
       <Routes>
         {/* <Route path="/signup" element={<TestPage />} /> */}
         <Route path="/" element={<LandingPage />} />
+        <Route path="/home" element={<HeroPage />} />
         <Route path="/register" element={<SignUpPage />} />
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/reset-password" element={<ResetPasswordForm />} />
         <Route path="/new-password/:token" element={<NewPasswordForm />} />
         <Route path="/dashboard/messages" element={<UserMessageView />} />
-        <Route
-                  path="applications-section/messages"
-                  element={<AdminMessageView />}
-                />
-        
+        <Route path="/chat/logo" element={<Chat />} />
+        <Route path="/chatInput" element={<ChatInput />} />
+
         {/* Protected Routes after logging - Dashboard related routes. */}
         <Route
           path="/dashboard/*"
@@ -146,10 +149,10 @@ function App() {
                   element={<ApplicationViewPage />}
                 />
 
-                {/* <Route
+                <Route
                   path="applications-section/messages"
                   element={<AdminMessageView />}
-                /> */}
+                />
               </Routes>
             </ProtectedRoute>
           }

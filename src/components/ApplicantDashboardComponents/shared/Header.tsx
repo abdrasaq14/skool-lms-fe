@@ -10,6 +10,7 @@ import axiosInstance from "../../../utils/axiosInstance";
 import { FaCircle } from "react-icons/fa";
 import { BiNotificationOff } from "react-icons/bi";
 import { updateNotificationCount } from "../../../states/notification/notificationSlice";
+import { clearUserDetails } from "../../../states/userDetails/userDetailsSlice";
 
 // import container from "postcss/lib/container";
 
@@ -34,12 +35,11 @@ export default function Header() {
       const {
         data: { notifications },
       } = await axiosInstance.get("/users/notification");
-      console.log({ data: { notifications } });
+
 
       const unreadNotifications: [] = notifications.filter(
         (notification: Notification) => !notification.status
       );
-      console.log(unreadNotifications);
       
       setNotifications(unreadNotifications);
     
@@ -70,6 +70,9 @@ export default function Header() {
 
   const logout = () => {
     localStorage.removeItem("token");
+    dispatch(clearUserDetails());
+    window.history.replaceState(null, "", "/");
+ 
     navigate("/");
   };
 
