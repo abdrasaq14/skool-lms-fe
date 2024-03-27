@@ -60,6 +60,7 @@ const ChatHeader: React.FC<ChatProps> = ({
               className="mr-3 h-7 sm:h-9"
               alt="Back Arrow"
             />
+
             <span className="text-lg font-bold text-black">Messages</span>
           </div>
           <div className="flex flex-col items-center">
