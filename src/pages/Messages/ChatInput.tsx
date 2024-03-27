@@ -1,127 +1,71 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import ChatHeader from "../../components/chat/header";
+import axiosInstance from "../../utils/axiosInstance";
+import { useSearchParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store"
+
+interface Chat {
+  createdAt: string;
+  id: string;
+  message: string;
+  receiver: {id: string, firstName: string, lastName: string};
+  sender: {id: string, firstName: string, lastName: string};
+
+}
 
 const ChatInput: React.FC = () => {
-  const [chats, setChats] = useState([
-    {
-      senderMessage: "",
-      receiverMessage: "",
-      senderTime: "",
-      receiverTime: "",
-    },
-  ]);
 
-  const handleMessageChange = (
-    index: number,
-    newMessage: string,
-    isSender: boolean
-  ) => {
-    const updatedChats = chats.map((chat, i) => {
-      if (i === index) {
-        return {
-          ...chat,
-          [isSender ? "senderMessage" : "receiverMessage"]: newMessage,
-        };
+
+  const [chats, setChats] = useState<Chat[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const [searchParams] = useSearchParams();
+  const recipientId = searchParams.get('id');
+  const userId = useSelector((state: RootState) => state.userDetails.userId);
+
+  useEffect(() => {
+    
+    const fetchChats = async () => {
+      try {
+        const response = await axiosInstance.get(`/users/chats/${recipientId}/${userId}`, {
+        });
+
+        if(response.data){
+          setChats(response.data.conversation);
+        }        
+        
+      } catch (error) {
+        console.error("Failed to fetch chats", error);
       }
-      return chat;
-    });
-    setChats(updatedChats);
-  };
+      finally {
+        setLoading(false); // Update loading state after fetching chats
+      }
+    }
+    fetchChats()
+  }, [])
+
 
   return (
     <div>
-      {chats.map((chat, index) => (
-        <ChatHeader
-          key={index}
-          senderMessage={chat.senderMessage}
-          senderTime={chat.senderTime}
-          receiverMessage={chat.receiverMessage}
-          receiverTime={chat.receiverTime}
-          userName="Jane Doe"
-          onMessageChange={(newMessage) =>
-            handleMessageChange(index, newMessage, true)
-          }
-        />
-      ))}
+
+      {
+        loading ? (
+
+          <div className="flex items-center justify-center">
+          <div className=" mt-40 w-20 h-20 border-t-4 border-b-4 border-green-600 rounded-full text-center animate-spin"></div>
+        </div>
+        ) : 
+        (
+          <ChatHeader chats={chats} />
+        )
+      
+    }
+    
     </div>
   );
+
 };
 
 export default ChatInput;
-
-// import React, { useState } from "react";
-// import ChatHeader from "../../components/chat/header";
-
-// interface Chat {
-//   senderMessage: string;
-//   receiverMessage: string;
-//   senderTime: string;
-//   receiverTime: string;
-// }
-
-// const ChatInput: React.FC = () => {
-//   const [chats, setChats] = useState<Chat[]>([
-//     {
-//       senderMessage: "",
-//       receiverMessage: "",
-//       senderTime: "",
-//       receiverTime: "",
-//     },
-//   ]);
-
-//   const handleMessageChange = (
-//     index: number,
-//     newMessage: string,
-//     isSender: boolean
-//   ) => {
-//     const updatedChats = chats.map((chat, i) => {
-//       if (i === index) {
-//         return {
-//           ...chat,
-//           [isSender ? "senderMessage" : "receiverMessage"]: newMessage,
-//           [isSender ? "senderTime" : "receiverTime"]:
-//             new Date().toLocaleTimeString(),
-//         };
-//       }
-//       return chat;
-//     });
-
-//     // If the last chat container is not empty, add a new chat container
-//     const lastChat = updatedChats[updatedChats.length - 1];
-//     const isLastChatEmpty =
-//       lastChat.senderMessage === "" && lastChat.receiverMessage === "";
-//     if (!isLastChatEmpty) {
-//       setChats([
-//         ...updatedChats,
-//         {
-//           senderMessage: "",
-//           receiverMessage: "",
-//           senderTime: "",
-//           receiverTime: "",
-//         },
-//       ]);
-//     } else {
-//       setChats(updatedChats);
-//     }
-//   };
-
-//   return (
-//     <div>
-//       {chats.map((chat, index) => (
-//         <ChatHeader
-//           key={index}
-//           senderMessage={chat.senderMessage}
-//           senderTime={chat.senderTime}
-//           receiverMessage={chat.receiverMessage}
-//           receiverTime={chat.receiverTime}
-//           userName="Jane Doe"
-//           onMessageChange={(newMessage: string) =>
-//             handleMessageChange(index, newMessage, true)
-//           }
-//         />
-//       ))}
-//     </div>
-//   );
-// };
-
-// export default ChatInput;

@@ -1,52 +1,93 @@
-import React, { useState } from "react";
+import  {  useState } from "react";
 import EmojiPicker from "emoji-picker-react";
 import MicrophoneButton from "./microphone";
-import { BsEmojiSmileFill } from "react-icons/bs";
+import { BsEmojiSmile } from "react-icons/bs";
+import axiosInstance from "../../utils/axiosInstance";
+import { useSearchParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import  chatTail from '../../../public/images/chatbox-tail.png'
+import chatTailTwo from '../../../public/images/chatbox-tail2.png'
 
-interface ChatProps {
-  senderMessage: string;
-  senderTime: string;
-  receiverMessage: string;
-  receiverTime: string;
-  userName: string;
-  onMessageChange: (newMessage: string) => void;
+interface Chat {
+  createdAt: string;
+  id: string;
+  message: string;
+  receiver: { id: string; firstName: string; lastName: string };
+  sender: { id: string; firstName: string; lastName: string };
 }
 
 interface Message {
   text: string;
   timestamp: string;
+  senderId: string;
+  receiverId: string;
 }
 
-const ChatHeader: React.FC<ChatProps> = ({
-  senderMessage,
-  senderTime,
-  receiverMessage,
-  receiverTime,
-  userName,
-  onMessageChange,
-}) => {
+const ChatHeader = ({ chats }: { chats: Chat[] }) => {
+  console.log("chats in header page", chats);
+
   const [emojiPickerState, setEmojiPickerState] = useState(false);
   const [chosenEmoji, setChosenEmoji] = useState(null);
   const [inputValue, setInputValue] = useState("");
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>(
+    chats.map((chat) => ({
+      text: chat.message,
+      timestamp:
+        new Date(chat.createdAt).getUTCHours().toString().padStart(2, "0") +
+        ":" +
+        new Date(chat.createdAt).getUTCMinutes().toString().padStart(2, "0"),
+      senderId: chat.sender.id,
+      receiverId: chat.receiver.id,
+    }))
+  );
 
-  const sendMessage = () => {
+  const [searchParams] = useSearchParams();
+  const recipientId = searchParams.get("id");
+  const userId = useSelector((state: RootState) => state.userDetails.userId);
+
+  console.log("messages", messages);
+
+  // useEffect(() => {
+  //   setMessages(chats.map(chat => ({
+  //     text: chat.message,
+  //     timestamp: chat.createdAt,
+  //     senderId: chat.sender.id,
+  //     receiverId: chat.receiver.id
+  //   })));
+  // }, []);
+
+  const sendMessage = async () => {
     if (inputValue.trim() !== "") {
+
       const message = {
-        text: inputValue + (chosenEmoji ? chosenEmoji : ""),
-        timestamp: new Date().toISOString(),
+        text: inputValue,
+        timestamp: new Date().getUTCHours().toString().padStart(2, "0") + ":" + new Date().getUTCMinutes().toString().padStart(2, "0"),
+        senderId: userId || "",
+        receiverId: recipientId || "",
       };
 
       setMessages([...messages, message]);
       setInputValue("");
-      setChosenEmoji(null); // Clear chosen emoji after sending message
-      onMessageChange(inputValue); // Update the parent's message state
+      setChosenEmoji(null)
+
+      try {
+        await axiosInstance.post("/users/messages/chats", message);
+      } catch (error) {
+        console.error("Failed to send message", error);
+      }
+
+      ;
     }
   };
 
   function onEmojiClick(emoji: any) {
-    setChosenEmoji(emoji);
-    setInputValue(inputValue + emoji.emoji);
+    setChosenEmoji(emoji.emoji);
+    console.log("chosenEmoji", emoji.emoji.toString())
+    console.log("chosenEmoji", emoji.emoji)
+    setInputValue(inputValue + emoji.emoji.toString());
+
+    console.log("input value", inputValue)
     setEmojiPickerState(false);
   }
 
@@ -69,47 +110,76 @@ const ChatHeader: React.FC<ChatProps> = ({
               className="h-2 sm:h-10"
               alt="Chat Avatar"
             />
-            <p className="text-sm text-gray-700 ml-2">{userName}</p>
+            <p className="text-sm text-gray-700 ml-2">{chats[0].receiver.firstName}</p>
           </div>
         </header>
 
+        <div className="overflow-y-auto max-h-80 px-6 pb-6 bg-white">
         {messages.length === 0 ? (
           <div className="flex justify-center items-center h-32">
             <p className="text-gray-500">No messages yet</p>
           </div>
         ) : (
           <>
-            <div className="mt-4 flex-justify-start">
-              <div className="flex justify-start flex-row p-4 bg-gray-300 rounded-lg shadow-md w-1/2">
-                <div className="flex flex-col">
-                  <p className="text-slate-600 font-normal">
-                    {receiverMessage}
-                  </p>
-                  <p className="text-xs text-gray-500">{receiverTime}</p>
+            {messages.map((message, index) => {
+              const isSender = message.senderId === userId;
+              const senderMessage = isSender ? message.text : "";
+              const receiverMessage = !isSender ? message.text : "";
+              const senderTime = isSender ? message.timestamp : "";
+              const receiverTime = !isSender ? message.timestamp : "";
+
+              return (
+                <div key={index}>
+                  {!isSender && (
+                    <div className="mt-2 flex-justify-start relative">
+                      <div className="flex justify-start flex-row py-2 px-3 bg-[#E6E5EB] rounded-xl shadow-md w-6/12">
+                      <div className="flex flex-col w-full gap-1">
+                          <p className="text-black font-normal">
+                            {receiverMessage}
+                          </p>
+                          <div className=" flex justify-end items-center">
+                            <p className="flex justify-end text-xs text-black">
+                              {receiverTime}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <img className=" h-6 absolute bottom-0 -left-[8px]" src={chatTailTwo}/>
+                    </div>
+                  )}
+                  {isSender && (
+                    <div className="mt-2 flex justify-end relative ">
+                      <div className="flex py-2 px-3 bg-[#27AE60] rounded-2xl w-6/12">
+                        <div className="flex flex-col w-full gap-1">
+                          <p className="text-white font-normal">
+                            {senderMessage}
+                          </p>
+                          <div className=" flex justify-end items-center">
+                            <p className="flex justify-end text-xs text-white">
+                              {senderTime}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <img className=" h-2 absolute bottom-0 right-0" src={chatTail}/>
+                    </div>
+                  )}
                 </div>
-              </div>
-            </div>
-            <div className="mt-4 flex justify-end ">
-              <div className="flex justify-end p-4 bg-green-300 rounded-lg w-1/2">
-                <div className="flex flex-col">
-                  <p className="text-slate-600 font-normal">{senderMessage}</p>
-                  <p className="flex justify-end text-xs text-gray-500">
-                    {senderTime}
-                  </p>
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </>
         )}
+        </div>
 
-        <div className="mt-10 border-t-2 border-gray-200">
+
+        <div className="mt-6 border-t-2 border-gray-200">
           <div className="relative flex items-center gap-4 p-2">
             <MicrophoneButton />
 
             <input
               type="text"
-              placeholder="Type a message"
-              className="flex-grow p-2 pr-16 border rounded-lg bg-green-200"
+              placeholder="Type your message"
+              className="flex-grow p-2 pr-16 border rounded-lg bg-[#27AE60] text-white placeholder:text-white active:ring-1 active:ring-white"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
             />
@@ -120,11 +190,12 @@ const ChatHeader: React.FC<ChatProps> = ({
             >
               <img src="/images/Vector.png" alt="send-icon" />
             </button>
+
             <button
               className="absolute right-16 text-white font-extrabold text-xl"
               onClick={() => setEmojiPickerState(!emojiPickerState)}
             >
-              <BsEmojiSmileFill />
+              <BsEmojiSmile />
             </button>
 
             <button className="absolute right-24">
@@ -135,7 +206,8 @@ const ChatHeader: React.FC<ChatProps> = ({
             {emojiPickerState && (
               <EmojiPicker
                 width="100%"
-                height={300}
+                height={320}
+                lazyLoadEmojis={true}
                 onEmojiClick={onEmojiClick}
               />
             )}
