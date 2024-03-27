@@ -11,7 +11,7 @@ const ChatInput: React.FC = () => {
     },
   ]);
 
-  const handleMessageChange = (index, newMessage, isSender) => {
+  const handleMessageChange = (index: number, newMessage: string, isSender: boolean) => {
     const updatedChats = chats.map((chat, i) => {
       if (i === index) {
         return {

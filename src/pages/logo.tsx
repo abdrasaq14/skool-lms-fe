@@ -4,7 +4,7 @@ function Chat() {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/chat");
+    navigate("/dashboard/messages");
   };
 
   return (
