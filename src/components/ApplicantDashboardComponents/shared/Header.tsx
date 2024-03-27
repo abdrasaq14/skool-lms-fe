@@ -157,7 +157,7 @@ export default function Header() {
                         {notifications.length !== 0 ? (
                           <>
                             <ul className="flex flex-col gap-4 mb-6 ">
-                              {notifications.map(
+                              {notifications.slice(0, 3).map(
                                 (notification: Notification) => (
                                   <li
                                     className="px-2 py-1 border border-gray-600 rounded-lg text-sm hover:border-2 hover:border-green-600 bg-white text-gray-600 flex gap-4 items-center transition-all duration-300 ease-in-out hover:shadow-md hover:scale-105 hover:transform hover:translate-y-1"
