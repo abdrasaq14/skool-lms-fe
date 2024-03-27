@@ -3,7 +3,6 @@ import EmojiPicker from "emoji-picker-react";
 import MicrophoneButton from "./microphone";
 import { BsEmojiSmileFill } from "react-icons/bs";
 
-
 interface ChatProps {
   senderMessage: string;
   senderTime: string;
@@ -13,10 +12,9 @@ interface ChatProps {
   onMessageChange: (newMessage: string) => void;
 }
 
-interface Message{
+interface Message {
   text: string;
   timestamp: string;
-
 }
 
 const ChatHeader: React.FC<ChatProps> = ({
@@ -35,7 +33,7 @@ const ChatHeader: React.FC<ChatProps> = ({
   const sendMessage = () => {
     if (inputValue.trim() !== "") {
       const message = {
-        text: inputValue + (chosenEmoji ? chosenEmoji : ''), 
+        text: inputValue + (chosenEmoji ? chosenEmoji : ""),
         timestamp: new Date().toISOString(),
       };
 
@@ -49,7 +47,7 @@ const ChatHeader: React.FC<ChatProps> = ({
   function onEmojiClick(emoji: any) {
     setChosenEmoji(emoji);
     setInputValue(inputValue + emoji.emoji);
-    setEmojiPickerState(false); 
+    setEmojiPickerState(false);
   }
 
   return (
@@ -62,6 +60,7 @@ const ChatHeader: React.FC<ChatProps> = ({
               className="mr-3 h-7 sm:h-9"
               alt="Back Arrow"
             />
+
             <span className="text-lg font-bold text-black">Messages</span>
           </div>
           <div className="flex flex-col items-center">
@@ -83,19 +82,19 @@ const ChatHeader: React.FC<ChatProps> = ({
             <div className="mt-4 flex-justify-start">
               <div className="flex justify-start flex-row p-4 bg-gray-300 rounded-lg shadow-md w-1/2">
                 <div className="flex flex-col">
-                  <p className="text-slate-600 font-normal">{senderMessage}</p>
-                  <p className="text-xs text-gray-500">{senderTime}</p>
+                  <p className="text-slate-600 font-normal">
+                    {receiverMessage}
+                  </p>
+                  <p className="text-xs text-gray-500">{receiverTime}</p>
                 </div>
               </div>
             </div>
             <div className="mt-4 flex justify-end ">
               <div className="flex justify-end p-4 bg-green-300 rounded-lg w-1/2">
                 <div className="flex flex-col">
-                  <p className="text-slate-600 font-normal">
-                    {receiverMessage}
-                  </p>
+                  <p className="text-slate-600 font-normal">{senderMessage}</p>
                   <p className="flex justify-end text-xs text-gray-500">
-                    {receiverTime}
+                    {senderTime}
                   </p>
                 </div>
               </div>
@@ -115,25 +114,32 @@ const ChatHeader: React.FC<ChatProps> = ({
               onChange={(e) => setInputValue(e.target.value)}
             />
 
-            <button className=" flex items-center justify-center" onClick={sendMessage}>
+            <button
+              className=" flex items-center justify-center"
+              onClick={sendMessage}
+            >
               <img src="/images/Vector.png" alt="send-icon" />
             </button>
             <button
               className="absolute right-16 text-white font-extrabold text-xl"
               onClick={() => setEmojiPickerState(!emojiPickerState)}
             >
-              <BsEmojiSmileFill/>
+              <BsEmojiSmileFill />
             </button>
 
             <button className="absolute right-24">
               <img src="/images/Photo copy.png" />
             </button>
-
           </div>
           <div>
-          {emojiPickerState && <EmojiPicker width='100%' height={300} onEmojiClick={onEmojiClick} />}
+            {emojiPickerState && (
+              <EmojiPicker
+                width="100%"
+                height={300}
+                onEmojiClick={onEmojiClick}
+              />
+            )}
           </div>
-
         </div>
       </div>
     </div>
