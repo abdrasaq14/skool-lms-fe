@@ -67,6 +67,10 @@ function App() {
         <Route path="/reset-password" element={<ResetPasswordForm />} />
         <Route path="/new-password/:token" element={<NewPasswordForm />} />
         <Route path="/dashboard/messages" element={<UserMessageView />} />
+        <Route
+                  path="applications-section/messages"
+                  element={<AdminMessageView />}
+                />
         
         {/* Protected Routes after logging - Dashboard related routes. */}
         <Route
@@ -142,10 +146,10 @@ function App() {
                   element={<ApplicationViewPage />}
                 />
 
-                <Route
+                {/* <Route
                   path="applications-section/messages"
                   element={<AdminMessageView />}
-                />
+                /> */}
               </Routes>
             </ProtectedRoute>
           }

@@ -13,6 +13,8 @@ import qualificationsReducer from "../states/applicationDetails/qualificationsSL
 import stepOneDataReducer from "../states/onboardingViews/stepOneDataSlice";
 import stepTwoDataReducer from "../states/onboardingViews/stepTwoDataSlice";
 import notificationCountReducer from "../states/notification/notificationSlice";
+import messagesReducer from "../states/messages/messagesSlice"; // Import your messages slice
+
 
 
 const persistConfig = {
@@ -35,6 +37,7 @@ const persistedReducer = persistReducer(
     stepOneData: stepOneDataReducer,
     stepTwoData: stepTwoDataReducer,
     notificationStatus: notificationCountReducer,
+    messages: messagesReducer,
     
   })
 );
