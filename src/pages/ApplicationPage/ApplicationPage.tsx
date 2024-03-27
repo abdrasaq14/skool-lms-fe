@@ -15,7 +15,9 @@ import { deleteQualificationDetails } from "../../states/applicationDetails/qual
 import { deletePassportDetails } from "../../states/applicationDetails/uploadPassportSlice";
 import axiosInstance from "../../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
-import ApplicationSuccessful from "../../components/applicationComponents/AppliedSuccessful";
+import ModalComponent from "../../components/ModalComponent";
+import success from "/images/Successgood.png";
+
 
 interface UserCourse {
   courseSearch: string;
@@ -306,10 +308,10 @@ function ApplicationPage() {
   </div>
   {showSuccessModal && (
     <div className="modal-overlay">
-      <ApplicationSuccessful
+      <ModalComponent
         message="Your application has been successfully submitted. Thanks!"
         buttonText="OK"
-        icon={""}
+        icon={success}
         onClick={() => {
           setShowSuccessModal(false);
           navigate("/dashboard");

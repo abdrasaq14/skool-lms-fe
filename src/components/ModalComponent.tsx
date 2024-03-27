@@ -1,24 +1,25 @@
-import React from 'react';
-import MainButton from '../../components/MainButton';
-import success from "/images/Successgood.png";
+import React from "react";
+import MainButton from "../components/MainButton";
+// import success from "/images/Successgood.png";
 
-interface ApplicationSuccessfulProps {
-    message: string;
-    icon: string;
-    buttonText: string;
-    onClick: () => void; 
+interface ModalProps {
+  message: string;
+  icon: string;
+  buttonText: string;
+  onClick: () => void;
 }
 
-const ApplicationSuccessful: React.FC<ApplicationSuccessfulProps> = ({
+const ModalComponent: React.FC<ModalProps> = ({
   message,
   buttonText,
-  onClick
+  icon,
+  onClick,
 }) => {
   return (
     <div className="flex flex-col items-center justify-center h-screen w-3/12">
       <div className="success-container bg-white rounded-lg shadow-lg p-6 w-full">
         <div className="success-icon flex flex-col items-center justify-center">
-          <img src={success} alt="Success" className="justify-center" />
+          <img src={icon} alt="Success" className="justify-center" />
         </div>
         <div className="success-message text-center mt-4">
           <h2 className="text-xl font-semibold">{message}</h2>
@@ -33,4 +34,4 @@ const ApplicationSuccessful: React.FC<ApplicationSuccessfulProps> = ({
   );
 };
 
-export default ApplicationSuccessful;
+export default ModalComponent;
