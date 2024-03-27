@@ -5,8 +5,10 @@ import axiosInstance from "../../utils/axiosInstance";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import PageDownload from "../../components/DownloadFunction/PageDownload";
-import ApplicationSuccessful from "../../components/applicationComponents/AppliedSuccessful";
-import AppliedRejected from "../../components/applicationComponents/AppliedRejected";
+import ModalComponent from "../../components/ModalComponent";
+import failed from "/images/Cancelbad.png";
+import success from "/images/Successgood.png";
+
 
 interface Data {
   user: {
@@ -86,10 +88,10 @@ const ApplicationViewPage = () => {
     if (showSuccessModal) {
       return (
         <div className="modal-overlay">
-          <ApplicationSuccessful
+          <ModalComponent
             message="Application Accepted"
             buttonText="OK"
-            icon={""}
+            icon={success}
             onClick={closeModal}
           />
         </div>
@@ -132,10 +134,10 @@ const ApplicationViewPage = () => {
     if (showRejectModal) {
       return (
         <div className="modal-overlay">
-          <AppliedRejected
+          <ModalComponent
             message="Application Rejected"
             buttonText="OK"
-            icon={""}
+            icon={failed}
             onClick={closeRejectModal}
           />
         </div>
