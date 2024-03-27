@@ -1,12 +1,12 @@
-import axios from 'axios';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import axiosInstance from '../../utils/axiosInstance';
 
 export default function PDFDownloadButton({ applicationId }: { applicationId: string }) {
 
     const handleDownload = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/download-pdf/${applicationId}`, {
+        const response = await axiosInstance.get(`/download-pdf/${applicationId}`, {
           responseType: 'text',
         });
         const htmlContent = response.data;

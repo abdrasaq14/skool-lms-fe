@@ -1,7 +1,7 @@
 import { MouseEventHandler, useEffect, useState } from "react";
 import AdminHeader from "../../components/admin/AdminHeader";
 import axiosInstance from "../../utils/axiosInstance";
-import axios from "axios";
+// import axios from "axios";
 import { Link } from "react-router-dom";
 import PDFDownloadButton from "../../components/DownloadFunction/SingleDownload";
 import Dots from "/images/Dots.png";
@@ -131,17 +131,17 @@ const handleConfirmDelete = async (idsToDelete: string[]) => {
     setShowModal(false);
   };
 
-
+  const user = useSelector((state: RootState) => state.userDetails);
   const downloadApplicationsAsPDF = async (applicationIds: string[]) => {
     try {
         const pdf = new jsPDF();
-        const user = useSelector((state: RootState) => state.userDetails);
+        
         console.log(applicationIds);
         console.log(user);
         
 
         for (const applicationId of applicationIds) {
-            const response = await axios.get(`http://localhost:3000/download-pdf/${applicationId}`, {
+            const response = await axiosInstance.get(`/download-pdf/${applicationId}`, {
                 responseType: 'text',
                 
             });
