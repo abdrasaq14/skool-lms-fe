@@ -49,9 +49,6 @@ function App() {
       console.log("Connected to WebSocket server");
       console.log(socket)
     })
-   
-    
-    
   
     return () => {
       socket.disconnect(); // Clean up WebSocket connection
@@ -67,9 +64,8 @@ function App() {
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/reset-password" element={<ResetPasswordForm />} />
         <Route path="/new-password/:token" element={<NewPasswordForm />} />
-        <Route path="/dashboard/messages" element={<UserMessageView />} />
-        <Route path="/chat/logo" element={<Chat />} />
-        <Route path="/chatInput" element={<ChatInput />} />
+        
+        
 
         {/* Protected Routes after logging - Dashboard related routes. */}
         <Route
@@ -89,6 +85,10 @@ function App() {
 
                 <Route path="onboarding" element={<ApplicationView />} />
                 <Route path="application" element={<ApplicationPage />} />
+                <Route path="/chat/logo" element={<Chat />} />
+                <Route path="messages" element={<UserMessageView />} />
+                <Route path="messages/chats" element={<ChatInput />} />
+                
 
                 <Route
                   path="application/personal-statement"
@@ -125,6 +125,8 @@ function App() {
                   path="application/funding-information"
                   element={<FundingInformation />}
                 />
+
+
               </Routes>
             </ProtectedRoute>
           }
