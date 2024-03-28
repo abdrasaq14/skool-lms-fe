@@ -29,6 +29,9 @@ const UserChat: React.FC = () => {
     
     const fetchChats = async () => {
       try {
+        console.log("userId: ", userId);
+        console.log("recipientId: ", recipientId);
+        
         const response = await axiosInstance.get(`/users/chats/${recipientId}/${userId}`, {
         });
 
