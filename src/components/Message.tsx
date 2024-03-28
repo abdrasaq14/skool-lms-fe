@@ -11,7 +11,7 @@ const Message = (props: MessageProps) => {
       <div className="flex items-center gap-4">
        <div className="flex items-center">
         {/* <div className="bg-blue-600 border w-4 h-4 rounded-full mr-1"></div> */}
-        <div className={`bg-${props.online ? 'blue' : 'gray'}-600 border w-4 h-4 rounded-full mr-1`}></div>
+        {/* <div className={`bg-${props.online ? 'blue' : 'gray'}-600 border w-4 h-4 rounded-full mr-1`}></div> */}
 
 
        <img
@@ -23,7 +23,7 @@ const Message = (props: MessageProps) => {
 
         <div className="w-full p-0">
           <div className="flex flex-row justify-between  w-full">
-            <h3 className="text-lg font-bold pb-10 ">{props.name}</h3>
+            <h3 className="text-lg font-bold pb-3 ">{props.name}</h3>
             <p className="font-light text-slate-500">{props.time}</p>
           </div>
           <p className="font-light text-slate-500">{props.message}</p>

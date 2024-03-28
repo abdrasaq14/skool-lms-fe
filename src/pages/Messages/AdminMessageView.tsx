@@ -5,16 +5,16 @@ import {
   selectFilteredMessages,
 } from "../../states/messages/messagesSlice";
 import Message from "../../components/Message";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
 import { RootState } from "../../store/store";
 
 interface Chats {
   id: string;
-  imageUrl: string;
+  passportUpload: string;
   firstName: string;
-  message: string;
-  createdAt: string;
+  lastMessage: string; 
+  lastMessageCreatedAt: string;
   online: boolean;
 }
 const AdminMessageView: React.FC = () => {
@@ -24,7 +24,10 @@ const AdminMessageView: React.FC = () => {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
+
         const response = await axiosInstance.get(`/users/chats/${userId}`);
+        console.log("response: ", response);
+        
         setChattingUsers(response.data.users);
       } catch (error) {
         console.error("Failed to fetch messages", error);
@@ -89,37 +92,31 @@ const AdminMessageView: React.FC = () => {
       <div>
       {chattingUsers.length > 0 && (
   chattingUsers.map((message, index) => {
-    const timestamp:any = new Date(message.createdAt);
-    const now: any = new Date();
-    const diffTime = now - timestamp;
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    
-    const options: Intl.DateTimeFormatOptions = { hour12: true, hour: "numeric", minute: "numeric" };
-    const timeFormat = new Intl.DateTimeFormat("en-US", options).format(timestamp);
-    
-    let output = "";
-    if (diffDays === 1) {
-      output = `Yesterday`;
-    } else if (diffDays <= 7) {
-      output = `${diffDays} days ago`;
-    } else {
-      output = timeFormat;
-    }
+
+    // const timestamp: any = new Date(message.createdAt);
+    const chatDate = new Date(message.
+      lastMessageCreatedAt);
+      chatDate.setHours(chatDate.getHours() + 1);
+ 
+   const timestamp = chatDate.getUTCHours().toString().padStart(2, "0") +
+          ":" +
+          chatDate.getUTCMinutes().toString().padStart(2, "0")
 
     return (
-      <div
+      
+    <Link to={`/admin/messages/chats?=${message.id}`}>
+    <div
         key={index}
-        onClick={() => handleViewClick(message.message)}
         style={{ cursor: "pointer" }}
       >
         <Message
-          imageUrl={message.imageUrl}
+          imageUrl={message.passportUpload}
           name={message.firstName}
-          message={message.message}
-          time={output} 
-          online={true}
+          message={message.lastMessage}
+          time={timestamp} 
         />
       </div>
+    </Link>
     );
   })
 )}
