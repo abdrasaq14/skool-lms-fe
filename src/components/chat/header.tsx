@@ -1,4 +1,4 @@
-import  {  useState } from "react";
+import  { useRef, useState, useEffect} from "react";
 import EmojiPicker from "emoji-picker-react";
 import MicrophoneButton from "./microphone";
 import { BsEmojiSmile } from "react-icons/bs";
@@ -29,6 +29,7 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
   console.log("chats in header page", chats);
 
   const [emojiPickerState, setEmojiPickerState] = useState(false);
+  const emojiPickerRef = useRef<HTMLDivElement>(null);
   const [chosenEmoji, setChosenEmoji] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState<Message[]>(
@@ -92,10 +93,24 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
     setEmojiPickerState(false);
   }
 
-  return (
-    <div className=" p-4 h-screen overflow-y-auto">
+  
+  const handleClickOutside = (event: any) => {
+    if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target as Node)) {
+      setEmojiPickerState(false);
+    }
+  };
 
-      <div className=" w-5/12 p-2 rounded-xl shadow-lg bg-white h-[72%]">
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  return (
+    <div className=" p-4 h-screen overflow-y-auto w-full h-100vh ">
+
+      <div className="  p-2 rounded-xl shadow-lg bg-white h-[72%]">
         <header className="py-2 px-2 items-center border-b-2 border-gray-300">
           <div className="flex items-center">
             <img
@@ -216,10 +231,10 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
             </button>
 
             {emojiPickerState && (
-              <div className=" absolute w-9/12 -top-[22rem]">
+              <div ref={emojiPickerRef} className=" absolute right-0 w-9/10  -top-[26rem]">
               <EmojiPicker
                 width="100%"
-                height={380}
+                height={420}
                 lazyLoadEmojis={true}
                 onEmojiClick={onEmojiClick}
                 

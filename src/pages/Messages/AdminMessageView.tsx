@@ -1,22 +1,53 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchQuery, selectFilteredMessages } from "../../states/messages/messagesSlice";
+import {
+  setSearchQuery,
+  selectFilteredMessages,
+} from "../../states/messages/messagesSlice";
 import Message from "../../components/Message";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../utils/axiosInstance";
+import { RootState } from "../../store/store";
 
+interface Chats {
+  id: string;
+  imageUrl: string;
+  firstName: string;
+  message: string;
+  createdAt: string;
+  online: boolean;
+}
 const AdminMessageView: React.FC = () => {
+  const userId = useSelector((state: RootState) => state.userDetails.userId);
+  const [chattingUsers, setChattingUsers] = useState<Chats[]>([]);
+  
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const response = await axiosInstance.get(`/users/chats/${userId}`);
+        setChattingUsers(response.data.users);
+      } catch (error) {
+        console.error("Failed to fetch messages", error);
+      }
+    };
+
+    fetchMessages();
+  }, []);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
   const filteredMessages = useSelector(selectFilteredMessages);
 
-  const searchRef = useRef<HTMLInputElement>(null); 
+  const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
-        setSearchValue(""); 
-        dispatch(setSearchQuery("")); 
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
+        setSearchValue("");
+        dispatch(setSearchQuery(""));
       }
     };
 
@@ -36,16 +67,7 @@ const AdminMessageView: React.FC = () => {
   const handleViewClick = (searchValue: string) => {
     if (filteredMessages.length === 0 || searchValue.trim() === "") return;
     // navigate(`/chat?search=${encodeURIComponent(searchValue)}`);
-      navigate ('/chat')
-  };
-
-  // Test message data
-  const testMessage = {
-    imageUrl: "https://images.unsplash.com/photo-1614644147724-2d4785d69962?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80",
-    name: "Olalekan",
-    message: "Kindly check my document again",
-    time: "9:40 AM",
-    online: true,
+    navigate("/chat");
   };
 
   return (
@@ -65,194 +87,46 @@ const AdminMessageView: React.FC = () => {
         </div>
       </div>
       <div>
-        {filteredMessages.length > 0 ? (
-          filteredMessages.map((message, index) => (
-            <div key={index} onClick={() => handleViewClick(message.message)} style={{ cursor: "pointer" }}>
-              <Message
-                imageUrl={message.imageUrl}
-                name={message.name}
-                message={message.message}
-                time={message.time}
-                online={true}
-              />
-            </div>
-          ))
-        ) : (
-          searchValue.trim() ? (
-            // <p className="py-2 px-4 bg-gray-200 hover:bg-gray-300 rounded-md">Not found</p>
-            <p className="py-2 px-4 bg-gray-200 hover:bg-gray-300 rounded-md">{searchValue.trim() ? "Not found" : "No messages" }</p>
+      {chattingUsers.length > 0 && (
+  chattingUsers.map((message, index) => {
+    const timestamp:any = new Date(message.createdAt);
+    const now: any = new Date();
+    const diffTime = now - timestamp;
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    
+    const options: Intl.DateTimeFormatOptions = { hour12: true, hour: "numeric", minute: "numeric" };
+    const timeFormat = new Intl.DateTimeFormat("en-US", options).format(timestamp);
+    
+    let output = "";
+    if (diffDays === 1) {
+      output = `Yesterday`;
+    } else if (diffDays <= 7) {
+      output = `${diffDays} days ago`;
+    } else {
+      output = timeFormat;
+    }
 
-          ) : 
-          (
-            <div onClick={() => handleViewClick(testMessage.message)} style={{ cursor: "pointer" }}>
-              <div className="py-2 px-4 bg-gray-200 hover:bg-gray-300 rounded-md" style={{ maxWidth: "700px" }}>
-                <Message
-                  imageUrl={testMessage.imageUrl}
-                  name={testMessage.name}
-                  message={testMessage.message}
-                  time={testMessage.time}
-                  online={true}
-                />
-              </div>
-            </div>
-          )
-        )
-        }
+    return (
+      <div
+        key={index}
+        onClick={() => handleViewClick(message.message)}
+        style={{ cursor: "pointer" }}
+      >
+        <Message
+          imageUrl={message.imageUrl}
+          name={message.firstName}
+          message={message.message}
+          time={output} 
+          online={true}
+        />
+      </div>
+    );
+  })
+)}
+
       </div>
     </div>
   );
 };
 
 export default AdminMessageView;
-
-
-
-
-// import React, { useState, useEffect, useRef } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { setSearchQuery, selectFilteredMessages } from "../../states/messages/messagesSlice";
-// import Message from "../../components/Message";
-// import { useNavigate } from "react-router-dom";
-
-// const UserMessageView: React.FC = () => {
-//   const dispatch = useDispatch();
-//   const navigate = useNavigate();
-//   const [searchValue, setSearchValue] = useState("");
-//   const filteredMessages = useSelector(selectFilteredMessages);
-
-//   const searchRef = useRef<HTMLInputElement>(null); 
-
-//   useEffect(() => {
-
-//     const handleClickOutside = (event: MouseEvent) => {
-//       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
-//         setSearchValue(""); 
-//         dispatch(setSearchQuery("")); 
-//       }
-//     };
-
-//     document.addEventListener("mousedown", handleClickOutside);
-
-//     return () => {
-//       document.removeEventListener("mousedown", handleClickOutside);
-//     };
-//   }, [dispatch]);
-
-//   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     const { value } = event.target;
-//     setSearchValue(value);
-//     dispatch(setSearchQuery(value));
-//   };
-
-//   const handleViewClick = () => {
-//     if (filteredMessages.length === 0) return;
-//     navigate(`/chat?search=${encodeURIComponent(searchValue)}`);
-//   };
-
-//   // Test message data
-//   const testMessage = {
-//     imageUrl: "https://images.unsplash.com/photo-1614644147724-2d4785d69962?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80",
-//     name: "Olalekan",
-//     message: "Kindly check my document again",
-//     time: "9:40 AM",
-//     online: true,
-//   };
-
-//   return (
-//     <div className="bg-white w-6/12 mx-auto mt-10 py-8 px-7 border rounded-2xl transition-all duration-300">
-//       <div>
-//         <h2 className="font-serif text-4xl text-black-100">Messages</h2>
-//         <div className="relative mt-3 mb-7">
-//           <input
-//             ref={searchRef}
-//             type="text"
-//             id="Search"
-//             placeholder="Search"
-//             value={searchValue}
-//             onChange={handleSearchChange}
-//             className="w-full rounded-2xl border-gray-200 py-2.5 pr-10 shadow-sm sm:text-md px-5 bg-zinc-200"
-//           />
-//         </div>
-//       </div>
-//       <div onClick={handleViewClick} style={{ cursor: "pointer" }}>
-//         {filteredMessages.length > 0 ? (
-//           filteredMessages.map((message, index) => (
-//             <Message
-//               key={index}
-//               imageUrl={message.imageUrl}
-//               name={message.name}
-//               message={message.message}
-//               time={message.time}
-//               online={true}
-//             />
-//           ))
-//         ) :  (
-//           searchValue.trim() ? (
-//             <p className="py-2 px-4 bg-gray-200 hover:bg-gray-300 rounded-md">Not found</p>
-//           ) : (
-//             <>
-//             {filteredMessages.length > 0 ? (
-//               filteredMessages.map((message, index) => (
-//                 <div key={index} className="py-2 px-4 bg-gray-200 hover:bg-gray-300 rounded-md" style={{ maxWidth: "700px" }}>
-//                   <Message
-//                     imageUrl={testMessage.imageUrl}
-//                     name={testMessage.name}
-//                     message={testMessage.message}
-//                     time={testMessage.time}
-//                     online={true}
-//                   />
-//                 </div>
-//               ))
-//             ) 
-//             : 
-//             (
-//               <p className="py-2 px-4 bg-gray-200 hover:bg-gray-300 rounded-md">No messages</p>
-//             )
-//             }
-//           </>
-//         )
-//       )}
-//       </div>
-      
-//     </div>
-//   );
-// };
-
-// export default UserMessageView;
-
-
-
-
-// import Message from "../../components/Message";
-
-// function UserMessageView() {
-//   return (
-//     <div className="bg-white w-6/12 mx-auto mt-10 py-8 px-7 border rounded-2xl">
-//       <div>
-//         <h2 className="font-serif text-4xl text-black-100">Messages</h2>
-
-//         <div className="relative mt-3 mb-7">
-//           <input
-//             type="text"
-//             id="Search"
-//             placeholder="Search"
-//             className="w-full rounded-2xl border-gray-200 py-2.5 pr-10 shadow-sm sm:text-md px-5 bg-zinc-200"
-//           />
-//         </div>
-//       </div>
-//       <div>
-//         <Message
-//           imageUrl="https://images.unsplash.com/photo-1614644147724-2d4785d69962?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80"
-//           name="Olalekan"
-//           message="Kindly check my document again"
-//           time="9:40 AM"
-//         />
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default UserMessageView;
-
-
-            // <p className="py-2 px-4 bg-gray-200 hover:bg-gray-300 rounded-md">{searchValue.trim() ? "Not found" : "No messages"}</p>
