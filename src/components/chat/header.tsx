@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import  chatTail from '../../../public/images/chatbox-tail.png'
 import chatTailTwo from '../../../public/images/chatbox-tail2.png'
+import { position } from "html2canvas/dist/types/css/property-descriptors/position";
 
 interface Chat {
   createdAt: string;
@@ -92,8 +93,9 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
   }
 
   return (
-    <div className="flex flex-col items-center h-screen p-10 bg-slate-300">
-      <div className="w-full max-w-xl p-2 rounded-xl shadow-lg bg-white">
+    <div className=" p-4 h-screen overflow-y-auto">
+
+      <div className=" w-5/12 p-2 rounded-xl shadow-lg bg-white h-[72%]">
         <header className="py-2 px-2 items-center border-b-2 border-gray-300">
           <div className="flex items-center">
             <img
@@ -173,13 +175,15 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
 
 
         <div className="mt-6 border-t-2 border-gray-200">
-          <div className="relative flex items-center gap-4 p-2">
+
+          <div className="relative flex items-center gap-3 p-2 mt-2">
+
             <MicrophoneButton />
 
             <input
               type="text"
               placeholder="Type your message"
-              className="flex-grow p-2 pr-16 border rounded-lg bg-[#27AE60] text-white placeholder:text-white active:ring-1 active:ring-white"
+              className="flex-grow p-2 pr-20 border rounded-lg bg-[#27AE60] text-white placeholder:text-white active:ring-1 active:ring-white"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
             />
@@ -192,26 +196,31 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
             </button>
 
             <button
-              className="absolute right-16 text-white font-extrabold text-xl"
+              className="absolute right-[3.5rem] text-white font-extrabold text-xl"
               onClick={() => setEmojiPickerState(!emojiPickerState)}
             >
               <BsEmojiSmile />
             </button>
 
-            <button className="absolute right-24">
+            <button className="absolute right-[5.5rem]">
               <img src="/images/Photo copy.png" />
             </button>
-          </div>
-          <div>
+
             {emojiPickerState && (
+              <div className=" absolute w-9/12 -top-[22rem]">
               <EmojiPicker
                 width="100%"
-                height={320}
+                height={380}
                 lazyLoadEmojis={true}
                 onEmojiClick={onEmojiClick}
+                
               />
+              </div>
             )}
+
           </div>
+          
+          
         </div>
       </div>
     </div>
