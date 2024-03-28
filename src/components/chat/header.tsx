@@ -1,4 +1,4 @@
-import  {  useState } from "react";
+import  { useRef, useState, useEffect} from "react";
 import EmojiPicker from "emoji-picker-react";
 import MicrophoneButton from "./microphone";
 import { BsEmojiSmile } from "react-icons/bs";
@@ -29,6 +29,7 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
   console.log("chats in header page", chats);
 
   const [emojiPickerState, setEmojiPickerState] = useState(false);
+  const emojiPickerRef = useRef<HTMLDivElement>(null);
   const [chosenEmoji, setChosenEmoji] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState<Message[]>(
@@ -91,6 +92,33 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
     console.log("input value", inputValue)
     setEmojiPickerState(false);
   }
+
+  // Function to close emoji picker when clicking outside of it
+  // const handleClickOutside = (event: any) => {
+  //   const emojiPicker = emojiPickerRef.current;
+  //   if (emojiPicker && !emojiPicker.contains(event.target)) {
+  //     setEmojiPickerState(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
+  const handleClickOutside = (event: any) => {
+    if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target as Node)) {
+      setEmojiPickerState(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className=" p-4 h-screen overflow-y-auto w-full h-100vh ">
@@ -216,7 +244,7 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
             </button>
 
             {emojiPickerState && (
-              <div className=" absolute right-0 w-9/10  -top-[26rem]">
+              <div ref={emojiPickerRef} className=" absolute right-0 w-9/10  -top-[26rem]">
               <EmojiPicker
                 width="100%"
                 height={420}
