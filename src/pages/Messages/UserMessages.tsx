@@ -53,6 +53,8 @@ const UserChat: React.FC = () => {
       console.log("Connected to WebSocket server");
       console.log(socket)
 
+      socket.emit("addNewUser", userId);
+
       return () => {
         socket.disconnect(); // Clean up WebSocket connection
       };

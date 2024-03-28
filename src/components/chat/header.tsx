@@ -1,4 +1,4 @@
-import  { useRef, useState} from "react";
+import  { useRef, useState, useEffect} from "react";
 import EmojiPicker from "emoji-picker-react";
 import MicrophoneButton from "./microphone";
 import { BsEmojiSmile } from "react-icons/bs";
@@ -9,6 +9,7 @@ import { RootState } from "../../store/store";
 import  chatTail from '/images/chatbox-tail.png'
 import chatTailTwo from '/images/chatbox-tail2.png'
 import { TbMessagesOff } from "react-icons/tb";
+import socket from '../../../socket'
 
 interface Chat {
   createdAt: string;
@@ -44,6 +45,7 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
     }))
   );
 
+
   const [searchParams] = useSearchParams();
   const recipientId = searchParams.get("id");
   const userId = useSelector((state: RootState) => state.userDetails.userId);
@@ -59,6 +61,20 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
   //   })));
   // }, []);
 
+
+  useEffect(() => {
+    // Subscribe to incoming messages from the server
+    socket.on("message", (message: Message) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
+
+    return () => {
+      // Unsubscribe from socket events when component unmounts
+      socket.off("message");
+    };
+  }, []);
+
+
   const sendMessage = async () => {
     if (inputValue.trim() !== "") {
 
@@ -69,6 +85,7 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
         receiverId: recipientId || "",
       };
 
+      socket.emit("sendMessage", message);
       setMessages([...messages, message]);
       setInputValue("");
       setChosenEmoji(null)
@@ -92,6 +109,20 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
     console.log("input value", inputValue)
     setEmojiPickerState(false);
   }
+
+
+  const handleClickOutside = (event: any) => {
+    if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target as Node)) {
+      setEmojiPickerState(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className=" p-4 h-screen overflow-y-auto w-full h-100vh ">
