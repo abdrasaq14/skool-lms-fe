@@ -1,5 +1,6 @@
 import DashboardStatsGrid from "../../components/ApplicantDashboardComponents/DashboardStatsGrid";
 import RecentApplications from "../../components/ApplicantDashboardComponents/RecentApplications";
+import SupportChat from "../logo";
 
 
 import {
@@ -9,7 +10,9 @@ import {
 export default function ApplicantDashboard() {
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 h-screen relative">
+
+
       <div className="relative">
         <HiOutlineSearch
           fontSize={20}
@@ -21,15 +24,21 @@ export default function ApplicantDashboard() {
           className="text-sm focus:outline-none active:outline-none border border-gray-300 w-[24rem] h-10 pl-11 pr-4 rounded-sm"
         />
       </div>
+
+
       <DashboardStatsGrid />
       {/* <div className="flex flex-row gap-4 w-full">
                 <TransactionChart />
                 <BuyerProfilePieChart />
             </div> */}
       <div className="flex flex-row gap-4 w-full">
-        <RecentApplications />
-        {/* <PopularProducts /> */}
+        <RecentApplications />    
       </div>
+
+      <div className="z-50 w-2/12 absolute bottom-24 right-4">
+      <SupportChat />
+      </div>
+
     </div>
   );
 }

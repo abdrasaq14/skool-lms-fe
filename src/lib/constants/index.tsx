@@ -7,6 +7,8 @@ import {
     HiOutlineCog
 } from 'react-icons/hi'
 
+import { RiMessage2Line } from "react-icons/ri";
+
 export const DASHBOARD_SIDEBAR_LINKS = [
     {
         key: 'dashboard',
@@ -25,6 +27,12 @@ export const DASHBOARD_SIDEBAR_LINKS = [
         label: 'Notifications',
         path: '/dashboard/notifications',
         icon: <HiOutlineBell />
+    },
+    {
+        key: 'Messages',
+        label: 'Messages',
+        path: '/dashboard/messages/chats?id=dc93ecd9-ecac-4fa0-ae6e-fa34379b010f',
+        icon: <RiMessage2Line />
     },
     {
         key: 'Profile',

@@ -36,9 +36,7 @@ import ApplicationViewPage from "./pages/ApplicationViewPage/ApplicationViewPage
 import { ProtectedRoute } from "./components/protectedRoutes/ProtectedRoute";
 import AdminMessageView from "./pages/Messages/AdminMessageView";
 import UserMessageView from "./pages/Messages/UserMessageView";
-
-import Chat from "./pages/logo";
-import ChatInput from "./pages/Messages/ChatInput";
+import ChatInput from "./pages/Messages/UserMessages";
 
 function App() {
   useEffect(() => {
@@ -79,15 +77,15 @@ function App() {
                   <Route path="settings" element={<Settings />} />
                   <Route path="profile" element={<Profile />} />
                   <Route path="notifications" element={<NotificationPage />} />
+                  <Route path="messages/chats" element={<ChatInput />} />
                 </Route>
 
                 {/*  */}
 
                 <Route path="onboarding" element={<ApplicationView />} />
                 <Route path="application" element={<ApplicationPage />} />
-                <Route path="/chat/logo" element={<Chat />} />
                 <Route path="messages" element={<UserMessageView />} />
-                <Route path="messages/chats" element={<ChatInput />} />
+                
                 
 
                 <Route

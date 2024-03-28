@@ -15,7 +15,7 @@ interface Chat {
 
 }
 
-const ChatInput: React.FC = () => {
+const UserChat: React.FC = () => {
 
 
   const [chats, setChats] = useState<Chat[]>([]);
@@ -68,4 +68,4 @@ const ChatInput: React.FC = () => {
 
 };
 
-export default ChatInput;
+export default UserChat;

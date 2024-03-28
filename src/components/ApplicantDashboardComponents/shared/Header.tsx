@@ -79,7 +79,7 @@ export default function Header() {
   const user = useSelector((state: RootState) => state.userDetails);
 
   return (
-    <div className="bg-white h-16 px-10 flex items-center border-b border-gray-200 justify-end">
+    <div className="bg-white h-16 px-10 py-4 flex items-center border-b border-gray-200 justify-end">
       <div className="flex items-center gap-2 mr-2">
         <Popover className="relative">
           {({ open }) => (
@@ -101,14 +101,18 @@ export default function Header() {
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-0 translate-y-1"
               >
-                <Popover.Panel className="absolute right-0 z-10 mt-2.5 transform w-80">
+                <Popover.Panel className="absolute right-0 z-10 mt-2.5 transform w-72">
                   <div className="bg-white rounded-sm shadow-md ring-1 ring-black ring-opacity-5 px-2 py-2.5">
-                    <strong className="text-gray-700 font-medium">
+                  <strong className="text-gray-700 font-medium">
                       Messages
                     </strong>
                     <div className="mt-2 py-1 text-sm">
-                      This is messages panel.
+                      This is the messages panel.
                     </div>
+
+                    <button className=" mt-8 bg-blue-400 w-full text-center py-2 px-4 rounded-2xl text-white hover:bg-blue-500">
+                      <Link to={'/admin/messages'} className=" text-white no-underline">  View all messages</Link>
+                     </button>
                   </div>
                 </Popover.Panel>
               </Transition>
