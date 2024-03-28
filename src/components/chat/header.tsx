@@ -123,9 +123,9 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
           </div>
         </header>
 
-        <div className="overflow-y-auto max-h-80 px-6 pb-6 bg-white">
+        <div className="overflow-y-auto max-h-80 h-[19rem] px-6 pb-6">
         {messages.length === 0 ? (
-          <div className="flex flex-col gap-6 justify-center items-center h-64 mt-6">
+          <div className="flex flex-col gap-6 justify-center items-center h-full mt-6">
             <p className="text-gray-500">No messages yet</p>
             <TbMessagesOff className="h-20 w-20 text-gray-500 animate-bounce ease-in-out" />
 
@@ -140,7 +140,7 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
               const receiverTime = !isSender ? message.timestamp : "";
 
               return (
-                <div key={index}>
+                <div key={index} className="">
                   {!isSender && (
                     <div className="mt-2 flex-justify-start relative">
                       <div className="flex justify-start flex-row py-2 px-3 bg-[#E6E5EB] rounded-xl shadow-md w-6/12">
@@ -183,7 +183,7 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
         </div>
 
 
-        <div className="mt-6 border-t-2 border-gray-200">
+        <div className="mt-6 border-t-2 border-gray-200 ">
 
           <div className="relative flex items-center gap-3 p-2 mt-2">
 
