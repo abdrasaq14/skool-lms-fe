@@ -93,9 +93,9 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
   }
 
   return (
-    <div className=" p-4 h-screen overflow-y-auto">
+    <div className=" p-4 h-screen overflow-y-auto w-full h-100vh ">
 
-      <div className=" w-5/12 p-2 rounded-xl shadow-lg bg-white h-[72%]">
+      <div className="  p-2 rounded-xl shadow-lg bg-white h-[72%]">
         <header className="py-2 px-2 items-center border-b-2 border-gray-300">
           <div className="flex items-center">
             <img
@@ -207,10 +207,10 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
             </button>
 
             {emojiPickerState && (
-              <div className=" absolute w-9/12 -top-[22rem]">
+              <div className=" absolute right-0 w-9/10  -top-[26rem]">
               <EmojiPicker
                 width="100%"
-                height={380}
+                height={420}
                 lazyLoadEmojis={true}
                 onEmojiClick={onEmojiClick}
                 
