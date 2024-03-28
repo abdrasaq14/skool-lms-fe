@@ -1,4 +1,4 @@
-import  { useRef, useState, useEffect} from "react";
+import  { useRef, useState} from "react";
 import EmojiPicker from "emoji-picker-react";
 import MicrophoneButton from "./microphone";
 import { BsEmojiSmile } from "react-icons/bs";
@@ -9,7 +9,6 @@ import { RootState } from "../../store/store";
 import  chatTail from '/images/chatbox-tail.png'
 import chatTailTwo from '/images/chatbox-tail2.png'
 import { TbMessagesOff } from "react-icons/tb";
-import socket from "../../../socket";
 
 interface Chat {
   createdAt: string;
