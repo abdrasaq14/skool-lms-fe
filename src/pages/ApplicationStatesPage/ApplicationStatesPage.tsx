@@ -1,10 +1,16 @@
-import { useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import AdminHeader from "../../components/admin/AdminHeader";
 import axiosInstance from "../../utils/axiosInstance";
+// import axios from "axios";
 import { Link } from "react-router-dom";
 import PDFDownloadButton from "../../components/DownloadFunction/SingleDownload";
 import Dots from "/images/Dots.png";
-// import MultiplePDFDownloadButton from "../../components/DownloadFunction/MultipleDownload";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+
+
 interface addQualification {
   gradeOrCGPA: string;
   fieldOfStudy: string;
@@ -77,37 +83,94 @@ function ApplicationStatesPage() {
     setSelectedTab(tab);
   };
 
+
   const handleCheckboxChange = (id: string) => {
-    if (selectedIds.includes(id)) {
-      setSelectedIds(selectedIds.filter((selectedId) => selectedId !== id));
-    } else {
-      setSelectedIds([...selectedIds, id]);
-    }
+    const updatedSelectedIds = selectedIds.includes(id)
+      ? selectedIds.filter((selectedId) => selectedId !== id)
+      : [...selectedIds, id];
+    setSelectedIds(updatedSelectedIds);
   };
 
-  // const handleDeleteSelected = () => {
-  //   setShowModal(true);
-  // };
-
-  const handleConfirmDelete = async () => {
-    try {
-      await axiosInstance.delete(`/admin/professional-applications`, {
-        data: { applicationIds: selectedIds },
-      });
-      setApplicationData(
-        applicationData.filter(
-          (application) => !selectedIds.includes(application.id)
-        )
-      );
-    } catch (error) {
-      console.error("Error deleting applications:", error);
+  const handleDeleteButtonClick: MouseEventHandler<HTMLButtonElement> = async (event) => {
+    event.preventDefault();
+    if (selectedIds.length > 0) {
+      await handleConfirmDelete(selectedIds);
     }
-    setShowModal(false);
   };
+  
+
+
+  const handleDeleteSelected = () => {
+    setShowModal(true);
+  };
+
+ 
+
+const handleConfirmDelete = async (idsToDelete: string[]) => {
+  try {
+    console.log(idsToDelete);
+    
+    await axiosInstance.delete(`/users/professional-applications`, {
+      data: { applicationIds: idsToDelete },
+    });
+    
+    setApplicationData(
+      applicationData.filter(
+        (application) => !idsToDelete.includes(application.id)
+      )
+    );
+  } catch (error) {
+    console.error("Error deleting applications:", error);
+  }
+  setShowModal(false);
+};
+
+  
 
   const handleCancelDelete = () => {
     setShowModal(false);
   };
+
+  const user = useSelector((state: RootState) => state.userDetails);
+  const downloadApplicationsAsPDF = async (applicationIds: string[]) => {
+    try {
+        const pdf = new jsPDF();
+        
+        console.log(applicationIds);
+        console.log(user);
+        
+
+        for (const applicationId of applicationIds) {
+            const response = await axiosInstance.get(`/download-pdf/${applicationId}`, {
+                responseType: 'text',
+                
+            });
+            const htmlContent = response.data;
+
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = htmlContent;
+            document.body.appendChild(tempDiv);
+
+            const canvas = await html2canvas(tempDiv);
+            const imgData = canvas.toDataURL('image/png');
+            const imgProps = pdf.getImageProperties(imgData);
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            pdf.addPage();
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+
+            document.body.removeChild(tempDiv);
+        }
+
+        pdf.save('download.pdf');
+    } catch (error) {
+        console.error('Error downloading applications as PDF:', error);
+    }
+};
+
+
+
+
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -146,7 +209,7 @@ function ApplicationStatesPage() {
               <button
                 type="button"
                 className="rounded bg-green-50 px-4 py-2 text-sm font-medium text-green-600"
-                onClick={handleConfirmDelete}
+                onClick={handleDeleteButtonClick}
               >
                 Yes, I'm sure
               </button>
@@ -229,7 +292,7 @@ function ApplicationStatesPage() {
                       {isDropdownOpen && (
                         <div className="absolute z-10 mt-8 right-20 mr-10 bg-white border rounded-md shadow-md">
                           <ul>
-                            <li className="py-2 px-4 cursor-pointer hover:bg-gray-100">
+                            <li className="py-2 px-4 cursor-pointer hover:bg-gray-100" onClick={() => downloadApplicationsAsPDF(selectedIds)}>
                               <a className="group relative inline-flex items-center overflow-hidden rounded  px-4 py-3 hover:no-underline text-black ">
                                 <span className="absolute -start-full transition-all group-hover:start-4">
                                   <svg
@@ -255,7 +318,7 @@ function ApplicationStatesPage() {
                                 </span>
                               </a>
                             </li>
-                            <li className="py-4 px-5 cursor-pointer hover:bg-gray-100">
+                            <li className="py-4 px-5 cursor-pointer hover:bg-gray-100" onClick={handleDeleteSelected}>
                               <a className="group relative inline-flex items-center overflow-hidden rounded  px-5 py-3  hover:no-underline text-black">
                                 <span className="absolute -start-full transition-all group-hover:start-4">
                                   <svg
@@ -274,7 +337,7 @@ function ApplicationStatesPage() {
                                   </svg>
                                 </span>
 
-                                <span className="text-sm font-medium transition-all group-hover:ms-4 ">
+                                <span className="text-sm font-medium transition-all group-hover:ms-4 " >
                                   {" "}
                                   Delete {selectedIds.length === filteredData.length ? "all" : selectedIds.length} applications
                                 </span>
