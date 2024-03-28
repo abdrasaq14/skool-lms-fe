@@ -93,20 +93,7 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
     setEmojiPickerState(false);
   }
 
-  // Function to close emoji picker when clicking outside of it
-  // const handleClickOutside = (event: any) => {
-  //   const emojiPicker = emojiPickerRef.current;
-  //   if (emojiPicker && !emojiPicker.contains(event.target)) {
-  //     setEmojiPickerState(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, []);
+  
   const handleClickOutside = (event: any) => {
     if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target as Node)) {
       setEmojiPickerState(false);
