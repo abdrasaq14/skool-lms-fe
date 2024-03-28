@@ -1,4 +1,3 @@
-
 import { Routes, Route } from "react-router-dom";
 // import socket from "../socket";
 import "./index.css";
@@ -34,10 +33,10 @@ import ApplicationViewPage from "./pages/ApplicationViewPage/ApplicationViewPage
 import { ProtectedRoute } from "./components/protectedRoutes/ProtectedRoute";
 import AdminMessageView from "./pages/Messages/AdminMessageView";
 import UserMessageView from "./pages/Messages/UserMessageView";
-import ChatInput from "./pages/Messages/UserMessages";
+import UserChat from "./pages/Messages/UserChats";
+import AdminChat from './pages/Messages/AdminChats'
 
 function App() {
-  
   return (
     <>
       <Routes>
@@ -48,8 +47,6 @@ function App() {
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/reset-password" element={<ResetPasswordForm />} />
         <Route path="/new-password/:token" element={<NewPasswordForm />} />
-        
-        
 
         {/* Protected Routes after logging - Dashboard related routes. */}
         <Route
@@ -63,7 +60,7 @@ function App() {
                   <Route path="settings" element={<Settings />} />
                   <Route path="profile" element={<Profile />} />
                   <Route path="notifications" element={<NotificationPage />} />
-                  <Route path="messages/chats" element={<ChatInput />} />
+                  <Route path="messages/chats" element={<UserChat />} />
                 </Route>
 
                 {/*  */}
@@ -71,8 +68,6 @@ function App() {
                 <Route path="onboarding" element={<ApplicationView />} />
                 <Route path="application" element={<ApplicationPage />} />
                 <Route path="messages" element={<UserMessageView />} />
-                
-                
 
                 <Route
                   path="application/personal-statement"
@@ -109,8 +104,6 @@ function App() {
                   path="application/funding-information"
                   element={<FundingInformation />}
                 />
-
-
               </Routes>
             </ProtectedRoute>
           }
@@ -131,10 +124,9 @@ function App() {
                   element={<ApplicationViewPage />}
                 />
 
-                <Route
-                  path="/messages"
-                  element={<AdminMessageView />}
-                />
+                <Route path="/messages" element={<AdminMessageView />} />
+
+                <Route path="/messages/chats" element={<AdminChat />} />
               </Routes>
             </ProtectedRoute>
           }

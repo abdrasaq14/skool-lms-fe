@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import ChatHeader from "../../components/chat/header";
+import AdminChatHeader from "../../components/chat/Admin/header";
 import axiosInstance from "../../utils/axiosInstance";
 import { useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -16,10 +16,11 @@ interface Chat {
 
 }
 
-const UserChat: React.FC = () => {
+const AdminChat: React.FC = () => {
 
 
   const [chats, setChats] = useState<Chat[]>([]);
+  const [recipient, setRecipient] = useState('');
   const [loading, setLoading] = useState(true);
 
   const [searchParams] = useSearchParams();
@@ -30,14 +31,14 @@ const UserChat: React.FC = () => {
     
     const fetchChats = async () => {
       try {
-        console.log("userId: ", userId);
-        console.log("recipientId: ", recipientId);
         
         const response = await axiosInstance.get(`/users/chats/${recipientId}/${userId}`, {
         });
 
         if(response.data){
+            console.log("response.data: ", response.data);
           setChats(response.data.conversation);
+          setRecipient(response.data.recipient.firstName + " " + response.data.recipient.lastName)
         }        
         
       } catch (error) {
@@ -61,6 +62,22 @@ const UserChat: React.FC = () => {
     })
   }, [])
 
+//   useEffect(() => {
+
+//     const fetchRecipient = async() => {
+//       try {
+//         const response = await axiosInstance.get(`/users/chats/${recipientId}`);
+//         if(response.data){
+          
+//         }
+//       } catch (error) {
+//         console.error("Failed to fetch recipient", error);
+//       }
+//     }
+
+//     fetchRecipient()
+//   })
+
 
   return (
     <div>
@@ -73,7 +90,7 @@ const UserChat: React.FC = () => {
         </div>
         ) : 
         (
-          <ChatHeader chats={chats} />
+          <AdminChatHeader chats={chats} recipient={recipient} />
         )
       
     }
@@ -83,4 +100,4 @@ const UserChat: React.FC = () => {
 
 };
 
-export default UserChat;
+export default AdminChat;

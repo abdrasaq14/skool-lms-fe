@@ -2,14 +2,14 @@ import  { useRef, useState, useEffect} from "react";
 import EmojiPicker from "emoji-picker-react";
 import MicrophoneButton from "./microphone";
 import { BsEmojiSmile } from "react-icons/bs";
-import axiosInstance from "../../utils/axiosInstance";
+import axiosInstance from "../../../utils/axiosInstance";
 import { useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+import { RootState } from "../../../store/store";
 import  chatTail from '/images/chatbox-tail.png'
 import chatTailTwo from '/images/chatbox-tail2.png'
 import { TbMessagesOff } from "react-icons/tb";
-import socket from '../../../socket'
+import socket from '../../../../socket'
 
 interface Chat {
   createdAt: string;
@@ -26,7 +26,7 @@ interface Message {
   receiverId: string;
 }
 
-const ChatHeader = ({ chats }: { chats: Chat[] }) => {
+const ChatHeader = ({ chats, recipient }: { chats: Chat[]; recipient: string }) => {
   console.log("chats in header page", chats);
 
   const [emojiPickerState, setEmojiPickerState] = useState(false);
@@ -34,15 +34,19 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
   const [chosenEmoji, setChosenEmoji] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState<Message[]>(
-    chats.map((chat) => ({
-      text: chat.message,
-      timestamp:
-        new Date(chat.createdAt).getUTCHours().toString().padStart(2, "0") +
-        ":" +
-        new Date(chat.createdAt).getUTCMinutes().toString().padStart(2, "0"),
-      senderId: chat.sender.id,
-      receiverId: chat.receiver.id,
-    }))
+    chats.map((chat) => {
+      const chatDate = new Date(chat.createdAt);
+      chatDate.setHours(chatDate.getHours() + 1);
+      return {
+        text: chat.message,
+        timestamp:
+          chatDate.getUTCHours().toString().padStart(2, "0") +
+          ":" +
+          chatDate.getUTCMinutes().toString().padStart(2, "0"),
+        senderId: chat.sender.id,
+        receiverId: chat.receiver.id,
+      };
+    })
   );
 
 
@@ -52,14 +56,6 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
 
   console.log("messages", messages);
 
-  // useEffect(() => {
-  //   setMessages(chats.map(chat => ({
-  //     text: chat.message,
-  //     timestamp: chat.createdAt,
-  //     senderId: chat.sender.id,
-  //     receiverId: chat.receiver.id
-  //   })));
-  // }, []);
 
 
   useEffect(() => {
@@ -80,7 +76,15 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
 
       const message = {
         text: inputValue,
-        timestamp: new Date().getUTCHours().toString().padStart(2, "0") + ":" + new Date().getUTCMinutes().toString().padStart(2, "0"),
+        timestamp: (() => {
+    const currentDate = new Date();
+    currentDate.setHours(currentDate.getHours() + 1); // Add 1 hour for Nigerian time
+    return (
+      currentDate.getUTCHours().toString().padStart(2, "0") +
+      ":" +
+      currentDate.getUTCMinutes().toString().padStart(2, "0")
+    );
+  })(),
         senderId: userId || "",
         receiverId: recipientId || "",
       };
@@ -144,13 +148,7 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
               className="h-2 sm:h-10"
               alt="Chat Avatar"
             />
-            {
-              chats.length > 0 ? (
-                <p className="text-sm text-gray-700 ml-2">{chats[0].receiver.firstName}</p>
-              ) : (
-                <p>Admin</p>
-              )
-            }
+            <p className="text-sm text-gray-700 ml-2">{recipient}</p>
             
           </div>
         </header>
