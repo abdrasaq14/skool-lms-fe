@@ -6,9 +6,10 @@ import axiosInstance from "../../utils/axiosInstance";
 import { useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import  chatTail from '../../../public/images/chatbox-tail.png'
-import chatTailTwo from '../../../public/images/chatbox-tail2.png'
+import  chatTail from '/images/chatbox-tail.png'
+import chatTailTwo from '/images/chatbox-tail2.png'
 import { TbMessagesOff } from "react-icons/tb";
+import socket from "../../../socket";
 
 interface Chat {
   createdAt: string;
@@ -92,20 +93,6 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
     console.log("input value", inputValue)
     setEmojiPickerState(false);
   }
-
-  
-  const handleClickOutside = (event: any) => {
-    if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target as Node)) {
-      setEmojiPickerState(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   return (
     <div className=" p-4 h-screen overflow-y-auto w-full h-100vh ">

@@ -1,9 +1,7 @@
-import { useEffect } from "react";
+
 import { Routes, Route } from "react-router-dom";
 // import socket from "../socket";
 import "./index.css";
-import io from 'socket.io-client';
-
 // import TestPage from "./pages/TestPage";
 import HeroPage from "./pages/HeroPage/HeroPage";
 import LandingPage from "./pages/LandingPage/LandingPage";
@@ -39,19 +37,7 @@ import UserMessageView from "./pages/Messages/UserMessageView";
 import ChatInput from "./pages/Messages/UserMessages";
 
 function App() {
-  useEffect(() => {
-    // Test WebSocket connection
-    const socket = io(import.meta.env.VITE_SOCKET_SERVER_URL);
-
-    socket.on("connect", () => {
-      console.log("Connected to WebSocket server");
-      console.log(socket)
-    })
   
-    return () => {
-      socket.disconnect(); // Clean up WebSocket connection
-    };
-  }, []);
   return (
     <>
       <Routes>

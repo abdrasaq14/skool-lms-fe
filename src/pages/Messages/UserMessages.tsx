@@ -5,6 +5,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import { useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store"
+import socket from "../../../socket";
 
 interface Chat {
   createdAt: string;
@@ -47,6 +48,15 @@ const UserChat: React.FC = () => {
       }
     }
     fetchChats()
+
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server");
+      console.log(socket)
+
+      return () => {
+        socket.disconnect(); // Clean up WebSocket connection
+      };
+    })
   }, [])
 
 
