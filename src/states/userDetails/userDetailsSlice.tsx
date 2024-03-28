@@ -6,6 +6,7 @@ interface UserDetailsState {
     email: string;
     phone: string;
     country: string;
+    userId: string
 }
 
 const initialState: UserDetailsState = {
@@ -14,6 +15,7 @@ const initialState: UserDetailsState = {
     email: '',
     phone: '',
     country: '',
+    userId: ''
 };
 
 const userDetailsSlice = createSlice({

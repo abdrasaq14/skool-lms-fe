@@ -49,7 +49,7 @@ function LandingPage() {
         email: email,
         password: password,
       });
-      console.log(res);
+
 
       if (res.data.userNotOnboarded) {
         localStorage.setItem("token", res.data.token);
