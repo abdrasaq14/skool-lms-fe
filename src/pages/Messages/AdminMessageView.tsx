@@ -104,7 +104,7 @@ const AdminMessageView: React.FC = () => {
 
     return (
       
-    <Link to={`/admin/messages/chats?=${message.id}`}>
+    <Link to={`/admin/messages/chats?id=${message.id}`}>
     <div
         key={index}
         style={{ cursor: "pointer" }}
