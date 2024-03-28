@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import  chatTail from '../../../public/images/chatbox-tail.png'
 import chatTailTwo from '../../../public/images/chatbox-tail2.png'
-import { position } from "html2canvas/dist/types/css/property-descriptors/position";
+import { TbMessagesOff } from "react-icons/tb";
 
 interface Chat {
   createdAt: string;
@@ -112,14 +112,23 @@ const ChatHeader = ({ chats }: { chats: Chat[] }) => {
               className="h-2 sm:h-10"
               alt="Chat Avatar"
             />
-            <p className="text-sm text-gray-700 ml-2">{chats[0].receiver.firstName}</p>
+            {
+              chats.length > 0 ? (
+                <p className="text-sm text-gray-700 ml-2">{chats[0].receiver.firstName}</p>
+              ) : (
+                <p>Admin</p>
+              )
+            }
+            
           </div>
         </header>
 
         <div className="overflow-y-auto max-h-80 px-6 pb-6 bg-white">
         {messages.length === 0 ? (
-          <div className="flex justify-center items-center h-32">
+          <div className="flex flex-col gap-6 justify-center items-center h-64 mt-6">
             <p className="text-gray-500">No messages yet</p>
+            <TbMessagesOff className="h-20 w-20 text-gray-500 animate-bounce ease-in-out" />
+
           </div>
         ) : (
           <>
