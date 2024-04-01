@@ -3,6 +3,10 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+body{
+    overscroll-behavior: none;
+}
+
 /* style for APplicant dashboard*/
 @layer base {
     html {
