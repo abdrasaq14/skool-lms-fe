@@ -33,7 +33,7 @@ import { ReactNode, useEffect } from "react";
             res.data.verificationError)
          {
           localStorage.removeItem("token");
-          navigate("/");
+          navigate("/login");
         } 
         
         else if (res.status === 200 && res.data.user) {
@@ -43,7 +43,7 @@ import { ReactNode, useEffect } from "react";
         }
       } catch (error) {
         console.error("Error checking token:", error);
-        navigate("/");
+        navigate("/login");
 
       }
       }

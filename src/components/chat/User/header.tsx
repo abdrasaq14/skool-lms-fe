@@ -59,7 +59,7 @@ const ChatHeader = ({ chats, recipient }: { chats: Chat[]; recipient: string }) 
 
 
   useEffect(() => {
-    // Subscribe to incoming messages from the server
+    // listen to incoming messages from the server
     socket.on("message", (message: Message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
     });

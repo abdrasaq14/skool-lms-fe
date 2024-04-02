@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
 import { HiOutlineBell, HiOutlineChatAlt } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ import { BiNotificationOff } from "react-icons/bi";
 import { updateNotificationCount } from "../../../states/notification/notificationSlice";
 import { clearUserDetails } from "../../../states/userDetails/userDetailsSlice";
 
+
 // import container from "postcss/lib/container";
 
 interface Notification {
@@ -23,8 +24,11 @@ interface Notification {
 }
 
 export default function Header() {
+
+ 
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
+
   const count = useSelector(
     (state: RootState) => state.notificationStatus.notificationCount
   );
@@ -62,18 +66,16 @@ export default function Header() {
     }
   };
 
-  useEffect(() => {
-    fetchCount();
-  }, []);
+
 
   const navigate = useNavigate();
 
   const logout = () => {
     localStorage.removeItem("token");
     dispatch(clearUserDetails());
-    window.history.replaceState(null, "", "/");
+    window.history.replaceState(null, "", "/login");
  
-    navigate("/");
+    navigate("/login");
   };
 
   const user = useSelector((state: RootState) => state.userDetails);
@@ -90,7 +92,7 @@ export default function Header() {
                   "group inline-flex items-center rounded-sm p-1.5 text-gray-700 hover:text-opacity-100 focus:outline-none active:bg-gray-100"
                 )}
               >
-                <HiOutlineChatAlt fontSize={25} />
+                <HiOutlineChatAlt fontSize={27} />
               </Popover.Button>
               <Transition
                 as={Fragment}
@@ -130,7 +132,7 @@ export default function Header() {
                 )}
               >
                 <div className="inline-block relative" onClick={handleClick}>
-                  <HiOutlineBell fontSize={25} />
+                  <HiOutlineBell fontSize={27} />
                   {count > 0 && (
                     <span className=" absolute top-0.5 right-1 transform translate-x-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-full bg-red-500 px-1.5 py-0.5 text-white text-xs">
                       {count}
