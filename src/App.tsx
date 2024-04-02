@@ -46,6 +46,10 @@ function App() {
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/reset-password" element={<ResetPasswordForm />} />
         <Route path="/new-password/:token" element={<NewPasswordForm />} />
+        <Route
+                  path="admin/dashboard/application-view/:id"
+                  element={<ApplicationViewPage />}
+                />
 
         {/* Protected Routes after logging - Dashboard related routes. */}
         <Route
@@ -118,10 +122,7 @@ function App() {
                   element={<ApplicationStatesPage />}
                 />
 
-                <Route
-                  path="dashboard/application-view/:id"
-                  element={<ApplicationViewPage />}
-                />
+                
 
                 <Route path="/messages" element={<AdminMessageView />} />
 
