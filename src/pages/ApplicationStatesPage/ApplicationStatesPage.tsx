@@ -10,7 +10,6 @@ import html2canvas from "html2canvas";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 
-
 interface addQualification {
   gradeOrCGPA: string;
   fieldOfStudy: string;
@@ -83,7 +82,10 @@ function ApplicationStatesPage() {
     setSelectedTab(tab);
   };
 
-
+  const handleSelectAll = (ids: string[]) => {
+    setSelectedIds(ids);
+  };
+  
   const handleCheckboxChange = (id: string) => {
     const updatedSelectedIds = selectedIds.includes(id)
       ? selectedIds.filter((selectedId) => selectedId !== id)
@@ -91,41 +93,37 @@ function ApplicationStatesPage() {
     setSelectedIds(updatedSelectedIds);
   };
 
-  const handleDeleteButtonClick: MouseEventHandler<HTMLButtonElement> = async (event) => {
+  const handleDeleteButtonClick: MouseEventHandler<HTMLButtonElement> = async (
+    event
+  ) => {
     event.preventDefault();
     if (selectedIds.length > 0) {
       await handleConfirmDelete(selectedIds);
     }
   };
-  
-
 
   const handleDeleteSelected = () => {
     setShowModal(true);
   };
 
- 
+  const handleConfirmDelete = async (idsToDelete: string[]) => {
+    try {
+      console.log(idsToDelete);
 
-const handleConfirmDelete = async (idsToDelete: string[]) => {
-  try {
-    console.log(idsToDelete);
-    
-    await axiosInstance.delete(`/users/professional-applications`, {
-      data: { applicationIds: idsToDelete },
-    });
-    
-    setApplicationData(
-      applicationData.filter(
-        (application) => !idsToDelete.includes(application.id)
-      )
-    );
-  } catch (error) {
-    console.error("Error deleting applications:", error);
-  }
-  setShowModal(false);
-};
+      await axiosInstance.delete(`/users/professional-applications`, {
+        data: { applicationIds: idsToDelete },
+      });
 
-  
+      setApplicationData(
+        applicationData.filter(
+          (application) => !idsToDelete.includes(application.id)
+        )
+      );
+    } catch (error) {
+      console.error("Error deleting applications:", error);
+    }
+    setShowModal(false);
+  };
 
   const handleCancelDelete = () => {
     setShowModal(false);
@@ -134,43 +132,40 @@ const handleConfirmDelete = async (idsToDelete: string[]) => {
   const user = useSelector((state: RootState) => state.userDetails);
   const downloadApplicationsAsPDF = async (applicationIds: string[]) => {
     try {
-        const pdf = new jsPDF();
-        
-        console.log(applicationIds);
-        console.log(user);
-        
+      const pdf = new jsPDF();
 
-        for (const applicationId of applicationIds) {
-            const response = await axiosInstance.get(`/download-pdf/${applicationId}`, {
-                responseType: 'text',
-                
-            });
-            const htmlContent = response.data;
+      console.log(applicationIds);
+      console.log(user);
 
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = htmlContent;
-            document.body.appendChild(tempDiv);
+      for (const applicationId of applicationIds) {
+        const response = await axiosInstance.get(
+          `/download-pdf/${applicationId}`,
+          {
+            responseType: "text",
+          }
+        );
+        const htmlContent = response.data;
 
-            const canvas = await html2canvas(tempDiv);
-            const imgData = canvas.toDataURL('image/png');
-            const imgProps = pdf.getImageProperties(imgData);
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            pdf.addPage();
-            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = htmlContent;
+        document.body.appendChild(tempDiv);
 
-            document.body.removeChild(tempDiv);
-        }
+        const canvas = await html2canvas(tempDiv);
+        const imgData = canvas.toDataURL("image/png");
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        pdf.addPage();
+        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
 
-        pdf.save('download.pdf');
+        document.body.removeChild(tempDiv);
+      }
+
+      pdf.save("download.pdf");
     } catch (error) {
-        console.error('Error downloading applications as PDF:', error);
+      console.error("Error downloading applications as PDF:", error);
     }
-};
-
-
-
-
+  };
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -276,7 +271,20 @@ const handleConfirmDelete = async (idsToDelete: string[]) => {
             <table className=" mt-2 w-full ">
               <thead className=" border-none bg-white">
                 <tr>
-                  <th className="border-none  py-6 "></th>
+                  <th className="border-none  py-6 ">
+                    <input
+                      type="checkbox"
+                      checked={selectedIds.length === filteredData.length}
+                      onChange={() =>
+                        handleSelectAll(
+                          selectedIds.length === filteredData.length
+                            ? []
+                            : filteredData.map((app) => app.id)
+                        )
+                      }
+                    />
+                  </th>
+
                   <th className="border-none  py-6 ">Name</th>
                   <th className="border-none  py-6 ">Program Applied</th>
                   <th className="border-none  py-6 ">Degree</th>
@@ -292,7 +300,12 @@ const handleConfirmDelete = async (idsToDelete: string[]) => {
                       {isDropdownOpen && (
                         <div className="absolute z-10 mt-8 right-20 mr-10 bg-white border rounded-md shadow-md">
                           <ul>
-                            <li className="py-2 px-4 cursor-pointer hover:bg-gray-100" onClick={() => downloadApplicationsAsPDF(selectedIds)}>
+                            <li
+                              className="py-2 px-4 cursor-pointer hover:bg-gray-100"
+                              onClick={() =>
+                                downloadApplicationsAsPDF(selectedIds)
+                              }
+                            >
                               <a className="group relative inline-flex items-center overflow-hidden rounded  px-4 py-3 hover:no-underline text-black ">
                                 <span className="absolute -start-full transition-all group-hover:start-4">
                                   <svg
@@ -313,12 +326,18 @@ const handleConfirmDelete = async (idsToDelete: string[]) => {
 
                                 <span className="text-sm font-medium transition-all group-hover:ms-4 pl-2">
                                   {" "}
-                                  Download {
-                                  selectedIds.length === filteredData.length ? "all" : selectedIds.length} applications
+                                  Download{" "}
+                                  {selectedIds.length === filteredData.length
+                                    ? "all"
+                                    : selectedIds.length}{" "}
+                                  applications
                                 </span>
                               </a>
                             </li>
-                            <li className="py-4 px-5 cursor-pointer hover:bg-gray-100" onClick={handleDeleteSelected}>
+                            <li
+                              className="py-4 px-5 cursor-pointer hover:bg-gray-100"
+                              onClick={handleDeleteSelected}
+                            >
                               <a className="group relative inline-flex items-center overflow-hidden rounded  px-5 py-3  hover:no-underline text-black">
                                 <span className="absolute -start-full transition-all group-hover:start-4">
                                   <svg
@@ -337,9 +356,13 @@ const handleConfirmDelete = async (idsToDelete: string[]) => {
                                   </svg>
                                 </span>
 
-                                <span className="text-sm font-medium transition-all group-hover:ms-4 " >
+                                <span className="text-sm font-medium transition-all group-hover:ms-4 ">
                                   {" "}
-                                  Delete {selectedIds.length === filteredData.length ? "all" : selectedIds.length} applications
+                                  Delete{" "}
+                                  {selectedIds.length === filteredData.length
+                                    ? "all"
+                                    : selectedIds.length}{" "}
+                                  applications
                                 </span>
                               </a>
                             </li>
