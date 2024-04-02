@@ -59,7 +59,7 @@ function LandingPage() {
         navigate(`/dashboard`);
       } else if (res.data.adminSuccessMessage) {
         localStorage.setItem("token", res.data.token);
-        navigate(`admin/applications-section`);
+        navigate(`/admin/applications-section`);
       } else if (res.data.error) {
         setGenericError(res.data.error);
         return;

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import MainButton from "../../components/MainButton";
 import axiosInstance from "../../utils/axiosInstance";
+import { LuEyeOff, LuEye } from "react-icons/lu";
 
 function ChangePassword() {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -8,6 +9,9 @@ function ChangePassword() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false); // State to track password visibility
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -82,36 +86,82 @@ function ChangePassword() {
 
             <div className="flex flex-col gap-2">
               <label htmlFor="currentPassword">Current Password</label>
+
+              <div className=" relative">
               <input
                 onChange={(e) => setCurrentPassword(e.target.value)}
-                className="rounded-lg border border-gray-200 py-2 px-4 text-sm focus:outline-none focus:border-green-600 "
-                type="password"
+                className="rounded-lg border border-gray-200 py-2 px-4 text-sm focus:outline-none focus:border-green-600 w-full "
+                type={showCurrentPassword ? "text" : "password"} 
                 name="currentPassword"
                 id="currentPassword"
                 value={currentPassword}
               />
+              <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 px-4 py-3 flex items-center focus:outline-none"
+                  onClick={() => setShowCurrentPassword(!showCurrentPassword)} 
+                >
+                  {showCurrentPassword ? (
+                    <LuEye className="h-4 w-4 text-gray-400" />
+                  ) : (
+                    <LuEyeOff className="h-4 w-4 text-gray-400" />
+                  )}
+                </button>
+
+                </div>
             </div>
 
             <div className="flex flex-col gap-2">
               <label htmlFor="newPassword">New Password</label>
+              <div className=" relative">
+
+              
               <input
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="rounded-lg border border-gray-200 py-2 px-4 text-sm focus:outline-none focus:border-green-600 "
-                type="password"
+                className="rounded-lg border border-gray-200 py-2 px-4 text-sm focus:outline-none focus:border-green-600 w-full"
+                type={showNewPassword ? "text" : "password"}
                 name="newPassword"
                 id="newPassword"
               />
+              <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 px-4 py-3 flex items-center focus:outline-none"
+                  onClick={() => setShowNewPassword(!showNewPassword)} 
+                >
+                  {showNewPassword ? (
+                    <LuEye className="h-4 w-4 text-gray-400" />
+                  ) : (
+                    <LuEyeOff className="h-4 w-4 text-gray-400" />
+                  )}
+                </button>
+              </div>
             </div>
 
             <div className="flex flex-col gap-2">
               <label htmlFor="confirmPassword">Confirm Password</label>
+
+              <div className=" relative">
               <input
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="rounded-lg border border-gray-200 py-2 px-4 text-sm focus:outline-none focus:border-green-600"
-                type="password"
+                className="rounded-lg border border-gray-200 py-2 px-4 text-sm focus:outline-none focus:border-green-600 w-full"
+                type={showConfirmPassword ? "text" : "password"} 
                 name="confirmPassword"
                 id="confirmPassword"
               />
+              <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 px-4 py-3 flex items-center focus:outline-none"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)} 
+                >
+                  {showConfirmPassword ? (
+                    <LuEye className="h-4 w-4 text-gray-400" />
+                  ) : (
+                    <LuEyeOff className="h-4 w-4 text-gray-400" />
+                  )}
+                </button>
+              </div>
+              
+              
             </div>
 
             <div className="mt-4">
