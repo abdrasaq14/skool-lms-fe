@@ -71,6 +71,7 @@ const ResetPasswordForm = () => {
               <h5>Reset your password</h5>
             </div>
             <div className="flex flex-col gap-2 mb-4">
+              
               <div className="text-center text-xs text-gray-400 mb-4">
                 {genericError && (
                   <div
@@ -122,7 +123,7 @@ const ResetPasswordForm = () => {
                 <MainButton button_text={"Send reset instructions"} />
                 <div className="text-gray-400  text-center px-0 text-sm">
                   Go back to{" "}
-                  <Link className="text-green-400" to="/">
+                  <Link className="text-green-400" to="/login">
                     Sign in
                   </Link>
                 </div>

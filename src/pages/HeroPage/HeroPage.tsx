@@ -102,7 +102,7 @@ const HeroPage = () => {
                 <MainButton
                   button_text="Apply Now!"
                   onClick={() => {
-                    navigate("/");
+                    navigate("/login");
                   }}
                 />
               </div>
@@ -113,7 +113,7 @@ const HeroPage = () => {
           <div className="flex justify-between mx-auto gap-5 mt-44 mb-4border border-blue-400 w-10/12">
             <div className="flex justify-between mx-auto w-full">
               <input
-                className="px-4 sm:px-6 lg:px-8 rounded-md focus:outline-none focus:border-green-500 border border-gray-300 flex-1 flex justify-between"
+                className=" sm:px-6 md:px-8 rounded-md focus:outline-none focus:border-green-500 border border-gray-300 flex-1 flex justify-between"
                 type="text"
                 name="courseName"
                 value={courseName}

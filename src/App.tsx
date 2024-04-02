@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-// import socket from "../socket";
 import "./index.css";
 // import TestPage from "./pages/TestPage";
 import HeroPage from "./pages/HeroPage/HeroPage";
@@ -41,8 +40,8 @@ function App() {
     <>
       <Routes>
         {/* <Route path="/signup" element={<TestPage />} /> */}
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/home" element={<HeroPage />} />
+        <Route path="/" element={<HeroPage />} />
+        <Route path="/login" element={<LandingPage />} />
         <Route path="/register" element={<SignUpPage />} />
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/reset-password" element={<ResetPasswordForm />} />

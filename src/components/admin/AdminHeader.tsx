@@ -25,9 +25,9 @@ function AdminHeader( {header_text, linkTo}: Header) {
   const logout = () => {
     localStorage.removeItem("token");
     dispatch(clearUserDetails());
-    window.history.replaceState(null, "", "/");
+    window.history.replaceState(null, "", "/login");
  
-    navigate("/");
+    navigate("/login");
   };
 
   return (

@@ -213,8 +213,8 @@ const NotificationPage = () => {
             <h2 className="text-lg font-semibold mb-4">Confirm Deletion</h2>
             <p className="mb-4">Are you sure you want to delete this notification?</p>
             <div className="flex justify-end gap-6">
-              <button className="mr-2 text-gray-500 hover:text-gray-700" onClick={closeDeleteModal}>Cancel</button>
-              <button className="text-red-500 hover:text-red-700" onClick={deleteNotification}>Delete</button>
+              <button className="mr-2 text-gray-500 hover:bg-gray-500 hover:text-white py-2 px-4 rounded-xl" onClick={closeDeleteModal}>Cancel</button>
+              <button className="text-red-500 hover:bg-red-500 hover:text-white py-2 px-4 rounded-xl" onClick={deleteNotification}>Delete</button>
             </div>
           </div>
         </div>

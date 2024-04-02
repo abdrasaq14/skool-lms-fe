@@ -296,7 +296,7 @@ function SignUpPage() {
 
                 <p className="text-center text-sm text-gray-500">
                   Already have an account ?{" "}
-                  <Link className="text-green-400 hover:underline" to="/">
+                  <Link className="text-green-400 hover:underline" to="/login">
                     Sign in here
                   </Link>
                 </p>

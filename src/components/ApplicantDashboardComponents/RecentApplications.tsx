@@ -1,8 +1,11 @@
 import { format } from 'date-fns'
 import { useState, useEffect } from 'react'
 import axiosInstance from '../../utils/axiosInstance'
-
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 import { getApplicationStatus } from "../../lib/helpers";
+import socket from '../../../socket'
+
 
 // interface UserDetails{
 //     id: number,
@@ -37,9 +40,11 @@ export default function RecentApplications() {
   const [applicationDetails, setApplicationDetails] =
     useState<ApplicationDetails | null>(null);
   const [loading, setLoading] = useState(true);
+  const userId = useSelector((state: RootState) => state.userDetails.userId);
 
   useEffect(() => {
     const fetchUserDetails = async () => {
+
       try {
         const res = await axiosInstance.get("/users/dashboard");
 
@@ -56,6 +61,12 @@ export default function RecentApplications() {
 
     fetchUserDetails();
   }, []);
+
+  useEffect(() => {
+    if (userId) {
+        socket.emit("addNewUser", userId);
+    }
+}, [userId]);
 
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
