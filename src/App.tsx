@@ -1,9 +1,6 @@
-import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 // import socket from "../socket";
 import "./index.css";
-import io from 'socket.io-client';
-
 // import TestPage from "./pages/TestPage";
 import HeroPage from "./pages/HeroPage/HeroPage";
 import LandingPage from "./pages/LandingPage/LandingPage";
@@ -36,22 +33,10 @@ import ApplicationViewPage from "./pages/ApplicationViewPage/ApplicationViewPage
 import { ProtectedRoute } from "./components/protectedRoutes/ProtectedRoute";
 import AdminMessageView from "./pages/Messages/AdminMessageView";
 import UserMessageView from "./pages/Messages/UserMessageView";
-import ChatInput from "./pages/Messages/UserMessages";
+import UserChat from "./pages/Messages/UserChats";
+import AdminChat from './pages/Messages/AdminChats'
 
 function App() {
-  useEffect(() => {
-    // Test WebSocket connection
-    const socket = io(import.meta.env.VITE_SOCKET_SERVER_URL);
-
-    socket.on("connect", () => {
-      console.log("Connected to WebSocket server");
-      console.log(socket)
-    })
-  
-    return () => {
-      socket.disconnect(); // Clean up WebSocket connection
-    };
-  }, []);
   return (
     <>
       <Routes>
@@ -62,8 +47,10 @@ function App() {
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/reset-password" element={<ResetPasswordForm />} />
         <Route path="/new-password/:token" element={<NewPasswordForm />} />
-        
-        
+        <Route
+                  path="admin/dashboard/application-view/:id"
+                  element={<ApplicationViewPage />}
+                />
 
         {/* Protected Routes after logging - Dashboard related routes. */}
         <Route
@@ -77,7 +64,7 @@ function App() {
                   <Route path="settings" element={<Settings />} />
                   <Route path="profile" element={<Profile />} />
                   <Route path="notifications" element={<NotificationPage />} />
-                  <Route path="messages/chats" element={<ChatInput />} />
+                  <Route path="messages/chats" element={<UserChat />} />
                 </Route>
 
                 {/*  */}
@@ -85,8 +72,6 @@ function App() {
                 <Route path="onboarding" element={<ApplicationView />} />
                 <Route path="application" element={<ApplicationPage />} />
                 <Route path="messages" element={<UserMessageView />} />
-                
-                
 
                 <Route
                   path="application/personal-statement"
@@ -123,8 +108,6 @@ function App() {
                   path="application/funding-information"
                   element={<FundingInformation />}
                 />
-
-
               </Routes>
             </ProtectedRoute>
           }
@@ -140,15 +123,11 @@ function App() {
                   element={<ApplicationStatesPage />}
                 />
 
-                <Route
-                  path="dashboard/application-view/:id"
-                  element={<ApplicationViewPage />}
-                />
+                
 
-                <Route
-                  path="/messages"
-                  element={<AdminMessageView />}
-                />
+                <Route path="/messages" element={<AdminMessageView />} />
+
+                <Route path="/messages/chats" element={<AdminChat />} />
               </Routes>
             </ProtectedRoute>
           }

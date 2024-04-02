@@ -104,8 +104,8 @@ const AdminMessageView: React.FC = () => {
 
     return (
       
-    <Link to={`/admin/messages/chats?=${message.id}`}>
-    <div
+    <Link className="hover:no-underline" to={`/admin/messages/chats?id=${message.id}`}>
+    <div 
         key={index}
         style={{ cursor: "pointer" }}
       >
@@ -114,6 +114,7 @@ const AdminMessageView: React.FC = () => {
           name={message.firstName}
           message={message.lastMessage}
           time={timestamp} 
+          online={true}
         />
       </div>
     </Link>

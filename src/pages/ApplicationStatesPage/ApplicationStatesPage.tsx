@@ -9,6 +9,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+// import axios from "axios";
 
 interface addQualification {
   gradeOrCGPA: string;
@@ -45,12 +46,14 @@ interface ApplicationDetails {
     courseSearch: string;
   }[];
 }
-
+// interface Data {
+//   passportUpload: string;
+// }
 function ApplicationStatesPage() {
   const [applicationData, setApplicationData] = useState<ApplicationDetails[]>(
     []
   );
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
+
   const [showModal, setShowModal] = useState(false);
   const [selectedTab, setSelectedTab] = useState<string | null>("Accepted");
   const [loading, setLoading] = useState(true);
@@ -85,7 +88,7 @@ function ApplicationStatesPage() {
   const handleSelectAll = (ids: string[]) => {
     setSelectedIds(ids);
   };
-  
+
   const handleCheckboxChange = (id: string) => {
     const updatedSelectedIds = selectedIds.includes(id)
       ? selectedIds.filter((selectedId) => selectedId !== id)
@@ -127,6 +130,11 @@ function ApplicationStatesPage() {
 
   const handleCancelDelete = () => {
     setShowModal(false);
+    handleSelectAll(
+      selectedIds.length === filteredData.length
+        ? []
+        : filteredData.map((app) => app.id)
+    )
   };
 
   const user = useSelector((state: RootState) => state.userDetails);
@@ -138,12 +146,31 @@ function ApplicationStatesPage() {
       console.log(user);
 
       for (const applicationId of applicationIds) {
+        const {
+          data: { passportUpload },
+        } = await axiosInstance.get(
+          `/admin/professional-applications/${applicationId}`
+        );
+        console.log("passportUplod: ", passportUpload);
+
+        // setImg(passportUpload)
+
+        // const response = await axiosInstance.get(
+        //   `/download-pdf/${applicationId}/${passportUpload}`,
+        //   {
+        //     responseType: "text",
+        //   }
+        // );
+
         const response = await axiosInstance.get(
-          `/download-pdf/${applicationId}`,
+          `/download-pdf/${applicationId}?passportUpload=${encodeURIComponent(
+            passportUpload
+          )}`,
           {
             responseType: "text",
           }
         );
+
         const htmlContent = response.data;
 
         const tempDiv = document.createElement("div");
@@ -167,11 +194,6 @@ function ApplicationStatesPage() {
     }
   };
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!isDropdownOpen);
-  };
-
-  // const handleDownloadSelected = async () => {};
 
   const filteredData = selectedTab
     ? applicationData.filter(
@@ -291,84 +313,41 @@ function ApplicationStatesPage() {
                   <th className="border-none  py-6 ">Status</th>
                   {selectedIds.length > 1 && (
                     <th className="border-none py-6 flex justify-end  ">
-                      <img
-                        src={Dots}
-                        alt="Dots"
-                        className="cursor-pointer"
-                        onClick={toggleDropdown}
-                      />
-                      {isDropdownOpen && (
-                        <div className="absolute z-10 mt-8 right-20 mr-10 bg-white border rounded-md shadow-md">
-                          <ul>
-                            <li
-                              className="py-2 px-4 cursor-pointer hover:bg-gray-100"
-                              onClick={() =>
-                                downloadApplicationsAsPDF(selectedIds)
-                              }
-                            >
-                              <a className="group relative inline-flex items-center overflow-hidden rounded  px-4 py-3 hover:no-underline text-black ">
-                                <span className="absolute -start-full transition-all group-hover:start-4">
-                                  <svg
-                                    className="size-5 rtl:rotate-180 "
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth="2"
-                                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                                    />
-                                  </svg>
-                                </span>
-
-                                <span className="text-sm font-medium transition-all group-hover:ms-4 pl-2">
-                                  {" "}
-                                  Download{" "}
-                                  {selectedIds.length === filteredData.length
-                                    ? "all"
-                                    : selectedIds.length}{" "}
-                                  applications
-                                </span>
-                              </a>
-                            </li>
-                            <li
-                              className="py-4 px-5 cursor-pointer hover:bg-gray-100"
-                              onClick={handleDeleteSelected}
-                            >
-                              <a className="group relative inline-flex items-center overflow-hidden rounded  px-5 py-3  hover:no-underline text-black">
-                                <span className="absolute -start-full transition-all group-hover:start-4">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-5 w-4 "
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                                    />
-                                  </svg>
-                                </span>
-
-                                <span className="text-sm font-medium transition-all group-hover:ms-4 ">
-                                  {" "}
-                                  Delete{" "}
-                                  {selectedIds.length === filteredData.length
-                                    ? "all"
-                                    : selectedIds.length}{" "}
-                                  applications
-                                </span>
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
-                      )}
+                      <span>
+                        <svg
+                          className="w-6 h-6 text-gray-800 cursor-pointer"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          onClick={() => downloadApplicationsAsPDF(selectedIds)}
+                        >
+                          <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M4 15v2a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-2m-8 1V4m0 12-4-4m4 4 4-4"
+                          />
+                        </svg>
+                      </span>
+                      <span className="pl-5">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-8 w-6 pb-2 cursor-pointer"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          onClick={handleDeleteSelected}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                          />
+                        </svg>
+                      </span>
                     </th>
                   )}
 
