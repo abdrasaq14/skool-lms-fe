@@ -507,13 +507,13 @@ const ApplicationViewPage = () => {
       )}
 
       {acceptLoading && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-400 bg-opacity-75 z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75 z-50">
           <div className="loader ease-linear rounded-full border-t-4 border-b-4 border-green-600 h-24 w-24 animate-spin"></div>
         </div>
       )}
 
       {rejectLoading && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-400 bg-opacity-75 z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75 z-50">
           <div className="loader ease-linear rounded-full border-t-4 border-b-4 border-red-600 h-24 w-24 animate-spin"></div>
         </div>
       )}

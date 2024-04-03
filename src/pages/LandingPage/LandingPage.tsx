@@ -83,18 +83,22 @@ function LandingPage() {
           Welcome to the Applicant Portal
         </h1>
         <div className="  bg-white mx-auto max-w-lg rounded-2xl w-10/12 sm:w-6/12  lg:w-6/12 xl:w-4/12 mt-8">
+          
+          <Link to={`/`}>
           <img
             className="mx-auto mt-4 pt-4 max-w-md"
             src={decagonLogo}
             alt="decagon logo"
           />
+          </Link>
+          
 
           <form
             onSubmit={handleLogin}
             className="mb-0  space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8"
           >
             <p className="text-center text-lg font-medium">
-              Login in to the Applicant Portal
+              Login to the Applicant Portal
             </p>
             {genericError && (
               <div

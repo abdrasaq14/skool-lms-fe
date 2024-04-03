@@ -292,10 +292,11 @@ function ApplicationStatesPage() {
           <div>
             <table className=" mt-2 w-full ">
               <thead className=" border-none bg-white">
-                <tr>
-                  <th className="border-none  py-6 ">
+                <tr className=" relative">
+                  <th className="border-none py-6 ">
                     <input
                       type="checkbox"
+                      className=" cursor-pointer"
                       checked={selectedIds.length === filteredData.length}
                       onChange={() =>
                         handleSelectAll(
@@ -312,7 +313,7 @@ function ApplicationStatesPage() {
                   <th className="border-none  py-6 ">Degree</th>
                   <th className="border-none  py-6 ">Status</th>
                   {selectedIds.length > 1 && (
-                    <th className="border-none py-6 flex justify-end  ">
+                    <th className="border-none h-full flex justify-center items-center gap-5 absolute right-9 ">
                       <span>
                         <svg
                           className="w-6 h-6 text-gray-800 cursor-pointer"
@@ -331,10 +332,11 @@ function ApplicationStatesPage() {
                           />
                         </svg>
                       </span>
-                      <span className="pl-5">
+
+                      <span>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          className="h-8 w-6 pb-2 cursor-pointer"
+                          className="h-8 w-6 cursor-pointer"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"

@@ -309,7 +309,7 @@ function ApplicationPage() {
   {showSuccessModal && (
     <div className="modal-overlay">
       <ModalComponent
-        message="Your application has been successfully submitted. Thanks!"
+        message="Your application has been successfully submitted."
         buttonText="OK"
         icon={success}
         onClick={() => {
