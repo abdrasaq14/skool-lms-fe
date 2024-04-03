@@ -19,7 +19,7 @@ const HeroPage = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await axiosInstance.post("/users/check-availability", {
+      const response = await axiosInstance.post("/check-availability", {
         courseName: courseName,
       });
       if (response.data.isAvailable) {
