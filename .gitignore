@@ -6,14 +6,20 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-
+.env
+.env.development
+.env.local
+package-lock.json
+**yarn
+**.
+package-lock.json
+.pnp.cjs
+.pnp.loader.mjs
 node_modules
-yarn.lock
 dist
 dist-ssr
 *.local
-.env
-
+.yarnrc.yml
 
 # Editor directories and files
 .vscode/*
@@ -25,3 +31,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+yarn.lock
+.yarn-integrity
+.yarn

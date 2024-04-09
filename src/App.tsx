@@ -28,7 +28,7 @@ import NotificationPage from "./pages/ApplicantDashboard/Notifications";
 //Admin dashboard routes
 import ApplicationStatesPage from "./pages/ApplicationStatesPage/ApplicationStatesPage";
 import ApplicationViewPage from "./pages/ApplicationViewPage/ApplicationViewPage";
-
+import AddCourse from "./pages/Courses/AddCourse";
 import { ProtectedRoute } from "./components/protectedRoutes/ProtectedRoute";
 import AdminMessageView from "./pages/Messages/AdminMessageView";
 import UserMessageView from "./pages/Messages/UserMessageView";
@@ -46,12 +46,14 @@ function App() {
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/reset-password" element={<ResetPasswordForm />} />
         <Route path="/new-password/:token" element={<NewPasswordForm />} />
+
         <Route
                   path="admin/dashboard/application-view/:id"
                   element={<ApplicationViewPage />}
                 />
 
         {/* Protected Routes after logging - Dashboard related routes. */}
+
         <Route
           path="/dashboard/*"
           element={
@@ -111,6 +113,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        
 
         <Route
           path="/admin/*"
@@ -121,12 +124,10 @@ function App() {
                   path="applications-section"
                   element={<ApplicationStatesPage />}
                 />
+                <Route path="new_course" element={<AddCourse />} />
+                <Route path="messages" element={<AdminMessageView />} />
 
-                
-
-                <Route path="/messages" element={<AdminMessageView />} />
-
-                <Route path="/messages/chats" element={<AdminChat />} />
+                <Route path="messages/chats" element={<AdminChat />} />
               </Routes>
             </ProtectedRoute>
           }

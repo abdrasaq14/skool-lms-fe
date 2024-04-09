@@ -116,6 +116,22 @@ function AdminHeader( {header_text, linkTo}: Header) {
                 )}
               </Menu.Item>
 
+              <Menu.Item>
+                {({ active }) => (
+                  <div
+                  className={classNames(
+                    active && "bg-gray-100",
+                    "active:bg-gray-200 rounded-sm px-4 py-2  cursor-pointer focus:bg-gray-200"
+                  )}
+                  >
+                    <Link to={`/admin/new_course`} className=" no-underline text-gray-700 hover:no-underline">
+                    Add Course
+                    </Link>
+                     
+                  </div>
+                )}
+              </Menu.Item>
+
 
               <Menu.Item>
                 {({ active }) => (
