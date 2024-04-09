@@ -4,7 +4,6 @@ import axiosInstance from "../../utils/axiosInstance";
 // import axios from "axios";
 import { Link } from "react-router-dom";
 import PDFDownloadButton from "../../components/DownloadFunction/SingleDownload";
-import Dots from "/images/Dots.png";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useSelector } from "react-redux";

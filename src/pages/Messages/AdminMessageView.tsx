@@ -1,11 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setSearchQuery,
-  selectFilteredMessages,
-} from "../../states/messages/messagesSlice";
+import { setSearchQuery } from "../../states/messages/messagesSlice";
 import Message from "../../components/Message";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
 import { RootState } from "../../store/store";
 
@@ -13,21 +10,20 @@ interface Chats {
   id: string;
   passportUpload: string;
   firstName: string;
-  lastMessage: string; 
+  lastMessage: string;
   lastMessageCreatedAt: string;
   online: boolean;
 }
 const AdminMessageView: React.FC = () => {
   const userId = useSelector((state: RootState) => state.userDetails.userId);
   const [chattingUsers, setChattingUsers] = useState<Chats[]>([]);
-  
+
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-
         const response = await axiosInstance.get(`/users/chats/${userId}`);
         console.log("response: ", response);
-        
+
         setChattingUsers(response.data.users);
       } catch (error) {
         console.error("Failed to fetch messages", error);
@@ -37,9 +33,7 @@ const AdminMessageView: React.FC = () => {
     fetchMessages();
   }, []);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
-  const filteredMessages = useSelector(selectFilteredMessages);
 
   const searchRef = useRef<HTMLInputElement>(null);
 
@@ -67,11 +61,11 @@ const AdminMessageView: React.FC = () => {
     dispatch(setSearchQuery(value));
   };
 
-  const handleViewClick = (searchValue: string) => {
-    if (filteredMessages.length === 0 || searchValue.trim() === "") return;
-    // navigate(`/chat?search=${encodeURIComponent(searchValue)}`);
-    navigate("/chat");
-  };
+  // const handleViewClick = (searchValue: string) => {
+  //   if (filteredMessages.length === 0 || searchValue.trim() === "") return;
+  //   // navigate(`/chat?search=${encodeURIComponent(searchValue)}`);
+  //   navigate("/chat");
+  // };
 
   return (
     <div className="bg-white w-6/12 mx-auto mt-10 py-8 px-7 border rounded-2xl transition-all duration-300">
@@ -90,38 +84,34 @@ const AdminMessageView: React.FC = () => {
         </div>
       </div>
       <div>
-      {chattingUsers.length > 0 && (
-  chattingUsers.map((message, index) => {
+        {chattingUsers.length > 0 &&
+          chattingUsers.map((message, index) => {
+            // const timestamp: any = new Date(message.createdAt);
+            const chatDate = new Date(message.lastMessageCreatedAt);
+            chatDate.setHours(chatDate.getHours() + 1);
 
-    // const timestamp: any = new Date(message.createdAt);
-    const chatDate = new Date(message.
-      lastMessageCreatedAt);
-      chatDate.setHours(chatDate.getHours() + 1);
- 
-   const timestamp = chatDate.getUTCHours().toString().padStart(2, "0") +
-          ":" +
-          chatDate.getUTCMinutes().toString().padStart(2, "0")
+            const timestamp =
+              chatDate.getUTCHours().toString().padStart(2, "0") +
+              ":" +
+              chatDate.getUTCMinutes().toString().padStart(2, "0");
 
-    return (
-      
-    <Link className="hover:no-underline" to={`/admin/messages/chats?id=${message.id}`}>
-    <div 
-        key={index}
-        style={{ cursor: "pointer" }}
-      >
-        <Message
-          imageUrl={message.passportUpload}
-          name={message.firstName}
-          message={message.lastMessage}
-          time={timestamp} 
-          online={true}
-        />
-      </div>
-    </Link>
-    );
-  })
-)}
-
+            return (
+              <Link
+                className="hover:no-underline"
+                to={`/admin/messages/chats?id=${message.id}`}
+              >
+                <div key={index} style={{ cursor: "pointer" }}>
+                  <Message
+                    imageUrl={message.passportUpload}
+                    name={message.firstName}
+                    message={message.lastMessage}
+                    time={timestamp}
+                    online={true}
+                  />
+                </div>
+              </Link>
+            );
+          })}
       </div>
     </div>
   );
